@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            实验：决策树完成鸢尾花卉品种预测 |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">实验：决策树完成鸢尾花卉品种预测</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-10 23:33:22</span>
+        <span class="mobile">2022-01-10 23:33</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>13 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>[TOC]</p>
+<h1 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h1><p>本实验通过鸢尾花数据集<code>iris.csv</code>来实现对决策树进一步的了解。其中， <code>Iris</code>鸢尾花数据集是一个经典数据集，在统计学习和机器学习领域都经常被用作示例。数据集内包含3类共150条记录，每类各50个数据，每条记录都有4项特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度，可以通过这4个特征预测鸢尾花卉属于<code>iris-setosa, iris-versicolour, iris-virginica</code>三个类别中的 哪一品种。<code>Iris</code>数据集样例如下图所示：</p>
+<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E5%86%B3%E7%AD%96%E6%A0%91%E5%AE%8C%E6%88%90%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%8D%89%E5%93%81%E7%A7%8D%E9%A2%84%E6%B5%8B/image-20211205141444354.png" class="" title="image-20211205141444354">
+
+<p>本实验将五分之四的数据集作为训练集对决策树模型进行训练；将剩余五 分之一的数据集作为测试集，采用训练好的决策树模型对其进行预测。训练集 与测试集的数据随机选取。本实验采用准确率(accuracy)作为模型的评估函数：预测结果正确的数量占样本总数，(TP+TN)/(TP+TN+FP+FN)。</p>
+<p>【实验要求】  </p>
+<ol>
+<li><p>本实验要求输出测试集各样本的预测标签和真实标签，并计算模型准确率。(选做)另外，给出 3 个可视化预测结果。 </p>
+</li>
+<li><p>决策树算法可以分别尝试 <code>ID3,C4.5,cart</code>树，并评判效果。 </p>
+</li>
+<li><p>（选做）：对你的决策树模型进行预剪枝与后剪枝 </p>
+</li>
+<li><p>（选做）：分别做 c4.5 和 cart 树的剪枝并比较不同。</p>
+</li>
+</ol>
+<h1 id="实验思路"><a href="#实验思路" class="headerlink" title="实验思路"></a>实验思路</h1><p>分析数据结构，因为没有每个样本独有的属性（例如学生ID），决定采用<code>ID3</code>决策树（ID3决策树的信息增益偏向于可能值较多的属性）。采用信息增益<code>Information Gain</code>确定划分的最优特征，对于保存树的结构方面，采用<strong>字典</strong>的形式保存，以下方字典形式为例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="attr">"PetalWidth"</span>: {</span><br><span class="line">        <span class="attr">"0"</span>: <span class="string">"Iris-setosa"</span>,</span><br><span class="line">        <span class="attr">"1"</span>: {</span><br><span class="line">            <span class="attr">"PetalLength"</span>: {</span><br><span class="line">                <span class="attr">"0"</span>: <span class="string">"Iris-setosa"</span>,</span><br><span class="line">                <span class="attr">"1"</span>: <span class="string">"Iris-versicolor"</span>,</span><br><span class="line">                <span class="attr">"2"</span>: {</span><br><span class="line">                    <span class="attr">"SepalLength"</span>: {</span><br><span class="line">                        <span class="attr">"1"</span>: <span class="string">"Iris-virginica"</span>,</span><br><span class="line">                        <span class="attr">"2"</span>: <span class="string">"Iris-versicolor"</span></span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        },</span><br><span class="line">        <span class="attr">"2"</span>: {</span><br><span class="line">            <span class="attr">"SepalLength"</span>: {</span><br><span class="line">                <span class="attr">"0"</span>: <span class="string">"Iris-virginica"</span>,</span><br><span class="line">                <span class="attr">"1"</span>: <span class="string">"Iris-virginica"</span>,</span><br><span class="line">                <span class="attr">"2"</span>: {</span><br><span class="line">                    <span class="attr">"SepalWidth"</span>: {</span><br><span class="line">                        <span class="attr">"0"</span>: <span class="string">"Iris-virginica"</span>,</span><br><span class="line">                        <span class="attr">"1"</span>: <span class="string">"Iris-virginica"</span></span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>由于数据是连续的，在训练决策树之前需要将其离散化，利用python中<code>seaborn</code>库观察数据分布：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sb</span><br><span class="line"></span><br><span class="line">Data = pd.read_csv(<span class="string">'iris.csv'</span>)</span><br><span class="line">sb.pairplot(Data.dropna(), hue=<span class="string">'Species'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E5%86%B3%E7%AD%96%E6%A0%91%E5%AE%8C%E6%88%90%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%8D%89%E5%93%81%E7%A7%8D%E9%A2%84%E6%B5%8B/myplot.png" class="" title="myplot">
+
+<p>因此我们确定数据的离散边界：</p>
+<table>
+<thead>
+<tr>
+<th>离散特征\离散后的值</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SepalLength</td>
+<td>0-5.5</td>
+<td>5.5-6.3</td>
+<td>6.3-inf</td>
+</tr>
+<tr>
+<td>SepalWidth</td>
+<td>0.3.2</td>
+<td>3.2-inf</td>
+<td></td>
+</tr>
+<tr>
+<td>PetalLength</td>
+<td>0-2</td>
+<td>2-4.9</td>
+<td>4.9-inf</td>
+</tr>
+<tr>
+<td>PetalWidth</td>
+<td>0-0.6</td>
+<td>0.6-1.7</td>
+<td>1.7-inf</td>
+</tr>
+</tbody></table>
+<p>为了保证结果的随机性，训练集与测试集的划分采用随机采样，每种花随机抽取10个共30个测试集样本，其余为训练集样本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分割训练集与测试集</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_train_test</span>(<span class="params">data:pd.DataFrame</span>):</span></span><br><span class="line">    <span class="comment"># 随机采样</span></span><br><span class="line">    test_index = random.sample(<span class="built_in">range</span>(<span class="number">50</span>),<span class="number">10</span>)</span><br><span class="line">    test_index.extend(random.sample(<span class="built_in">range</span>(<span class="number">50</span>,<span class="number">100</span>),<span class="number">10</span>))</span><br><span class="line">    test_index.extend(random.sample(<span class="built_in">range</span>(<span class="number">100</span>,<span class="number">150</span>),<span class="number">10</span>))</span><br><span class="line">    <span class="built_in">print</span>(test_index)</span><br><span class="line">    testSet = data.iloc[test_index]</span><br><span class="line">    train_index = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">150</span>))</span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> test_index:</span><br><span class="line">        train_index.remove(index)</span><br><span class="line">    <span class="comment"># 划分训练集</span></span><br><span class="line">    trainSet = data.iloc[train_index]</span><br><span class="line">    <span class="keyword">return</span> trainSet,testSet</span><br></pre></td></tr></table></figure>
+
+<h1 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h1><ul>
+<li><code>split_train_test</code>：分割训练集与测试集</li>
+<li><code>ShannonEntropy</code>：计算一个<code>Dataframe</code>关于<code>forecast_label</code>列的信息熵</li>
+<li><code>InformationGain</code>：计算一个<code>Dataframe</code>中<code>label</code>标签关于<code>forecast_label</code>的信息增益</li>
+<li><code>createTree</code>：递归生成决策树的过程</li>
+<li><code>decision</code>：对一个样本进行决策</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sb</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">split_train_test</span>(<span class="params">data:pd.DataFrame</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    分割训练集与测试集</span></span><br><span class="line"><span class="string">    :param data: 总的数据集</span></span><br><span class="line"><span class="string">    :return: 返回训练集与测试集</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 随机采样</span></span><br><span class="line">    test_index = random.sample(<span class="built_in">range</span>(<span class="number">50</span>),<span class="number">10</span>)</span><br><span class="line">    test_index.extend(random.sample(<span class="built_in">range</span>(<span class="number">50</span>,<span class="number">100</span>),<span class="number">10</span>))</span><br><span class="line">    test_index.extend(random.sample(<span class="built_in">range</span>(<span class="number">100</span>,<span class="number">150</span>),<span class="number">10</span>))</span><br><span class="line">    <span class="built_in">print</span>(test_index)</span><br><span class="line">    testSet = data.iloc[test_index]</span><br><span class="line">    train_index = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">150</span>))</span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> test_index:</span><br><span class="line">        train_index.remove(index)</span><br><span class="line">    <span class="comment"># 划分训练集</span></span><br><span class="line">    trainSet = data.iloc[train_index]</span><br><span class="line">    <span class="keyword">return</span> trainSet,testSet</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ShannonEntropy</span>(<span class="params">data:pd.DataFrame,forecast_label:<span class="built_in">str</span></span>)-&gt;<span class="built_in">float</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算一个数据集关于某个标签(这里是预测标签)的信息熵</span></span><br><span class="line"><span class="string">    :param data: 数据集</span></span><br><span class="line"><span class="string">    :param forecast_label: 预测标签</span></span><br><span class="line"><span class="string">    :return: 返回这个数据集的信息熵</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    total = data.shape[<span class="number">0</span>]</span><br><span class="line">    kinds = data[forecast_label].value_counts()</span><br><span class="line">    Entropy = <span class="number">0.0</span></span><br><span class="line">    <span class="comment"># 对于每种预测标签 计算pk*log(pk)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(kinds.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="comment"># 计算每种预测标签的比例</span></span><br><span class="line">        prior_probability = kinds[i]/total</span><br><span class="line">        <span class="comment"># 计算信息熵</span></span><br><span class="line">        Entropy += (prior_probability * np.log2(prior_probability))</span><br><span class="line">    <span class="keyword">return</span> -Entropy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">InformationGain</span>(<span class="params">data:pd.DataFrame,label:<span class="built_in">str</span>,forecast_label:<span class="built_in">str</span></span>)-&gt;<span class="built_in">float</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计算label标签关于forecast_label的信息增益</span></span><br><span class="line"><span class="string">    :param data: 数据集</span></span><br><span class="line"><span class="string">    :param label: 计算标签</span></span><br><span class="line"><span class="string">    :param forecast_label: 预测标签</span></span><br><span class="line"><span class="string">    :return: 信息增益</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 计算总的信息熵Entropy(S)</span></span><br><span class="line">    total_entropy = ShannonEntropy(data,forecast_label)</span><br><span class="line">    <span class="comment"># 初始化信息增益</span></span><br><span class="line">    gain = total_entropy</span><br><span class="line">    <span class="comment"># 按照计算标签分组</span></span><br><span class="line">    sub_frame = data[[label,<span class="string">'Species'</span>]]</span><br><span class="line">    group = sub_frame.groupby(label)</span><br><span class="line">    <span class="comment"># 计算信息增益</span></span><br><span class="line">    <span class="keyword">for</span> key, df <span class="keyword">in</span> group:</span><br><span class="line">        gain -= (df.shape[<span class="number">0</span>]/data.shape[<span class="number">0</span>]) * ShannonEntropy(df,<span class="string">'Species'</span>)</span><br><span class="line">    <span class="keyword">return</span> gain</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">createTree</span>(<span class="params">data:pd.DataFrame</span>)-&gt;<span class="built_in">dict</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    递归的创建决策树</span></span><br><span class="line"><span class="string">    :param data: 训练集数据</span></span><br><span class="line"><span class="string">    :return: 返回一个字典表示决策树</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 该分支下的实例只有一种分类</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data[<span class="string">'Species'</span>].value_counts()) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> data[<span class="string">'Species'</span>].iloc[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化最优信息增益与最优属性</span></span><br><span class="line">    bestGain = <span class="number">0</span></span><br><span class="line">    bestFeature = -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对于每种属性计算信息增益，选出信息增益最大的一列</span></span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> data:</span><br><span class="line">        <span class="keyword">if</span> column != <span class="string">'Species'</span>:</span><br><span class="line">            gain = InformationGain(data, column, <span class="string">'Species'</span>)</span><br><span class="line">            <span class="keyword">if</span> bestGain &lt; gain:</span><br><span class="line">                bestGain = gain</span><br><span class="line">                bestFeature = column</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 数据集中所有数据都相同，但种类不同，返回最多数量的种类</span></span><br><span class="line">    <span class="keyword">if</span> bestFeature == -<span class="number">1</span>:</span><br><span class="line">        valueCount = data[<span class="string">'Species'</span>].value_counts()</span><br><span class="line">        <span class="keyword">return</span> valueCount.index[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化一个字典</span></span><br><span class="line">    myTree = {bestFeature: {}}</span><br><span class="line">    <span class="comment"># 统计出最佳属性的所有可能取值</span></span><br><span class="line">    valueList = <span class="built_in">set</span>(data[bestFeature])</span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> valueList:</span><br><span class="line">        <span class="comment"># 递归的构造子树</span></span><br><span class="line">        myTree[bestFeature][value] = createTree(data[data[bestFeature] == value])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> myTree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decision</span>(<span class="params">tree:<span class="built_in">dict</span>,testVector:pd.Series</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    预测一个测试集样本的类别</span></span><br><span class="line"><span class="string">    :param tree: 生成的决策树</span></span><br><span class="line"><span class="string">    :param testVector: 测试数据向量</span></span><br><span class="line"><span class="string">    :return: 返回预测标签</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 初始化预测标签</span></span><br><span class="line">    forecastLabel = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 获取当前决策树第一个节点属性</span></span><br><span class="line">    firstFeature = <span class="built_in">next</span>(<span class="built_in">iter</span>(tree))</span><br><span class="line">    <span class="comment"># 获取子树</span></span><br><span class="line">    childTree = tree[firstFeature]</span><br><span class="line">    <span class="comment"># 对子树中不同的可能值检测是否相等</span></span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> childTree.keys():</span><br><span class="line">        <span class="comment"># 满足条件深入到下一层</span></span><br><span class="line">        <span class="keyword">if</span> testVector[firstFeature] == key:</span><br><span class="line">            <span class="comment"># 下一层是分支节点</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">type</span>(childTree[key]) == <span class="built_in">dict</span> :</span><br><span class="line">                forecastLabel = decision(childTree[key],testVector)</span><br><span class="line">            <span class="comment"># 下一层是叶节点</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                forecastLabel = childTree[key]</span><br><span class="line">    <span class="keyword">return</span> forecastLabel</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span> :</span><br><span class="line">    Data = pd.read_csv(<span class="string">'iris.csv'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 画出统计分布图，统计每种类别的特征</span></span><br><span class="line">    <span class="comment"># sb.pairplot(Data.dropna(), hue='Species')</span></span><br><span class="line">    <span class="comment"># plt.show()</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 数据离散化处理</span></span><br><span class="line">    Data[<span class="string">'SepalLength'</span>] = np.digitize(Data[<span class="string">'SepalLength'</span>],bins=[<span class="number">5.5</span>,<span class="number">6.3</span>])</span><br><span class="line">    Data[<span class="string">'SepalWidth'</span>] = np.digitize(Data[<span class="string">'SepalWidth'</span>],bins=[<span class="number">3.2</span>])</span><br><span class="line">    Data[<span class="string">'PetalLength'</span>] = np.digitize(Data[<span class="string">'PetalLength'</span>],bins=[<span class="number">2</span>,<span class="number">4.9</span>])</span><br><span class="line">    Data[<span class="string">'PetalWidth'</span>] = np.digitize(Data[<span class="string">'PetalWidth'</span>],bins=[<span class="number">0.6</span>,<span class="number">1.7</span>])</span><br><span class="line">    <span class="comment"># 数据离散化的字典</span></span><br><span class="line">    discrete_dict = {</span><br><span class="line">        <span class="string">'SepalLength'</span> : {<span class="string">'0-5.5'</span>:<span class="number">0</span>,<span class="string">'5.5-6.3'</span>:<span class="number">1</span>,<span class="string">'6.3-inf'</span>:<span class="number">2</span>},</span><br><span class="line">        <span class="string">'SepalWidth'</span> : {<span class="string">'0.3.2'</span>:<span class="number">0</span>,<span class="string">'3.2-inf'</span>:<span class="number">1</span>},</span><br><span class="line">        <span class="string">'PetalLength'</span> : {<span class="string">'0-2'</span>:<span class="number">0</span>,<span class="string">'2-4.9'</span>:<span class="number">1</span>,<span class="string">'4.9-inf'</span>:<span class="number">2</span>},</span><br><span class="line">        <span class="string">'PetalWidth'</span> : {<span class="string">'0-0.6'</span>:<span class="number">0</span>,<span class="string">'0.6-1.7'</span>:<span class="number">1</span>,<span class="string">'1.7-inf'</span>:<span class="number">2</span>}</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'数据离散化字典：'</span>)</span><br><span class="line">    <span class="built_in">print</span>(json.dumps(discrete_dict, indent=<span class="number">4</span>))</span><br><span class="line">    <span class="comment"># 分出训练集与测试集</span></span><br><span class="line">    train_set,test_set = split_train_test(Data)</span><br><span class="line">    <span class="comment"># 训练出决策树</span></span><br><span class="line">    tree = createTree(train_set)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"决策树字典表示："</span>)</span><br><span class="line">    <span class="built_in">print</span>(json.dumps(tree, indent=<span class="number">4</span>, sort_keys=<span class="literal">True</span>))</span><br><span class="line">    <span class="comment"># 初始化统计参数</span></span><br><span class="line">    T = <span class="number">0</span></span><br><span class="line">    N = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(test_set.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'================================================'</span>)</span><br><span class="line">        vector = test_set.iloc[i, :-<span class="number">1</span>]</span><br><span class="line">        sl = vector[<span class="string">'SepalLength'</span>]</span><br><span class="line">        sw = vector[<span class="string">'SepalWidth'</span>]</span><br><span class="line">        pl = vector[<span class="string">'PetalLength'</span>]</span><br><span class="line">        pw = vector[<span class="string">'PetalWidth'</span>]</span><br><span class="line">        trueLabel = test_set.iloc[i][<span class="string">'Species'</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f'离散化后的测试数据:SepalLength=<span class="subst">{sl}</span>,SepalWidth=<span class="subst">{sw}</span>,PetalLength=<span class="subst">{pl}</span>,PetalWidth=<span class="subst">{pw}</span>,真实标签=<span class="subst">{trueLabel}</span>'</span>)</span><br><span class="line">        forecastLabel= decision(tree,vector)</span><br><span class="line">        <span class="keyword">if</span> forecastLabel == trueLabel:</span><br><span class="line">            T+=<span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f'预测为<span class="subst">{forecastLabel}</span>,预测正确'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            N+=<span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f'预测为<span class="subst">{forecastLabel}</span>,预测错误'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'-------------------------------------------------------------'</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f'决策树预测准确率为:'</span>+<span class="built_in">str</span>(T/(T+N)))</span><br></pre></td></tr></table></figure>
+
+<h1 id="实验结果与分析"><a href="#实验结果与分析" class="headerlink" title="实验结果与分析"></a>实验结果与分析</h1><p>运行程序后的控制台输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line">数据离散化字典：</span><br><span class="line">{</span><br><span class="line">    "SepalLength": {</span><br><span class="line">        "0-5.5": 0,</span><br><span class="line">        "5.5-6.3": 1,</span><br><span class="line">        "6.3-inf": 2</span><br><span class="line">    },</span><br><span class="line">    "SepalWidth": {</span><br><span class="line">        "0.3.2": 0,</span><br><span class="line">        "3.2-inf": 1</span><br><span class="line">    },</span><br><span class="line">    "PetalLength": {</span><br><span class="line">        "0-2": 0,</span><br><span class="line">        "2-4.9": 1,</span><br><span class="line">        "4.9-inf": 2</span><br><span class="line">    },</span><br><span class="line">    "PetalWidth": {</span><br><span class="line">        "0-0.6": 0,</span><br><span class="line">        "0.6-1.7": 1,</span><br><span class="line">        "1.7-inf": 2</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">随机训练集index: </span><br><span class="line">[38, 28, 26, 44, 40, 19, 2, 18, 7, 46, 68, 79, 50, 97, 65, 88, 69, 81, 92, 95, 126, 132, 137, 131, 110, 124, 133, 116, 125, 143]</span><br><span class="line">决策树字典表示：</span><br><span class="line">{</span><br><span class="line">    "PetalLength": {</span><br><span class="line">        "0": "Iris-setosa",</span><br><span class="line">        "1": {</span><br><span class="line">            "PetalWidth": {</span><br><span class="line">                "1": "Iris-versicolor",</span><br><span class="line">                "2": {</span><br><span class="line">                    "SepalWidth": {</span><br><span class="line">                        "0": "Iris-virginica",</span><br><span class="line">                        "1": "Iris-versicolor"</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        },</span><br><span class="line">        "2": {</span><br><span class="line">            "PetalWidth": {</span><br><span class="line">                "1": {</span><br><span class="line">                    "SepalLength": {</span><br><span class="line">                        "1": "Iris-virginica",</span><br><span class="line">                        "2": "Iris-versicolor"</span><br><span class="line">                    }</span><br><span class="line">                },</span><br><span class="line">                "2": {</span><br><span class="line">                    "SepalLength": {</span><br><span class="line">                        "1": "Iris-virginica",</span><br><span class="line">                        "2": {</span><br><span class="line">                            "SepalWidth": {</span><br><span class="line">                                "0": "Iris-virginica",</span><br><span class="line">                                "1": "Iris-virginica"</span><br><span class="line">                            }</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=0,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=0,SepalWidth=1,PetalLength=0,PetalWidth=0,真实标签=Iris-setosa</span><br><span class="line">预测为Iris-setosa,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=1,真实标签=Iris-versicolor</span><br><span class="line">预测为Iris-versicolor,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=1,SepalWidth=0,PetalLength=1,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=0,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=0,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=0,PetalLength=2,PetalWidth=1,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-versicolor,预测错误</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=0,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">================================================</span><br><span class="line">离散化后的测试数据:SepalLength=2,SepalWidth=1,PetalLength=2,PetalWidth=2,真实标签=Iris-virginica</span><br><span class="line">预测为Iris-virginica,预测正确</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">决策树预测准确率为:0.9666666666666667</span><br></pre></td></tr></table></figure>
+
+<p>观察决策树的结构，<code>SepalWidth=0</code>或<code>SepalWidth=1</code>时的决策结果相同，可以通过剪枝的操作减去多余的子树。<strong>同时对数据的分布进行分析，<code>SepalWidth</code>与<code>SepalLength</code>的数据重合部分大，对这两个数据进行预剪枝的效果可能更好。</strong></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>【1】机器学习实战</p>
+<p>【2】<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40683479/article/details/89390597">机器学习项目实战–基于鸢尾花数据集（python代码，多种算法对比：决策树、SVM、k近邻）_西南交大-Liu_z的博客-CSDN博客<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：实验：决策树完成鸢尾花卉品种预测</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-10 23:33:22</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/10/实验：决策树完成鸢尾花卉品种预测/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/python/">#python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">实验：神经网络预测Fashion—MNIST数据集</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1%E4%B8%8E%E9%9D%9E%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">实验：参数估计与非参数估计</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">实验要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">实验思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">实验代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">实验结果与分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>

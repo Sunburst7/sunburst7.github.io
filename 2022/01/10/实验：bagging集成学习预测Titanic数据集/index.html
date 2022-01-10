@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            实验：bagging集成学习预测Titanic数据集 |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">实验：bagging集成学习预测Titanic数据集</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-10 23:40:30</span>
+        <span class="mobile">2022-01-10 23:40</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>1.8k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>7 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="实验要求"><a href="#实验要求" class="headerlink" title="实验要求"></a>实验要求</h1><p>用集成方法对数据集进行分类</p>
+<ol>
+<li><p>利用若干算法，针对同一样本数据训练模型，使用投票机制，少数服从多数，用多数算法给出的结果当作最终的决策依据，对Titanic数据集 进行分类，给出在测试集上的精确度； </p>
+</li>
+<li><p>除了投票法，其他的集成学习方法也可以。 </p>
+</li>
+<li><p>实验来自kaggle入门赛 <a class="link" target="_blank" rel="noopener" href="https://www.kaggle.com/c/titanic">https://www.kaggle.com/c/titanic<i class="fas fa-external-link-alt"></i></a> ,可以参考原网站 代码与预处理部分，但与公开代码不同的在于，集成学习所用的基学习 器需要自己实现而不能调用sklearn库。 </p>
+</li>
+<li><p>数据集的分析是一个开放性问题，可以参考网站中的预处理方式。 </p>
+</li>
+<li><p>所选算法包括但不限于课堂上学习的模型例如： 决策树 SVM KNN  神经网络</p>
+</li>
+<li><p>需要在网站上提交，不要求结果很高，但要求模型自己实现，如果有优化可以加分</p>
+</li>
+</ol>
+<h1 id="实验思路"><a href="#实验思路" class="headerlink" title="实验思路"></a>实验思路</h1><p>主要采用<code>bagging</code>集成学习方法，Bagging原理可见另一篇博客<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45785407/article/details/121978863">(16条消息) 集成学习(ensemble learning)_Sunburst7的博客-CSDN博客<i class="fas fa-external-link-alt"></i></a>。子学习器采用<strong>贝叶斯决策论</strong>进行决策，对于训练集，我们进行5次有放回的随机抽样，得到5个训练子集，然后用这五个训练子集分别进行决策，得到5个分类结果，再进行投票决定最终的分类结果。</p>
+<p><code>Titanic</code>数据字典：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Definition</strong></th>
+<th><strong>Key</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>survival</td>
+<td>Survival</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+<tr>
+<td>pclass</td>
+<td>Ticket class，社会地位</td>
+<td>A proxy for socio-economic status (SES)，1 = 1st, 2 = 2nd, 3 = 3rd</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>乘客姓名</td>
+<td></td>
+</tr>
+<tr>
+<td>sex</td>
+<td>Sex</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Age in years</td>
+<td></td>
+</tr>
+<tr>
+<td>sibsp</td>
+<td># of siblings / spouses aboard the Titanic</td>
+<td></td>
+</tr>
+<tr>
+<td>parch</td>
+<td># of parents / children aboard the Titanic</td>
+<td></td>
+</tr>
+<tr>
+<td>ticket</td>
+<td>Ticket number</td>
+<td></td>
+</tr>
+<tr>
+<td>fare</td>
+<td>Passenger fare</td>
+<td></td>
+</tr>
+<tr>
+<td>cabin</td>
+<td>Cabin number</td>
+<td></td>
+</tr>
+<tr>
+<td>embarked</td>
+<td>Port of Embarkation 出发港</td>
+<td>C = Cherbourg, Q = Queenstown, S = Southampton</td>
+</tr>
+</tbody></table>
+<p>连接训练集与测试集，查看缺失值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">train = pd.read_csv(<span class="string">"train.csv"</span>)</span><br><span class="line">test = pd.read_csv(<span class="string">"test.csv"</span>)</span><br><span class="line"></span><br><span class="line">df = pd.concat([train, test], axis=<span class="number">0</span>)</span><br><span class="line">df = df.set_index(<span class="string">'PassengerId'</span>)</span><br><span class="line"><span class="built_in">print</span>(df.info())</span><br></pre></td></tr></table></figure>
+
+<p>控制台输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Int64Index: 1309 entries, 1 to 1309</span><br><span class="line">Data columns (total 11 columns):</span><br><span class="line"> #   Column    Non-Null Count  Dtype  </span><br><span class="line">---  ------    --------------  -----  </span><br><span class="line"> 0   Survived  891 non-null    float64</span><br><span class="line"> 1   Pclass    1309 non-null   int64  </span><br><span class="line"> 2   Name      1309 non-null   object   </span><br><span class="line"> 3   Sex       1309 non-null   object </span><br><span class="line"> 4   Age       1046 non-null   float64</span><br><span class="line"> 5   SibSp     1309 non-null   int64  </span><br><span class="line"> 6   Parch     1309 non-null   int64  </span><br><span class="line"> 7   Ticket    1309 non-null   object   </span><br><span class="line"> 8   Fare      1308 non-null   float64</span><br><span class="line"> 9   Cabin     295 non-null    object  </span><br><span class="line"> 10  Embarked  1307 non-null   object </span><br><span class="line">dtypes: float64(3), int64(3), object(5)</span><br></pre></td></tr></table></figure>
+
+<p><code>Cabin</code>特征因为有太多的缺失值，所以决定舍弃它，本次不进行语义分析，因此乘客姓名<code>Name</code>，船票编号<code>Ticket</code>人人各不相同，也被舍弃。</p>
+<ul>
+<li><p>总体分析<code>Age,Pclass,Sex</code>对于<code>Survived</code>的影响：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.set_theme(font_scale=<span class="number">1.5</span>)</span><br><span class="line">sns.displot(data=df,hue=<span class="string">'Sex'</span>, x=<span class="string">'Age'</span>,row=<span class="string">'Survived'</span>,col=<span class="string">'Pclass'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+  <img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9Abagging%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E9%A2%84%E6%B5%8BTitanic%E6%95%B0%E6%8D%AE%E9%9B%86/Pclass-Survived.png" class="" title="Pclass-Survived">
+
+<p>  第一行的乘客是那些没有存活下来的乘客，似乎大部分是来自<code>Pclass=3</code>的男性。幸存者大多是女性(第二行)。因此，<code>Age</code>和<code>Pclass</code>是生存的重要指标，年龄则不那么重要。</p>
+</li>
+<li><p>仔细分析<code>Age-Survived</code></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=df,hue=<span class="string">'Sex'</span>, x=<span class="string">'Kind'</span>,row=<span class="string">'Survived'</span>,col=<span class="string">'Pclass'</span>, kind=<span class="string">'count'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+  <img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9Abagging%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E9%A2%84%E6%B5%8BTitanic%E6%95%B0%E6%8D%AE%E9%9B%86/age-survived.png" class="" title="age-survived">`Pclass=1或2` 所有孩子都活下来了，也许这对我们有所帮助，所以我们保留`Age`这个特征，似乎儿童作为一个整体(年龄&lt;=15岁以上)比成年人生存得更好。因此可以粗略的将年龄分为成年人（`Age&gt;15`）与未成年人（`Age`&lt;=15)</li>
+<li><p>观察出发港<code>Embarked</code></p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.catplot(data=df,hue=<span class="string">'Sex'</span>, x=<span class="string">'Embarked'</span>,col=<span class="string">'Survived'</span>,kind=<span class="string">'count'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+  <img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9Abagging%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E9%A2%84%E6%B5%8BTitanic%E6%95%B0%E6%8D%AE%E9%9B%86/Embarked-Survived.png" class="" title="Embarked-Survived">
+
+<p>  从Southampton 出发的男性存活得较少(也许他们是在三等舱?)，但大约75%的南安普顿女性存活了下来，对于从Cherbourg出发的人来说，关系就相反了。所以Embarked也很重要。</p>
+</li>
+<li><p><code>Fare</code>表示船票价格：乘客要花更多的钱才能坐头等舱，但这对他们的生存并没有太大的帮助。去除该特征</p>
+</li>
+</ul>
+<p>因此留下的有意义的特征属性如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Definition</strong></th>
+<th><strong>Key</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>survival</td>
+<td>Survival，预测标签</td>
+<td>0 = No, 1 = Yes</td>
+</tr>
+<tr>
+<td>pclass</td>
+<td>Ticket class，社会地位</td>
+<td>A proxy for socio-economic status (SES)，1 = 1st, 2 = 2nd, 3 = 3rd</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>Sex</td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Age in years</td>
+<td></td>
+</tr>
+<tr>
+<td>sibsp</td>
+<td># of siblings / spouses aboard the Titanic</td>
+<td></td>
+</tr>
+<tr>
+<td>parch</td>
+<td># of parents / children aboard the Titanic</td>
+<td></td>
+</tr>
+<tr>
+<td>embarked</td>
+<td>Port of Embarkation 出发港</td>
+<td>C = Cherbourg, Q = Queenstown, S = Southampton</td>
+</tr>
+</tbody></table>
+<h1 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码"></a>实验代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照众数填充缺失值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fillMissingColumn</span>(<span class="params">dataframe: pd.DataFrame</span>):</span></span><br><span class="line">    <span class="comment"># 检测出有缺失值的列，返回一个Series，有缺失值的列为True，无缺失值的列为False</span></span><br><span class="line">    missing_column = dataframe.isnull().<span class="built_in">any</span>(axis=<span class="number">0</span>)  <span class="comment"># 按列检测</span></span><br><span class="line">    <span class="keyword">for</span> index, value <span class="keyword">in</span> missing_column.items():</span><br><span class="line">        <span class="keyword">if</span> value:</span><br><span class="line">            <span class="built_in">print</span>(index + <span class="string">" needs to fill missing values"</span>)</span><br><span class="line">            <span class="comment"># 利用众数填充有缺失值的行</span></span><br><span class="line">            dataframe[index].fillna(dataframe[index].mode()[<span class="number">0</span>], inplace=<span class="literal">True</span>)  <span class="comment"># 一定要设置inplace=True 修改内存的值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 贝叶斯分类器，输入一个向量，输出预测标签           </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifier</span>(<span class="params">x, train: pd.DataFrame</span>):</span></span><br><span class="line">    <span class="comment"># 分别存活的情况与没有存活的情况 0-死亡 1-存活</span></span><br><span class="line">    type0 = train[train[<span class="string">'Survived'</span>] == <span class="number">0</span>]</span><br><span class="line">    type1 = train[train[<span class="string">'Survived'</span>] == <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算行数</span></span><br><span class="line">    sum_type0 = type0.count().values[<span class="number">0</span>]</span><br><span class="line">    sum_type1 = type1.count().values[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算先验概率</span></span><br><span class="line">    prior_0 = sum_type0/(sum_type0+sum_type1)</span><br><span class="line">    prior_1 = sum_type1/(sum_type0+sum_type1)</span><br><span class="line">    <span class="comment"># print(str(prior_0) + " " + str(prior_1))</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化分类器值(加上lnp(w))</span></span><br><span class="line">    g0 = math.log(prior_0)</span><br><span class="line">    g1 = math.log(prior_1)</span><br><span class="line">    <span class="comment"># print(str(g0) + " " + str(g1))</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算所有列的似然/类条件概率密度</span></span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> train.columns:</span><br><span class="line">        <span class="keyword">if</span> column != <span class="string">'Survived'</span>:<span class="comment"># 去除预测标签的影响</span></span><br><span class="line">            <span class="comment"># print(column)</span></span><br><span class="line">            <span class="comment"># 计算拉普拉斯平滑后的似然</span></span><br><span class="line">            likelihood0 = (type0[type0[column] == x[column]].count().values[<span class="number">0</span>] + <span class="number">1</span>) / (sum_type0 + train[column].nunique())</span><br><span class="line">            likelihood1 = (type1[type1[column] == x[column]].count().values[<span class="number">0</span>] + <span class="number">1</span>) / (sum_type1 + train[column].nunique())</span><br><span class="line">            <span class="comment"># 取对数</span></span><br><span class="line">            ln_likelihood0 = math.log(likelihood0)</span><br><span class="line">            ln_likelihood1 = math.log(likelihood1)</span><br><span class="line">            <span class="comment"># print("type0: likelihood: " + str(likelihood0) + " ln:" + str(ln_likelihood0))</span></span><br><span class="line">            <span class="comment"># print("type1: likelihood: " + str(likelihood1) + " ln:" + str(ln_likelihood1))</span></span><br><span class="line"></span><br><span class="line">            g0 += ln_likelihood0</span><br><span class="line">            g1 += ln_likelihood1</span><br><span class="line">            <span class="comment"># print('------------------------------------------------------------------')</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># print(str(g0) + " " + str(g1))</span></span><br><span class="line">    <span class="keyword">if</span> g0&gt;=g1:</span><br><span class="line">        <span class="comment"># 预测为无法存活</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Load_Data</span></span><br><span class="line">train = pd.read_csv(<span class="string">"train.csv"</span>)</span><br><span class="line">test = pd.read_csv(<span class="string">"test.csv"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># EDA 数据预处理</span></span><br><span class="line">df = pd.concat([train, test], axis=<span class="number">0</span>)</span><br><span class="line">df = df.set_index(<span class="string">'PassengerId'</span>)</span><br><span class="line">df[<span class="string">'Age'</span>] = df[<span class="string">'Age'</span>].<span class="built_in">map</span>(<span class="keyword">lambda</span> x:<span class="string">'Adult'</span> <span class="keyword">if</span> x &gt;<span class="number">15</span> <span class="keyword">else</span> <span class="string">'Child'</span>)</span><br><span class="line">df[<span class="string">'Embarked'</span>] = df[<span class="string">'Embarked'</span>].fillna(<span class="string">'S'</span>)</span><br><span class="line">df = df.drop([<span class="string">'Name'</span>, <span class="string">'Ticket'</span>, <span class="string">'Cabin'</span>,<span class="string">'Fare'</span>], axis=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 填充缺失值</span></span><br><span class="line">fillMissingColumn(df)</span><br><span class="line"><span class="built_in">print</span>(df.info())</span><br><span class="line">mapper = {</span><br><span class="line">    <span class="string">'Sex'</span>:{</span><br><span class="line">        <span class="string">'male'</span>:<span class="number">0</span>,</span><br><span class="line">        <span class="string">'female'</span>:<span class="number">1</span></span><br><span class="line">    },</span><br><span class="line">    <span class="string">'Embarked'</span>:{</span><br><span class="line">        <span class="string">'C'</span>:<span class="number">0</span>,</span><br><span class="line">        <span class="string">'Q'</span>:<span class="number">1</span>,</span><br><span class="line">        <span class="string">'S'</span>:<span class="number">2</span>,</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="comment"># 特征数字化</span></span><br><span class="line">df.replace(mapper,inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(df.head())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分割训练集与测试集</span></span><br><span class="line">test = df.iloc[<span class="number">891</span>:<span class="number">1309</span>:<span class="number">1</span>,:]</span><br><span class="line">train = df.iloc[<span class="number">0</span>:<span class="number">891</span>:<span class="number">1</span>,:]</span><br><span class="line"></span><br><span class="line">SamplesArray = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    <span class="comment"># 有放回的随机抽样 抽样占比63%</span></span><br><span class="line">    SamplesArray.append(train.sample(frac=<span class="number">1</span>,replace=<span class="literal">True</span>,axis=<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存分类器的分类结果</span></span><br><span class="line">isSurvived = []</span><br><span class="line"><span class="keyword">for</span> index,row <span class="keyword">in</span> test.iterrows():</span><br><span class="line">    tmp = []</span><br><span class="line">    <span class="comment"># 对于每一个测试集数据，放到5个子分类器中进行分类，保存子分类器分类结果</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">        tmp.append(classifier(row,SamplesArray[i]))</span><br><span class="line">    isSurvived.append(tmp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 投票决定最终预测</span></span><br><span class="line">vote = []</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> isSurvived:</span><br><span class="line">    SurvivedCount = <span class="built_in">str</span>(item).count(<span class="string">'1'</span>)</span><br><span class="line">    <span class="keyword">if</span> SurvivedCount &gt; <span class="number">2</span>:</span><br><span class="line">        vote.append(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        vote.append(<span class="number">0</span>)</span><br><span class="line">test[<span class="string">'forecast_by_vote'</span>] = vote</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出预测结果</span></span><br><span class="line"><span class="keyword">for</span> index,row <span class="keyword">in</span> test.iterrows():</span><br><span class="line">    <span class="keyword">if</span> row[<span class="string">'forecast_by_vote'</span>] == <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"PassengerId: "</span> + <span class="built_in">str</span>(index) + <span class="string">", forecast: can Survive"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"PassengerId: "</span> + <span class="built_in">str</span>(index) + <span class="string">", forecast: can't Survive"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入CSV</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'write prediction to file:submission.csv'</span>)</span><br><span class="line">test[<span class="string">'PassengerId'</span>] = test.index</span><br><span class="line">test[[<span class="string">'PassengerId'</span>,<span class="string">'forecast_by_vote'</span>]].to_csv(<span class="string">'submission.csv'</span>, index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><p>运行控制台截图，控制台输出每个测试乘客的预测结果，同时将结果写入到<code>submission.csv</code>中：</p>
+<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9Abagging%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E9%A2%84%E6%B5%8BTitanic%E6%95%B0%E6%8D%AE%E9%9B%86/%E5%AE%9E%E9%AA%8C%E4%BA%94%E6%88%AA%E5%9B%BE.png" class="" title="实验五截图">
+
+<p>在Kaggle网站上提交，正确率为76%，还有待提高：</p>
+<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9Abagging%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E9%A2%84%E6%B5%8BTitanic%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211216184008536.png" class="" title="image-20211216184008536">
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：实验：bagging集成学习预测Titanic数据集</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-10 23:40:30</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/10/实验：bagging集成学习预测Titanic数据集/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/python/">#python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">实验：神经网络预测Fashion—MNIST数据集</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">实验要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">实验思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">实验代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">实验结果</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
