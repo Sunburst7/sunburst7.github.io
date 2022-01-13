@@ -140,80 +140,12 @@ mjx-container[display="true"] + br {
 
 
 <body>
-.progress-bar-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: $z-index-9;
+<div class="progress-bar-container">
+    
 
-  if (hexo-config('pjax.enable') == true) {
+    
+</div>
 
-    .pjax-progress-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 2px;
-      width: 0;
-      background: var(--pjax-progress-bar-color);
-      visibility: hidden;
-      opacity: 0;
-      z-index: $z-index-8;
-      transition-t("width", "0", "0.1", "linear");
-
-
-      &.show {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-
-
-    .pjax-progress-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: $z-index-8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 6px 0 0;
-      visibility: hidden;
-      font-size: 1.1rem;
-      color: var(--default-text-color);
-
-      +keep-tablet() {
-        padding: 6px 5px 0 0;
-        font-size: 1rem;
-      }
-
-      &.show {
-        visibility: visible;
-      }
-    }
-
-  }
-
-  if (hexo-config('style.scroll.progress_bar.enable') == true) {
-
-    .scroll-progress-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: $scroll-progress-bar-height;
-      visibility: hidden;
-      z-index: $z-index-7;
-      background: var(--primary-color);
-      transition-t("width", "0", "0.1", "linear");
-
-      &.hide {
-        display: none !important;
-      }
-    }
-
-  }
-}
 
 <main class="page-container">
 
@@ -222,313 +154,117 @@ mjx-container[display="true"] + br {
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            $logo-title-font-size = 2rem;
-$pc-search-icon-font-size = 1.5rem;
-$menu-bar-line-height = 2.5px;
-$logo-image-box-width = 46px;
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
 
-.header-wrapper {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--background-color);
-  padding-top: $scroll-progress-bar-height;
+    <div class="window-mask"></div>
 
-  hover-style(false, 0, 0);
+</header>
 
-  .header-content {
-    position: relative;
-    height: 100%;
-    width: $main-content-width;
-    max-width: $content-max-width;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    z-index: $z-index-5;
-
-
-    &.has-first-screen {
-      max-width: $content-max-width * 1.2;
-    }
-
-    +keep-tablet() {
-      width: $main-content-width-tablet;
-    }
-
-    +keep-mobile() {
-      width: $main-content-width-mobile;
-    }
-
-    .left {
-      display: flex;
-      align-items: center;
-      transition-t("transform", "0", "0.2", "linear");
-
-      .header-shrink & {
-        transform: scale(0.72);
-        transform-origin: left;
-      }
-
-
-      if (hexo-config('base_info.logo_img') && hexo-config('base_info.logo_img') != '') {
-        .logo-image {
-          width: $logo-image-box-width;
-          height: $logo-image-box-width;
-          margin-right: 8px;
-
-
-          +keep-tablet() {
-            width: $logo-image-box-width * 0.9;
-            height: $logo-image-box-width * 0.9;
-          }
-
-          +keep-mobile() {
-            width: $logo-image-box-width * 0.8;
-            height: $logo-image-box-width * 0.8;
-          }
-
-          img {
-            border-radius: 6px;
-            width: 100%;
-          }
-        }
-
-      }
-
-      .logo-title {
-        font-size: $logo-title-font-size;
-        font-weight: bold;
-        letter-spacing: 1px;
-        line-height: 1;
-        color: var(--first-text-color);
-
-        +keep-tablet() {
-          font-size: $logo-title-font-size * 0.9;
-        }
-
-        +keep-mobile() {
-          font-size: $logo-title-font-size * 0.8;
-        }
-      }
-
-    }
-
-
-    .right {
-
-      .pc {
-
-        .menu-list {
-          display: flex;
-          align-items: center;
-
-          +keep-tablet() {
-            display: none;
-          }
-
-
-          .menu-item {
-            float: left;
-            position: relative;
-            margin-left: 30px;
-            font-size: 1rem;
-            cursor: pointer;
-            color: var(--default-text-color);
-
-            &:first-child {
-              margin-left: 0;
-            }
-
-
-            a:hover, .active {
-
-              &::after {
-                content: '';
-                position: absolute;
-                bottom: -10px;
-                left: 50%;
-                width: 100%;
-                height: 2px;
-                transform: translateX(-50%);
-                background: var(--primary-color);
-                transition-t("transform, bottom", "0, 0", "0.2, 0.2", "linear, linear");
-
-                .header-shrink & {
-                  bottom: -($header-shrink-height / 2 - 12);
-                }
-              }
-            }
-
-            &.search {
-              font-size: $pc-search-icon-font-size;
-              margin-left: 26px;
-
-              i {
-                color: var(--default-text-color);
-              }
-
-            }
-          }
-
-
-        }
-
-      }
-
-
-      .mobile {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .icon-item {
-          display: none;
-          position: relative;
-          cursor: pointer;
-          font-size: 18px;
-          margin-left: 12px;
-          width: 20px;
-          height: 20px;
-          color: var(--default-text-color);
-
-          i {
-            color: var(--default-text-color);
-          }
-
-          &:first-child {
-            margin-left: 0;
-          }
-
-          +keep-tablet() {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        }
-
-        .menu-bar {
-
-          .menu-bar-middle {
-            width: 18px;
-            height: $menu-bar-line-height;
-            position: relative;
-            background: var(--default-text-color);
-
-            .header-drawer-show & {
-              background: transparent;
-            }
-
-
-            &::before, &::after {
-              content: '';
-              position: absolute;
-              left: 0;
-              width: 100%;
-              height: $menu-bar-line-height;
-              background: var(--default-text-color);
-              transition-t("transform", "0", "0.38", "ease");
-            }
-
-
-            &::before {
-              top: -6px;
-
-              .header-drawer-show & {
-                transform: translateY(6px) rotate(45deg);
-              }
-            }
-
-
-            &::after {
-              bottom: -6px;
-
-              .header-drawer-show & {
-                transform: translateY(-6px) rotate(-45deg);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  .header-drawer {
-    width: 100%;
-    padding: $header-height 0 20px 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    z-index: $z-index-2;
-    background: var(--background-color);
-    transition-t("transform", "0", "0.38", "ease");
-
-    .header-drawer-show & {
-      transform: scaleY(1);
-    }
-
-    .drawer-menu-list {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-
-      .drawer-menu-item {
-        font-size: 1rem;
-        margin: 6px 0;
-        height: 38px;
-
-        a {
-          padding: 6px 20px;
-          border-radius: 20px;
-          color: var(--default-text-color);
-
-          &:hover {
-            color: var(--second-text-color);
-            border: 1px solid var(--default-text-color);
-          }
-
-
-          &.active {
-            border: 1px solid var(--default-text-color);
-            color: var(--second-text-color);
-          }
-        }
-
-
-      }
-    }
-  }
-
-
-  .window-mask {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: $z-index-1;
-    visibility: hidden;
-    opacity: 0;
-    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease");
-
-    .header-drawer-show & {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
-}
-
-.header-drawer-show {
-  overflow: hidden;
-}
 
         </div>
 
@@ -557,65 +293,58 @@ $logo-image-box-width = 46px;
                         
                     </div>
                     <div class="meta-info">
-                        .article-meta-info {
-  font-size: 0.8rem;
-  color: var(--third-text-color);
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-10 23:37:51</span>
+        <span class="mobile">2022-01-10 23:37</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/python/">python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
 
-  .article-meta-item {
-    margin-right: 10px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .article-date {
-
-    .mobile {
-      display: none;
-    }
-
-    +keep-tablet() {
-      .pc {
-        display: none;
-      }
-
-      .mobile {
-        display: inline;
-      }
-    }
-
-  }
-
-
-  .article-tags, .article-categories {
-    display: inline;
-
-    ul, li {
-      display: inline;
-    }
-
-    a {
-      color: var(--third-text-color);
-
-      &:hover {
-        color: var(--primary-color);
-      }
-    }
-  }
-
-  .article-tags {
-    +keep-tablet() {
-      display: none;
-    }
-  }
-
-  .article-min2read, .article-wordcount {
-    +keep-mobile() {
-      display: none;
-    }
-  }
-}
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>18 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
 
                     </div>
                 </div>
@@ -624,7 +353,7 @@ $logo-image-box-width = 46px;
 
         <div class="article-content markdown-body">
             <h1 id="实验数据"><a href="#实验数据" class="headerlink" title="实验数据"></a>实验数据</h1><p>Fashion-MNIST数据集，数据集中包含 60000 张训练样本，10000 张测试 样本，可将训练样本划分为49000 张样本的训练集和1000 张样本的验证集，测 试集可只取1000 张测试样本。其中每个样本都是 28×28 像素的灰度照片，每 个像素点包括RGB三个数值，数值范围0 ~ 255，所有照片分属10个不同的类别。</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128153909041.png" class="" title="image-20211128153909041">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128153909041.png" class="" title="image-20211128153909041">
 
 <p>灰度与像素值的关系：</p>
 <ul>
@@ -639,7 +368,7 @@ $logo-image-box-width = 46px;
 <li><p>不能使用 pytorch 等框架，也不能使用库函数，所有算法都要自己实现</p>
 </li>
 <li><p>神经网络结构图如下图所示：</p>
- <img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128153820318.png" class="" title="image-20211128153820318"></li>
+ <img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128153820318.png" class="" title="image-20211128153820318"></li>
 <li><p>整个神经网络包括 3 层——输入层，隐藏层，输出层。输入层有28x28x3个神经元，隐藏层有 50个神经元，输出层有 10 个神经元（对应 10 个类别）。</p>
 </li>
 <li><p>附加：可以试着修改隐藏层神经元数，层数，学习率，正则化权重等参数探究参数对实验结果的影响</p>
@@ -657,7 +386,7 @@ $logo-image-box-width = 46px;
 </ul>
 <p>起初我的设计充满了面向对象的思想，导致在进行大数据集的运算时消耗时间很长，无法训练神经网络，受到参考【2】【3】【4】中博客的启发，改变思路，采用矩阵运算的思想成功训练出一个良好的神经网络。</p>
 <h2 id="初始的设想"><a href="#初始的设想" class="headerlink" title="初始的设想"></a>初始的设想</h2><p>我准备编写一个神经元类表示单个神经元，该神经元有以下属性，手绘原理图：</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128160151169.png" class="" title="image-20211128160151169">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128160151169.png" class="" title="image-20211128160151169">
 
 <ul>
 <li><p>权值数组Weights：上一层与该神经元相连的所有神经元的权值</p>
@@ -684,10 +413,10 @@ $logo-image-box-width = 46px;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"><span class="keyword">from</span> exp4.Neuron1 <span class="keyword">import</span> Neuron</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x&gt;=<span class="number">0</span>:      <span class="comment">#对sigmoid函数的优化，避免了出现极大的数据溢出</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1</span>+np.exp(-x))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> np.exp(x)/(<span class="number">1</span>+np.exp(x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义加载数据的函数，加载4个zip格式文件</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span>(<span class="params">data_folder</span>):</span></span><br><span class="line">  files = [</span><br><span class="line">      <span class="string">'train-labels-idx1-ubyte.gz'</span>, <span class="string">'train-images-idx3-ubyte.gz'</span>,</span><br><span class="line">      <span class="string">'t10k-labels-idx1-ubyte.gz'</span>, <span class="string">'t10k-images-idx3-ubyte.gz'</span></span><br><span class="line">  ]</span><br><span class="line">  paths = []</span><br><span class="line">  <span class="keyword">for</span> fname <span class="keyword">in</span> files:</span><br><span class="line">    paths.append(os.path.join(data_folder,fname))</span><br><span class="line">  <span class="keyword">with</span> gzip.<span class="built_in">open</span>(paths[<span class="number">0</span>], <span class="string">'rb'</span>) <span class="keyword">as</span> lbpath:</span><br><span class="line">    y_train = np.frombuffer(lbpath.read(), np.uint8, offset=<span class="number">8</span>)</span><br><span class="line">  <span class="keyword">with</span> gzip.<span class="built_in">open</span>(paths[<span class="number">1</span>], <span class="string">'rb'</span>) <span class="keyword">as</span> imgpath:</span><br><span class="line">    x_train = np.frombuffer(</span><br><span class="line">        imgpath.read(), np.uint8, offset=<span class="number">16</span>).reshape(<span class="built_in">len</span>(y_train), <span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">  <span class="keyword">with</span> gzip.<span class="built_in">open</span>(paths[<span class="number">2</span>], <span class="string">'rb'</span>) <span class="keyword">as</span> lbpath:</span><br><span class="line">    y_test = np.frombuffer(lbpath.read(), np.uint8, offset=<span class="number">8</span>)</span><br><span class="line">  <span class="keyword">with</span> gzip.<span class="built_in">open</span>(paths[<span class="number">3</span>], <span class="string">'rb'</span>) <span class="keyword">as</span> imgpath:</span><br><span class="line">    x_test = np.frombuffer(</span><br><span class="line">        imgpath.read(), np.uint8, offset=<span class="number">16</span>).reshape(<span class="built_in">len</span>(y_test), <span class="number">28</span>, <span class="number">28</span>)</span><br><span class="line">  <span class="keyword">return</span> (x_train, y_train), (x_test, y_test)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeTrueLabels</span>(<span class="params">trueLabel</span>):</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    生成传递给输出层的期望标签数组</span></span><br><span class="line"><span class="string">    :param trueLabel:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    labels = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">if</span> trueLabel == i:</span><br><span class="line">            labels.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            labels.append(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> labels</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuronNetwork</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,train_images,train_labels,test_images,test_labels</span>):</span></span><br><span class="line">        self.inputLayer = []</span><br><span class="line">        self.hiddenLayer = []</span><br><span class="line">        self.outputLayer = []</span><br><span class="line">        self.train_images = train_images</span><br><span class="line">        self.train_labels = train_labels</span><br><span class="line">        self.test_images = test_images</span><br><span class="line">        self.test_labels = test_labels</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 从输入层到隐含层权值的初始化</span></span><br><span class="line">        initWeight_1 = np.random.uniform(-<span class="number">1</span>/np.sqrt(<span class="number">784</span>),<span class="number">1</span>/np.sqrt(<span class="number">784</span>),(<span class="number">50</span>,<span class="number">784</span>))</span><br><span class="line">        <span class="comment"># 从隐含层到输出层权值的初始化</span></span><br><span class="line">        initWeight_2 = np.random.uniform(-<span class="number">1</span>/np.sqrt(<span class="number">50</span>),<span class="number">1</span>/np.sqrt(<span class="number">50</span>),(<span class="number">10</span>,<span class="number">50</span>))</span><br><span class="line">        <span class="comment"># 偏置初始化</span></span><br><span class="line">        bias = np.random.normal(<span class="number">0</span>,<span class="number">0.5</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化输入层</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">784</span>):</span><br><span class="line">            neuron = Neuron(<span class="number">1</span>,<span class="number">0</span>,ntype=<span class="string">'Input'</span>)</span><br><span class="line">            self.inputLayer.append(neuron)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化隐藏层</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">50</span>):</span><br><span class="line">            neuron = Neuron(initWeight_1[i],bias[<span class="number">0</span>],ntype=<span class="string">'Hidden'</span>)</span><br><span class="line">            self.hiddenLayer.append(neuron)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化输出层</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">            neuron = Neuron(initWeight_2[i],bias[<span class="number">1</span>],ntype=<span class="string">'Output'</span>)</span><br><span class="line">            self.outputLayer.append(neuron)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">iteration</span>(<span class="params">self</span>):</span></span><br><span class="line">        T = <span class="number">0</span></span><br><span class="line">        N = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 依次将60000章图片训练一边</span></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(self.train_images.shape[<span class="number">0</span>]):</span><br><span class="line">            <span class="comment"># 输入层(784个神经元)的输出</span></span><br><span class="line">            y_i = []</span><br><span class="line">            <span class="comment"># 对于每张图片的784个像素点</span></span><br><span class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> <span class="built_in">range</span>(self.train_images.shape[<span class="number">1</span>]):</span><br><span class="line">                <span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">range</span>(self.train_images.shape[<span class="number">2</span>]):</span><br><span class="line">                    y_i.append(</span><br><span class="line">                        self.inputLayer[<span class="number">28</span> * row + col].feedForward(inputs=np.array(train_images[m][row][col]))</span><br><span class="line">                    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 隐藏层(50个神经元)的输出</span></span><br><span class="line">            y_h = []</span><br><span class="line">            <span class="keyword">for</span> hidden_neuron <span class="keyword">in</span> self.hiddenLayer:</span><br><span class="line">                y_h.append(hidden_neuron.feedForward(y_i))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 输出层的标签：预测标签</span></span><br><span class="line">            y_o = []</span><br><span class="line">            <span class="keyword">for</span> output_neuron <span class="keyword">in</span> self.outputLayer:</span><br><span class="line">                y_o.append(output_neuron.feedForward(y_h))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 进行预测，统计预测正误</span></span><br><span class="line">            forecastLabel = y_o.index(np.array(y_o).<span class="built_in">max</span>())</span><br><span class="line">            <span class="keyword">if</span> forecastLabel == train_labels[m]:</span><br><span class="line">                T+=<span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                N+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 期望值数组</span></span><br><span class="line">            trueLabels = makeTrueLabels(trueLabel=forecastLabel)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 对输出层进行反向传播</span></span><br><span class="line">            output_sensitivities = [] <span class="comment"># 输出层所有节点的敏感度</span></span><br><span class="line">            output_weights = [] <span class="comment"># 输出层所有节点的权重</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">                self.outputLayer[i].backPropagation(eta=<span class="number">0.1</span>,tk=trueLabels[i],sensitivities=<span class="literal">None</span>,weights=<span class="literal">None</span>)</span><br><span class="line">                <span class="comment"># 保存更新过的敏感度</span></span><br><span class="line">                output_sensitivities.append(self.outputLayer[i].sensitivity)</span><br><span class="line">                output_weights.append(self.outputLayer[i].weights)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 对隐含层进行反向传播</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">50</span>):</span><br><span class="line">                <span class="comment"># 隐含层每个神经元连接的10个输出层神经元的权值</span></span><br><span class="line">                linkedWeights = [arr[i] <span class="keyword">for</span> arr <span class="keyword">in</span> output_weights]</span><br><span class="line">                self.hiddenLayer[i].backPropagation(eta=<span class="number">0.1</span>,tk=<span class="literal">None</span>,sensitivities=output_sensitivities,weights=linkedWeights)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> T, N</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 传入数据集</span></span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = load_data(<span class="string">''</span>)</span><br><span class="line">train_images = train_images[<span class="number">0</span>:<span class="number">500</span>:<span class="number">1</span>]</span><br><span class="line">train_labels = train_labels[<span class="number">0</span>:<span class="number">500</span>:<span class="number">1</span>]</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">    定义统计信息：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">n = <span class="number">100</span></span><br><span class="line">positive = []</span><br><span class="line">negative = []</span><br><span class="line">nn = NeuronNetwork(train_images=train_images,train_labels=train_labels,test_images=test_images,test_labels=test_labels)</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    T,N = nn.iteration()</span><br><span class="line">    positive.append(T)</span><br><span class="line">    negative.append(N)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>该神经网络只能运行在少量的样本上，不能满足需要</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/Snipaste_2021-11-26_23-59-22.png" class="" title="Snipaste_2021-11-26_23-59-22">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/Snipaste_2021-11-26_23-59-22.png" class="" title="Snipaste_2021-11-26_23-59-22">
 
 <h2 id="改进思路：矩阵运算"><a href="#改进思路：矩阵运算" class="headerlink" title="改进思路：矩阵运算"></a>改进思路：矩阵运算</h2><p>之前思路中更新的过程太慢，每次都要一张一张图片传入，同时大量的对象也拖慢了运算的速度，因此我取消了神经元类，而在神经网络中保存两个矩阵，分别代表从输入层到隐含层与从隐含层到输出层的权值。</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128161424625.png" class="" title="image-20211128161424625">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128161424625.png" class="" title="image-20211128161424625">
 
 <p>神经网络类通过输入层节点数、隐含层节点数、输出层节点数、学习率进行初始化，同时初始化两个权值矩阵以及一个偏置数组。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 制作一个神经网络算法的类，其名为神经网络，相当于函数库，直接进行调用里面的函数即可。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuralNetwork</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self,inputNeurons,hiddenNeurons,outputNeurons,lr</span>):</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        神经网络构造方法</span></span><br><span class="line"><span class="string">        :param inputNeurons:输入层神经元个数</span></span><br><span class="line"><span class="string">        :param hiddenNeurons:隐含层神经元个数</span></span><br><span class="line"><span class="string">        :param outputNeurons:输出层神经元个数</span></span><br><span class="line"><span class="string">        :param lr:学习率</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.iNeuron_num = inputNeurons</span><br><span class="line">        self.hNeuron_num = hiddenNeurons</span><br><span class="line">        self.oNeuron_num = outputNeurons</span><br><span class="line">        self.learnRate = lr <span class="comment"># 学习率</span></span><br><span class="line">        self.f = <span class="keyword">lambda</span> x: ssp.expit(x) <span class="comment"># 设置激活函数f为Sigmod(x)激活函数</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置输入层与隐藏层直接的权重关系矩阵以及隐藏层与输出层之间的权重关系矩阵,初始值为正态分布</span></span><br><span class="line">        self.weights_i_h = np.random.normal(<span class="number">0.0</span>, <span class="number">1</span>/np.sqrt(hiddenNeurons), (self.hNeuron_num, self.iNeuron_num))</span><br><span class="line">        self.weights_h_o = np.random.normal(<span class="number">0.0</span>, <span class="number">1</span>/np.sqrt(hiddenNeurons), (self.oNeuron_num, self.hNeuron_num))</span><br><span class="line">        <span class="comment"># 偏置初始化</span></span><br><span class="line">        self.bias = np.random.normal(<span class="number">0</span>, <span class="number">0.5</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
@@ -701,10 +430,10 @@ $logo-image-box-width = 46px;
 </ul>
   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对60000张图片进行遍历</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">60000</span>):</span><br><span class="line">    <span class="comment"># 测试集的28*28矩阵转化为784的一维数组</span></span><br><span class="line">    img = train_images[i].reshape(train_images.shape[<span class="number">1</span>]*train_images.shape[<span class="number">2</span>])</span><br><span class="line">    <span class="comment"># 进行归一化：除以255，再乘以0.99，最后加上0。01，保证所有的数据都在0.01到1.00之间</span></span><br><span class="line">    train_matrix[:,i] = (img/<span class="number">255.0</span>)*<span class="number">0.99</span>+<span class="number">0.01</span></span><br><span class="line">    <span class="comment"># 建立准确输出结果矩阵，对应的位置标签数值为0.99，其他位置为0.01</span></span><br><span class="line">    <span class="comment"># 第i张图片代表第i列，行数代表正确的标签</span></span><br><span class="line">    train_labels_matrix[train_labels[i],i] = <span class="number">0.99</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 对10000章测试集图片进行处理</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    <span class="comment"># 训练集的28*28矩阵转化为784的一维数组</span></span><br><span class="line">    test_img = test_images[i].reshape(test_images.shape[<span class="number">1</span>] * test_images.shape[<span class="number">2</span>])</span><br><span class="line">    <span class="comment"># 更新输入到神经网络中的训练集矩阵</span></span><br><span class="line">    test_matrix[:,i] = (test_img/<span class="number">255.0</span>)*<span class="number">0.99</span>+<span class="number">0.01</span></span><br><span class="line">    <span class="comment"># 建立准确输出结果矩阵，对应的位置标签数值为0.99，其他位置为0.01</span></span><br><span class="line">    test_label_matrix[test_labels[i],i] = <span class="number">0.99</span></span><br></pre></td></tr></table></figure></li>
 <li><p>Reshape：将输入的图片灰度与标签从新组合</p>
-  <img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128162535151.png" class="" title="image-20211128162535151"></li>
+  <img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128162535151.png" class="" title="image-20211128162535151"></li>
 </ul>
 <p>整个前馈的矩阵运算的过程如图：</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128164044624.png" class="" title="image-20211128164044624">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128164044624.png" class="" title="image-20211128164044624">
 
 <p>BP的过程主要分为两个部分：</p>
 <ul>
@@ -723,15 +452,15 @@ $logo-image-box-width = 46px;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入数据</span></span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = load_data(<span class="string">''</span>)</span><br><span class="line"><span class="comment"># 输出图片</span></span><br><span class="line"><span class="comment"># plt.imshow(train_images[0], cmap='Greys', interpolation='None')</span></span><br><span class="line"><span class="comment"># 初始化输入数据矩阵</span></span><br><span class="line">train_matrix = np.zeros((<span class="number">784</span>,<span class="number">60000</span>))</span><br><span class="line">test_matrix = np.zeros((<span class="number">784</span>,<span class="number">10000</span>))</span><br><span class="line"><span class="comment"># 初始化输出层期望值矩阵</span></span><br><span class="line">train_labels_matrix = np.zeros((<span class="number">10</span>,<span class="number">60000</span>))+<span class="number">0.01</span></span><br><span class="line">test_label_matrix = np.zeros((<span class="number">10</span>,<span class="number">10000</span>))+<span class="number">0.01</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对60000张图片进行遍历</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">60000</span>):</span><br><span class="line">    <span class="comment"># 测试集的28*28矩阵转化为784的一维数组</span></span><br><span class="line">    img = train_images[i].reshape(train_images.shape[<span class="number">1</span>]*train_images.shape[<span class="number">2</span>])</span><br><span class="line">    <span class="comment"># 进行归一化：除以255，再乘以0.99，最后加上0。01，保证所有的数据都在0.01到1.00之间</span></span><br><span class="line">    train_matrix[:,i] = (img/<span class="number">255.0</span>)*<span class="number">0.99</span>+<span class="number">0.01</span></span><br><span class="line">    <span class="comment"># 建立准确输出结果矩阵，对应的位置标签数值为0.99，其他位置为0.01</span></span><br><span class="line">    <span class="comment"># 第i张图片代表第i列，行数代表正确的标签</span></span><br><span class="line">    train_labels_matrix[train_labels[i],i] = <span class="number">0.99</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对10000章测试集图片进行处理</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    <span class="comment"># 训练集的28*28矩阵转化为784的一维数组</span></span><br><span class="line">    test_img = test_images[i].reshape(test_images.shape[<span class="number">1</span>] * test_images.shape[<span class="number">2</span>])</span><br><span class="line">    <span class="comment"># 更新输入到神经网络中的训练集矩阵</span></span><br><span class="line">    test_matrix[:,i] = (test_img/<span class="number">255.0</span>)*<span class="number">0.99</span>+<span class="number">0.01</span></span><br><span class="line">    <span class="comment"># 建立准确输出结果矩阵，对应的位置标签数值为0.99，其他位置为0.01</span></span><br><span class="line">    test_label_matrix[test_labels[i],i] = <span class="number">0.99</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 学习率</span></span><br><span class="line">learn_rate = <span class="number">0.000025</span></span><br><span class="line"><span class="comment"># 迭代次数</span></span><br><span class="line">epochs = <span class="number">100</span></span><br><span class="line"><span class="comment"># 初始化神经网络</span></span><br><span class="line">nn = NeuralNetwork(<span class="number">784</span>,<span class="number">50</span>,<span class="number">10</span>,learn_rate)</span><br><span class="line"><span class="comment"># 准确率数组</span></span><br><span class="line">train_accuracy = []</span><br><span class="line">test_accuracy = []</span><br><span class="line"><span class="comment"># 进行迭代</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">    train_accuracy.append( nn.train(train_matrix,train_labels_matrix,<span class="built_in">str</span>(i)) )</span><br><span class="line">    test_accuracy.append( nn.test(test_matrix,test_label_matrix,<span class="built_in">str</span>(i)) )</span><br><span class="line"><span class="comment"># 画图</span></span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="number">1</span>,epochs+<span class="number">1</span>),train_accuracy,<span class="string">'y'</span>)</span><br><span class="line">plt.plot(<span class="built_in">range</span>(<span class="number">1</span>,epochs+<span class="number">1</span>),test_accuracy,<span class="string">'g'</span>)</span><br><span class="line">plt.legend(labels = (<span class="string">'train accuracy'</span>, <span class="string">'test accuracy'</span>), loc = <span class="string">'lower right'</span>) <span class="comment"># legend placed at lower right</span></span><br><span class="line">plt.title(<span class="string">"learn rate: "</span>+<span class="built_in">str</span>(learn_rate))</span><br><span class="line">plt.xlabel(<span class="string">'iteration'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'accuracy'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
 <h1 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h1><p>当学习率为0.1时，由于学习率过大导致更新的权重过大使得权重数组全为负值，继而在之后的迭代中计算激活能时是一个极大的复数，带入sigmod函数趋近于0，从而导致权值不再更新，正确率维持在0.1更新。</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128165926465.png" class="" title="image-20211128165926465">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128165926465.png" class="" title="image-20211128165926465">
 
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128165907966.png" class="" title="image-20211128165907966">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128165907966.png" class="" title="image-20211128165907966">
 
 <p>解决的方法是<strong>降低学习率</strong>，不让权值更新的过快，将学习率降低为0.000025时，迭代50次，整个模型有很大的优化：</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128170150336.png" class="" title="image-20211128170150336">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/image-20211128170150336.png" class="" title="image-20211128170150336">
 
 <p><strong>提高迭代次数</strong>至200次，预测正确率可以达到75%左右：</p>
-<img src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/200%E6%AC%A1.png" class="" title="200次">
+<img lazyload="" src="/images/loading.svg" data-src="/2022/01/10/%E5%AE%9E%E9%AA%8C%EF%BC%9A%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E9%A2%84%E6%B5%8BFashion%E2%80%94MNIST%E6%95%B0%E6%8D%AE%E9%9B%86/200%E6%AC%A1.png" class="" title="200次">
 
 <h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><p>【1】<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45785407/article/details/121539815">神经网络基础与反向传播_Sunburst7的博客-CSDN博客<i class="fas fa-external-link-alt"></i></a></p>
 <p>【2】<a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/supercally/article/details/54312625">识别MNIST数据集之（二）：用Python实现神经网络_superCally的专栏-CSDN博客<i class="fas fa-external-link-alt"></i></a></p>
@@ -742,46 +471,19 @@ $logo-image-box-width = 46px;
 
         
             <div class="post-copyright-info">
-                .article-copyright-info-container {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 6px;
-  font-size: 1rem;
-  background: var(--second-background-color);
-
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-    width: 6px;
-    height: 100%;
-    background: var(--copyright-info-color);
-  }
-
-
-  ul {
-
-    margin-left: 10px;
-
-    li {
-      margin-bottom: 5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--default-text-color);
-
-      .license {
-        font-weight: bold;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-}
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：实验：神经网络预测Fashion—MNIST数据集</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-10 23:37:51</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/10/实验：神经网络预测Fashion—MNIST数据集/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
 
             </div>
         
@@ -848,509 +550,147 @@ $logo-image-box-width = 46px;
         </div>
 
         <div class="page-main-content-bottom">
-            .footer {
-  font-size: 1rem;
-  color: var(--third-text-color);
-
-
-  a {
-    color: var(--third-text-color);
-
-
-    &:hover {
-      color: var(--primary-color);
-
-    }
-  }
-
-  .info-container {
-    padding-bottom: 10px;
-    text-align: center;
-  }
-
-  .info-item {
-    margin: 5px 0;
-  }
-
-  .icon-animate {
-    animation: icon-animate 1.2s ease-in-out infinite;
-  }
-
-}
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
 
         </div>
     </div>
 
     
         <div class="post-tools">
-            $li-border-radius = 5px;
-$li-margin-bottom = 12px;
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
 
-.post-tools-container {
-
-  .tools-list {
-
-    li {
-      cursor: pointer;
-      width: $post-tool-button-width;
-      height: $post-tool-button-width;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: $li-margin-bottom;
-      background: var(--background-color);
-      color: var(--default-text-color);
-
-      i {
-        color: var(--default-text-color);
-      }
-
-      &:hover {
-        background: var(--primary-color);
-        color: var(--background-color);
-
-        i {
-          color: var(--background-color);
-        }
-      }
-
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-
-      hover-style(true, 1.06, 1.06);
-
-      &.page-aside-toggle {
-        display: none;
-
-        +keep-tablet() {
-          display: none !important;
-        }
-      }
-    }
-  }
-
-}
+        <!-- go comment -->
+        
+    </ul>
+</div>
 
         </div>
     
 
     <div class="right-bottom-side-tools">
-        $tools-item-width = 32px;
-$tools-item-font-size = 1.1rem;
-$tools-item-border-radius = 1px;
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
 
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
 
-.side-tools-container {
-  position: relative;
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
 
-  .tools-item {
-    width: $tools-item-width;
-    height: $tools-item-width;
-    font-size: $tools-item-font-size;
-    margin-bottom: 3px;
-    cursor: pointer;
-    border-right: none;
-    border-radius: $tools-item-border-radius;
-    box-shadow: 1px 1px 3px var(--shadow-color);
-    color: var(--default-text-color);
-    background: var(--background-color);
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
 
-    i {
-      color: var(--default-text-color);
-    }
+        <!-- rss -->
+        
 
-    &:hover {
-      color: var(--background-color);
-      background: var(--primary-color);
-      box-shadow: 2px 2px 6px var(--shadow-color);
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
 
-      i {
-        color: var(--background-color);
-      }
-    }
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
 
-    +keep-tablet() {
-      width: $tools-item-width * 0.9;
-      height: $tools-item-width * 0.9;
-      font-size: $tools-item-font-size * 0.9;
-      margin-bottom: 2px;
-    }
-
-    &.rss {
-
-      a {
-        border-radius: $tools-item-border-radius;
-        width: 100%;
-        height: 100%;
-
-        &:hover {
-          color: var(--background-color);
-          background: var(--primary-color);
-          box-shadow: 2px 2px 6px var(--shadow-color);
-        }
-      }
-    }
-  }
-
-
-  .side-tools-list {
-    opacity: 0;
-    transform: translateX(100%);
-    transition-t("transform, opacity", "0, 0", "0.2, 0.2", "linear, linear");
-
-    .tool-expand-width {
-      +keep-tablet() {
-        display: none;
-      }
-    }
-
-
-    &.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-
-  .exposed-tools-list {
-
-    if (hexo-config('style.scroll.percent.enable') == true) {
-      .tool-scroll-to-top {
-        display: none;
-
-        &.show {
-          display: flex;
-        }
-
-        &:hover {
-
-          .percent {
-            display: none;
-          }
-
-          .arrow-up {
-            display: flex;
-          }
-
-        }
-
-        .arrow-up {
-          display: none;
-        }
-
-        .percent {
-          display: flex;
-          font-size: 1rem;
-        }
-
-      }
-
-    }
-  }
-}
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
 
     </div>
 
     
         <aside class="page-aside">
-            .post-toc-wrap {
-  width: 100%;
-  font-size: 0.92rem;
-  box-sizing: border-box;
-
-  .post-toc {
-
-    ol {
-      list-style: none;
-      margin: 0;
-      padding: 0 2px 12px 10px;
-      text-align: left;
-
-      &:last-child {
-        padding-bottom: 0;
-      }
-
-      > ol {
-        padding-left: 0;
-      }
-
-      a {
-        transition-property: all;
-        transition();
-      }
-    }
-
-
-    .nav-item {
-      line-height: 1.8;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-
-    .nav {
-      .nav-child {
-        display: hexo-config('toc.expand_all') ? block : none;
-      }
-
-      .active > .nav-child {
-        display: block;
-      }
-
-      .active-current > .nav-child {
-        display: block;
-
-        > .nav-item {
-          display: block;
-        }
-      }
-
-
-      .nav-number, .nav-text {
-        color: var(--default-text-color);
-      }
-
-      .active > a {
-        .nav-number, .nav-text {
-          color: var(--primary-color);
-        }
-      }
-
-      .active-current > a {
-        .nav-number, .nav-text {
-          color: var(--primary-color);
-        }
-      }
-    }
-  }
-}
-
-
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE"><span class="nav-text">实验数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%A6%81%E6%B1%82"><span class="nav-text">实验要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E6%80%9D%E8%B7%AF%E4%B8%8E%E4%BB%A3%E7%A0%81"><span class="nav-text">实验思路与代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E7%9A%84%E8%AE%BE%E6%83%B3"><span class="nav-text">初始的设想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E6%80%9D%E8%B7%AF%EF%BC%9A%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="nav-text">改进思路：矩阵运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">实验结果分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="nav-text">参考：</span></a></li></ol>
+    </div>
+</div>
         </aside>
     
 
-    .image-viewer-container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0);
-  visibility: hidden;
-  z-index: $z-index-8;
-  padding: 6%;
-  box-sizing: border-box;
-  transition-t("visibility, background", "0, 0", "0.3, 0.3", "ease, ease");
-
-  &.active {
-    background: rgba(0, 0, 0, 0.5);
-    visibility: visible;
-
-    img {
-      cursor: zoom-out;
-      transform: scale(1);
-      padding: 2px;
-      background: var(--background-color);
-    }
-  }
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    transform: scale(0);
-    transition-t("transform", "0", "0.3", "ease");
-  }
-}
-
-
+    <div class="image-viewer-container">
+    <img src="">
+</div>
 
 
     
-        $icon-size = 1.2rem;
-
-.search-pop-overlay {
-  position: fixed;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0);
-  visibility: hidden;
-  z-index: $z-index-8;
-  transition-t("visibility, background", "0, 0", "0.3, 0.3", "ease, ease");
-
-  &.active {
-    visibility: visible;
-    background: rgba(0, 0, 0, 0.35);
-
-    .search-popup {
-      transform: scale(1);
-    }
-
-  }
-
-
-  .search-popup {
-    background: var(--background-color);
-    border-radius: 5px;
-    height: 80%;
-    width: 70%;
-    margin: auto;
-    transform: scale(0);
-    z-index: $z-index-6;
-    transition-t("transform", "0", "0.3", "ease");
-
-    +keep-tablet() {
-      width: 80%;
-    }
-
-    +keep-mobile() {
-      width: 90%;
-    }
-
-    .search-header {
-      background: var(--fourth-text-color);
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-      display: flex;
-      padding: 10px;
-
-      .search-input-field-pre, .popup-btn-close {
-        font-size: $icon-size;
-        padding: 0 10px;
-        display: flex;
-        align-items: center;
-      }
-
-      .search-input-field-pre {
-        cursor: pointer;
-        color: var(--third-text-color);
-      }
-
-      .popup-btn-close {
-        color: var(--default-text-color);
-      }
-
-
-      .search-input-container {
-
-        flex-grow: 1;
-        padding: 2px;
-
-        .search-input {
-          background: transparent;
-          border: 0;
-          outline: 0;
-          width: 100%;
-          font-size: 1.2rem;
-          color: var(--default-text-color);
-
-          &::-webkit-search-cancel-button {
-            display: none;
-          }
-        }
-
-
-      }
-
-
-      .popup-btn-close {
-        cursor: pointer;
-
-        &:hover .fas, far, fab {
-          color: var(--first-text-color);
-        }
-      }
-
-    }
-
-
-    #search-result {
-      display: flex;
-      height: calc(100% - 55px);
-      overflow: auto;
-      padding: 5px 25px;
-
-      .search-result-list {
-        width: 100%;
-        height: 100%;
-        font-size: 1rem;
-
-        li {
-          border-bottom: 1px dashed var(--border-color);
-          padding: 10px 0;
-          margin: 10px 0;
-          box-sizing: border-box;
-
-          &:last-child {
-            border-bottom: none;
-          }
-
-
-          .search-result-title {
-            position: relative;
-            font-weight: bold;
-            margin-bottom: 10px;
-            padding-left: 16px;
-            display: flex;
-            align-items: center;
-
-            &::after {
-              content: '';
-              position: absolute;
-              width: 5px;
-              height: 5px;
-              border-radius: 50%;
-              top: 50%;
-              transform: translateY(-50%);
-              left: 0;
-              background: var(--default-text-color);
-            }
-          }
-
-
-          .search-result {
-            line-height: 2rem;
-            margin: 0;
-            padding-left: 16px;
-            word-wrap: break-word;
-          }
-
-          a {
-            &:hover {
-              color: var(--default-text-color);
-            }
-          }
-
-          .search-keyword {
-            border-bottom: 1px dashed var(--primary-color);
-            color: var(--primary-color);
-            font-weight: bold;
-          }
-
-        }
-      }
-
-
-      #no-result {
-        color: var(--third-text-color);
-        margin: auto;
-      }
-
-    }
-  }
-}
-
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     
 
