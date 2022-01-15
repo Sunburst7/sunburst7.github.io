@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            JS深入学习(3)：类 |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"sunburst7.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS深入学习(3)：类</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-15 19:21:23</span>
+        <span class="mobile">2022-01-15 19:21</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>3.6k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>15 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>前面一篇博客我们讲述了使用ES5的特性来模拟类似类的行为，但实现继承的代码也显得非常冗长和混乱。ECMAScript 6 新引入的class 关键字具有正式定义类的能力。类（class）是ECMAScript 中新的基础性语法糖结构，虽然ECMAScript 6 类表面上看起来可以支持正式的面向对象编程，但实际上它背后使用的仍然是<strong>原型和构造函数</strong>的概念。</p>
+<h1 id="1-类定义"><a href="#1-类定义" class="headerlink" title="1 类定义"></a>1 类定义</h1><p>与函数类型相似，定义类也有两种主要方式：类声明和类表达式。这两种方式都使用class 关键字加大括号：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类声明</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 类表达式</span></span><br><span class="line"><span class="keyword">const</span> Animal = <span class="class"><span class="keyword">class</span> </span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>跟函数声明不同的地方是，函数受函数作用域限制，而类受<strong>块作用域</strong>限制：</p>
+<blockquote>
+<p>JavaScript的<strong>函数作用域</strong>是指在函数内声明的所有变量在函数体内始终是可见的，可以在整个函数的范围内使用及复用，也就是说在函数体内变量声明之前就已经可用了(事实上在嵌套的作用域中也可以使用)。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">FunctionDeclaration</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">ClassDeclaration</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(FunctionDeclaration); <span class="comment">// FunctionDeclaration() &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(ClassDeclaration); <span class="comment">// ReferenceError: ClassDeclaration is not defined</span></span><br></pre></td></tr></table></figure>
+
+<p>类可以包含构造函数方法、实例方法、获取函数、设置函数和静态类方法，但这些都不是必需的。空的类定义照样有效。默认情况下，类定义中的代码都在严格模式下执行。</p>
+<h1 id="2-构造函数"><a href="#2-构造函数" class="headerlink" title="2 构造函数"></a>2 构造函数</h1><p><code>constructor </code>关键字用于在类定义块内部创建类的构造函数。不定义构造函数默认为空函数。</p>
+<p>使用 new 操作符实例化一个类的操作等于<strong>使用 new 调用其构造函数</strong>，使用 new 会执行如下操作：</p>
+<ol>
+<li><p>在内存中创建一个新对象。</p>
+</li>
+<li><p>这个新对象内部的[[Prototype]]指针被赋值为构造函数的prototype 属性。</p>
+</li>
+<li><p>构造函数内部的 this 被赋值为这个新对象（<strong>即 this 指向新对象）。</strong></p>
+</li>
+<li><p>执行构造函数内部的代码（给新对象添加属性）。</p>
+</li>
+<li><p>如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。</p>
+</li>
+</ol>
+<p>类实例化时传入的参数会用作构造函数的参数。如果不需要参数，则类名后面的括号也是可选的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">arguments</span>.length);</span><br><span class="line">		<span class="built_in">this</span>.name = name || <span class="literal">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> Person; <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(p1.name); <span class="comment">// null</span></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> Person(); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(p2.name); <span class="comment">// null</span></span><br><span class="line"><span class="keyword">let</span> p3 = <span class="keyword">new</span> Person(<span class="string">&#x27;Jake&#x27;</span>); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(p3.name); <span class="comment">// Jake</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，类构造函数会在执行之后返回 this 对象（此时 this 对象指向内存中新创建的对象）。构造函数返回的对象会被用作实例化的对象，如果没有什么引用新创建的 this 对象，那么这个对象会被销毁。不过，如果返回的不是 this 对象，而是其他对象，<strong>那么这个对象不会通过 instanceof 操作符检测出跟类有关联，因为这个对象的原型指针并没有被修改指向类</strong></p>
+<blockquote>
+<p>使用 <code>instanceo</code> 操作符检查构造函数原型是否存在于实例的原型链中。</p>
+<p>可以使用instanceof 操作符检查一个对象与类构造函数，以确定这个对象是不是类的实例。只不过此时的类构造函数要使用类标识符</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">override</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.foo = <span class="string">&#x27;foo&#x27;</span>;</span><br><span class="line">		<span class="keyword">if</span> (override) &#123;</span><br><span class="line">			<span class="keyword">return</span> &#123;</span><br><span class="line">				<span class="attr">bar</span>: <span class="string">&#x27;bar&#x27;</span></span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> Person(),</span><br><span class="line">p2 = <span class="keyword">new</span> Person(<span class="literal">true</span>);</span><br><span class="line"><span class="built_in">console</span>.log(p1); <span class="comment">// Person&#123; foo: &#x27;foo&#x27; &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(p1 <span class="keyword">instanceof</span> Person); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(p2); <span class="comment">// &#123; bar: &#x27;bar&#x27; &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(p2 <span class="keyword">instanceof</span> Person); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>类构造函数与构造函数的区别：</strong></p>
+<ul>
+<li><p>调用类构造函数必须使用 <code>new</code> 操作符，忘了使用 <code>new</code> 则会抛出错误。而普通构造函数如果不使用 <code>new</code> 调用，那么就会以全局的 this（通常是window）作为内部对象。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 把window 作为this 来构建实例</span></span><br><span class="line"><span class="keyword">let</span> p = Person();</span><br><span class="line"><span class="keyword">let</span> a = Animal();</span><br><span class="line"><span class="comment">// TypeError: class constructor Animal cannot be invoked without &#x27;new&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>实例化之后，类构造函数会成为普通的实例方法（但作为类构造函数，仍然要使用new 调用）。因此，实例化之后可以在实例上引用它：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用类创建一个新实例</span></span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> Person();</span><br><span class="line">p1.constructor();</span><br><span class="line"><span class="comment">// TypeError: Class constructor Person cannot be invoked without &#x27;new&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用对类构造函数的引用创建一个新实例</span></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> p1.constructor();</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>类是一个特殊函数：</strong></p>
+<ul>
+<li><p>通过 <code>typeof</code> 操作符检测类标识符，表明它是一个函数</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Person); <span class="comment">// class Person &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> Person); <span class="comment">// function</span></span><br></pre></td></tr></table></figure>
+
+<p>  类标识符可等同于函数名，类标识符有prototype 属性，而这个原型也有一个constructor 属性指向类自身</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Person.prototype); <span class="comment">// &#123; constructor: f() &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(Person === Person.prototype.constructor); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li><p>类可以像其他对象或函数引用一样把类作为参数传递：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类可以像函数一样在任何地方定义，比如在数组中</span></span><br><span class="line"><span class="keyword">let</span> classList = [</span><br><span class="line">	<span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="title">constructor</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">			<span class="built_in">this</span>.id_ = id;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">`instance <span class="subst">$&#123;<span class="built_in">this</span>.id_&#125;</span>`</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createInstance</span>(<span class="params">classDefinition, id</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> classDefinition(id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> foo = createInstance(classList[<span class="number">0</span>], <span class="number">3141</span>); <span class="comment">// instance 3141</span></span><br></pre></td></tr></table></figure></li>
+<li><p>与立即调用函数表达式相似，类也可以立即实例化</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为是一个类表达式，所以类名是可选的</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">x</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;(<span class="string">&#x27;bar&#x27;</span>); <span class="comment">// bar</span></span><br><span class="line"><span class="built_in">console</span>.log(p); <span class="comment">// Foo &#123;&#125;</span></span><br><span class="line"><span class="comment">// 结合类构造函数的特性</span></span><br><span class="line"><span class="keyword">let</span> q = <span class="keyword">new</span> p.constructor(<span class="string">&#x27;qqq&#x27;</span>)<span class="comment">// qqq</span></span><br><span class="line"><span class="built_in">console</span>.log(q);<span class="comment">// Foo &#123;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="3-实例、原型和类成员"><a href="#3-实例、原型和类成员" class="headerlink" title="3 实例、原型和类成员"></a>3 实例、原型和类成员</h1><p>类的语法可以非常方便地定义应该存在于实例上的成员、应该存在于原型上的成员，以及应该存在于类本身的成员。</p>
+<h2 id="3-1-实例成员"><a href="#3-1-实例成员" class="headerlink" title="3.1 实例成员"></a>3.1 实例成员</h2><p>在构造函数内或在构造函数外通过<code>this.</code>添加的自有属性是类的实例成员，每个实例都对应一个唯一的成员对象，这意味着所有实例成员都不会共享：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">	<span class="comment">// 这个例子先使用对象包装类型定义一个字符串</span></span><br><span class="line">	<span class="comment">// 为的是在下面测试两个对象的相等性</span></span><br><span class="line">		<span class="built_in">this</span>.name = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">&#x27;Jack&#x27;</span>);</span><br><span class="line">		<span class="built_in">this</span>.sayName = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="built_in">this</span>.name);</span><br><span class="line">		<span class="built_in">this</span>.nicknames = [<span class="string">&#x27;Jake&#x27;</span>, <span class="string">&#x27;J-Dog&#x27;</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> Person(),</span><br><span class="line">p2 = <span class="keyword">new</span> Person();</span><br><span class="line"></span><br><span class="line">p1.sayName(); <span class="comment">// Jack</span></span><br><span class="line">p2.sayName(); <span class="comment">// Jack</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(p1.name === p2.name); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(p1.sayName === p2.sayName); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(p1.nicknames === p2.nicknames); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line">p1.name = p1.nicknames[<span class="number">0</span>];</span><br><span class="line">p2.name = p2.nicknames[<span class="number">1</span>];</span><br><span class="line">p1.sayName(); <span class="comment">// Jake</span></span><br><span class="line">p2.sayName(); <span class="comment">// J-Dog</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-原型方法与访问器"><a href="#3-2-原型方法与访问器" class="headerlink" title="3.2 原型方法与访问器"></a>3.2 原型方法与访问器</h2><p>为了在实例间共享方法，类定义语法把在类块中定义的方法作为原型方法。但不能在类块中给原型添加成员数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">	<span class="comment">// 添加到this 的所有内容都会存在于不同的实例上</span></span><br><span class="line">		<span class="built_in">this</span>.locate = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;instance&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 在类块中定义的所有内容都会定义在类的原型上</span></span><br><span class="line">	<span class="function"><span class="title">locate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;prototype&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Person();</span><br><span class="line">p.locate(); <span class="comment">// instance</span></span><br><span class="line">Person.prototype.locate(); <span class="comment">// prototype</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="attr">name</span>: <span class="string">&#x27;Jake&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Uncaught SyntaxError: Unexpected token</span></span><br><span class="line"></span><br><span class="line">Foo.prototype.name = <span class="string">&#x27;111&#x27;</span><span class="comment">// 在类块外定义原型属性</span></span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(p.name);<span class="comment">// 111</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>类定义也支持get和set访问器。语法与行为跟普通对象一样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// let book = &#123;</span></span><br><span class="line"><span class="comment">//     year_:2017,</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// Object.defineProperty(</span></span><br><span class="line"><span class="comment">//     book, &#x27;year&#x27;,&#123;</span></span><br><span class="line"><span class="comment">//         get()&#123;</span></span><br><span class="line"><span class="comment">//             return this.year_;</span></span><br><span class="line"><span class="comment">//         &#125;,</span></span><br><span class="line"><span class="comment">//         set(newValue)&#123;</span></span><br><span class="line"><span class="comment">//             if(newValue &gt; 2017)&#123;</span></span><br><span class="line"><span class="comment">//                 this.year_ = newValue</span></span><br><span class="line"><span class="comment">//                 this.edition += newValue - 2017</span></span><br><span class="line"><span class="comment">//             &#125;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// )</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="keyword">set</span> <span class="title">name</span>(<span class="params">newName</span>) &#123;</span><br><span class="line">		<span class="built_in">this</span>.name_ = newName;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">get</span> <span class="title">name</span>() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">this</span>.name_;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Person();</span><br><span class="line">p.name = <span class="string">&#x27;Jake&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(p.name); <span class="comment">// Jake</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-静态类方法"><a href="#3-3-静态类方法" class="headerlink" title="3.3 静态类方法"></a>3.3 静态类方法</h2><p>可以在类上定义静态方法。这些方法通常用于<strong>执行不特定于实例的操作，也不要求存在类的实例。</strong>与原型方法类似，静态成员所有实例共享。</p>
+<p>静态类成员在类定义中使用static 关键字作为前缀。在静态成员中，this 引用类自身。其他所有约定跟原型成员一样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">	<span class="comment">// 添加到this 的所有内容都会存在于不同的实例上</span></span><br><span class="line">		<span class="built_in">this</span>.locate = <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;instance&#x27;</span>, <span class="built_in">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 定义在类的原型对象上</span></span><br><span class="line">	<span class="function"><span class="title">locate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;prototype&#x27;</span>, <span class="built_in">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 定义在类本身上</span></span><br><span class="line">	<span class="keyword">static</span> <span class="function"><span class="title">locate</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;class&#x27;</span>, <span class="built_in">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Person();</span><br><span class="line">p.locate(); <span class="comment">// instance, Person &#123;&#125;</span></span><br><span class="line">Person.prototype.locate(); <span class="comment">// prototype, &#123;constructor: ... &#125;</span></span><br><span class="line">Person.locate(); <span class="comment">// class, class Person &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>静态类方法非常适合作为实例工厂：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">age</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.age_ = age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="title">sayAge</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span>.age_);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="function"><span class="title">create</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">// 使用随机年龄创建并返回一个Person 实例</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Person(<span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">100</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(Person.create()); <span class="comment">// Person &#123; age_: ... &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-类外添加"><a href="#3-4-类外添加" class="headerlink" title="3.4 类外添加"></a>3.4 类外添加</h2><p>虽然类块中(构造函数外)并不显式支持在原型或类上添加成员数据，但在类定义外部，可以手动添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">sayName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;Person.greeting&#125;</span> <span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>`</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在类上定义实例数据成员</span></span><br><span class="line">Person.greeting = <span class="string">&#x27;My name is&#x27;</span>;</span><br><span class="line"><span class="comment">// 在原型上定义数据成员</span></span><br><span class="line">Person.prototype.name = <span class="string">&#x27;Jake&#x27;</span>;</span><br><span class="line"><span class="comment">// 在原型上定义函数成员</span></span><br><span class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;hi&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p = <span class="keyword">new</span> Person();</span><br><span class="line">p.sayName(); <span class="comment">// My name is Jake</span></span><br><span class="line"><span class="built_in">console</span>.log(p.sayHi()) <span class="comment">// hi</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-继承"><a href="#4-继承" class="headerlink" title="4 继承"></a>4 继承</h1><p>之前一直在讨论 ES5 的机制实现继承。ECMAScript 6 新增特性中最出色的一个就是原生支持了类继承机制。虽然类继承使用的是新语法，但背后依旧使用的是原型链。</p>
+<h2 id="4-1-继承基础"><a href="#4-1-继承基础" class="headerlink" title="4.1 继承基础"></a>4.1 继承基础</h2><p>ES6 类支持单继承。使用extends 关键字，就可以继承任何拥有[[Construct]]和原型的对象。很大程度上，这意味着不仅可以继承一个类，也可以继承普通的构造函数（保持向后兼容）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> Bus();</span><br><span class="line"><span class="built_in">console</span>.log(b <span class="keyword">instanceof</span> Bus); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(b <span class="keyword">instanceof</span> Vehicle); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 继承普通构造函数</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Engineer</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> e = <span class="keyword">new</span> Engineer();</span><br><span class="line"><span class="built_in">console</span>.log(e <span class="keyword">instanceof</span> Engineer); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(e <span class="keyword">instanceof</span> Person); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>派生类都会通过原型链访问到类和原型上定义的方法。this 的值会反映调用相应方法的实例或者类。</p>
+<p>子类通过 super 关键字引用它们的原型。这个关键字只能在派生类中使用，而且仅限于类构造函数、实例方法和静态方法内部：</p>
+<ul>
+<li><p>在类构造函数中使用 super 可以调用父类构造函数：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.hasEngine = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">// 不要在调用super()之前引用this，否则会抛出	ReferenceError</span></span><br><span class="line">		<span class="built_in">super</span>(); <span class="comment">// 相当于super.constructor()</span></span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span> <span class="keyword">instanceof</span> Vehicle); <span class="comment">// true</span></span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span>); <span class="comment">// Bus &#123; hasEngine: true &#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> Bus();</span><br></pre></td></tr></table></figure></li>
+<li><p>在静态方法中可以通过 super 调用继承的类上定义的静态方法：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="function"><span class="title">identify</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;vehicle&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="function"><span class="title">identify</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>.identify();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">Bus.identify(); <span class="comment">// vehicle</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>在使用 super 时要注意几个问题：</p>
+<ul>
+<li><p>super 只能在派生类构造函数和静态方法中使用。</p>
+</li>
+<li><p>不能单独引用 super 关键字，要么用它调用构造函数，要么用它引用静态方法。</p>
+</li>
+<li><p>调用<code>super()</code>会调用父类构造函数，并将返回的实例赋值给this。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span> <span class="keyword">instanceof</span> Vehicle);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> Bus(); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>super()</code>的行为如同调用构造函数，如果需要给父类构造函数传参，则需要手动传入。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">licensePlate</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.licensePlate = licensePlate;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params">licensePlate</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>(licensePlate);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Bus(<span class="string">&#x27;1337H4X&#x27;</span>)); <span class="comment">// Bus &#123; licensePlate: &#x27;1337H4X&#x27; &#125;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>派生类如果没有定义类构造函数，在实例化派生类时会调用<code>super()</code>，而且会传入所有传给派生类的参数。</p>
+</li>
+<li><p>在类构造函数中，不能在调用<code>super()</code>之前引用this。可能是因为<code>super()</code>会将返回的实例赋给this，因此要先super</p>
+</li>
+<li><p>如果在派生类中显式定义了构造函数，则要么必须在其中调用super()，要么必须在其中返回一个对象。</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Van</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Car()); <span class="comment">// Car &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Bus()); <span class="comment">// Bus &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Van()); <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="4-2-抽象基类"><a href="#4-2-抽象基类" class="headerlink" title="4.2 抽象基类"></a>4.2 抽象基类</h2><p>有时我们可能需要定义一个抽象类，它可供其他类继承，但本身不会被实例化。虽然ECMAScript 没有专门支持这种类的语法 ，但通过<code>new.target</code>也很容易实现。<code>new.target</code>保存通过 new 关键字调用的类或函数。通过在实例化时检测<code>new.target</code>是不是抽象基类，可以阻止对抽象基类的实例化：</p>
+<p>通过在抽象基类构造函数中进行检查，可以要求派生类必须定义某个方法。因为原型内的方法在一个实例初始化之前就存在，所以可以通过<code>this</code>关键字来检查相应的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抽象基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">new</span>.target === Vehicle) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Vehicle cannot be directly instantiated&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">this</span>.foo) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Inheriting class must define foo()&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&#x27;success!&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 基类初始化失败</span></span><br><span class="line"><span class="keyword">new</span> Vehicle(); <span class="comment">// Error: Vehicle cannot be directly instantiated</span></span><br><span class="line"><span class="comment">// 派生类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bus</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">foo</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 派生类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Van</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">new</span> Bus(); <span class="comment">// success!</span></span><br><span class="line"><span class="keyword">new</span> Van(); <span class="comment">// Error: Inheriting class must define foo()</span></span><br></pre></td></tr></table></figure>
+
+<p>ES6 类为继承**内置引用类型(Array Map…)**提供了顺畅的机制，以一个扩展数组为例，扩展数组实现了洗牌算法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperArray</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">shuffle</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="comment">// 洗牌算法</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="built_in">this</span>.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">			<span class="keyword">const</span> j = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * (i + <span class="number">1</span>));</span><br><span class="line">			[<span class="built_in">this</span>[i], <span class="built_in">this</span>[j]] = [<span class="built_in">this</span>[j], <span class="built_in">this</span>[i]];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> SuperArray(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(a <span class="keyword">instanceof</span> SuperArray); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// [1, 2, 3, 4, 5]</span></span><br><span class="line">a.shuffle();</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// [3, 1, 4, 5, 2]</span></span><br></pre></td></tr></table></figure>
+
+<p>有些内置类型的方法会返回新实例。默认情况下，返回实例的类型与原始实例的类型是一致的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperArray</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">let</span> a1 = <span class="keyword">new</span> SuperArray(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> a2 = a1.filter(<span class="function"><span class="params">x</span> =&gt;</span> !!(x%<span class="number">2</span>))</span><br><span class="line"><span class="built_in">console</span>.log(a1); <span class="comment">// [1, 2, 3, 4, 5]</span></span><br><span class="line"><span class="built_in">console</span>.log(a2); <span class="comment">// [1, 3, 5]</span></span><br><span class="line"><span class="built_in">console</span>.log(a1 <span class="keyword">instanceof</span> SuperArray); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(a2 <span class="keyword">instanceof</span> SuperArray); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想覆盖这个默认行为，则可以覆盖<code>Symbol.species</code>访问器，这个访问器决定在创建返回的实例时使用的类：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperArray</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> get [<span class="built_in">Symbol</span>.species]() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Array</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：JS深入学习(3)：类</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-15 19:21:23</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/15/JS-类/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">#面向对象</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/14/leetcode-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">leetcode(3)最长回文串</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">1 类定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">2 构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E4%BE%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E5%92%8C%E7%B1%BB%E6%88%90%E5%91%98"><span class="nav-text">3 实例、原型和类成员</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%9E%E4%BE%8B%E6%88%90%E5%91%98"><span class="nav-text">3.1 实例成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95%E4%B8%8E%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-text">3.2 原型方法与访问器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E9%9D%99%E6%80%81%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-text">3.3 静态类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E7%B1%BB%E5%A4%96%E6%B7%BB%E5%8A%A0"><span class="nav-text">3.4 类外添加</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%A7%E6%89%BF"><span class="nav-text">4 继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BB%A7%E6%89%BF%E5%9F%BA%E7%A1%80"><span class="nav-text">4.1 继承基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB"><span class="nav-text">4.2 抽象基类</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
