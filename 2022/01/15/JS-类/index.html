@@ -177,7 +177,7 @@
                     <div class="author">
                         <span class="name">Sunburst7</span>
                         
-                            <span class="author-label">Lv2</span>
+                            <span class="author-label">Lv3</span>
                         
                     </div>
                     <div class="meta-info">
@@ -360,6 +360,7 @@
 <p>如果想覆盖这个默认行为，则可以覆盖<code>Symbol.species</code>访问器，这个访问器决定在创建返回的实例时使用的类：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SuperArray</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> get [<span class="built_in">Symbol</span>.species]() &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Array</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h1><p>【1】JavaScript高级程序设计（第四版）</p>
 
         </div>
 
@@ -402,6 +403,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/01/16/JS-%E4%BD%9C%E7%94%A8%E5%9F%9F/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS深入学习(4)：作用域</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
@@ -535,7 +551,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">1 类定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">2 构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E4%BE%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E5%92%8C%E7%B1%BB%E6%88%90%E5%91%98"><span class="nav-text">3 实例、原型和类成员</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%9E%E4%BE%8B%E6%88%90%E5%91%98"><span class="nav-text">3.1 实例成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95%E4%B8%8E%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-text">3.2 原型方法与访问器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E9%9D%99%E6%80%81%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-text">3.3 静态类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E7%B1%BB%E5%A4%96%E6%B7%BB%E5%8A%A0"><span class="nav-text">3.4 类外添加</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%A7%E6%89%BF"><span class="nav-text">4 继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BB%A7%E6%89%BF%E5%9F%BA%E7%A1%80"><span class="nav-text">4.1 继承基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB"><span class="nav-text">4.2 抽象基类</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%B1%BB%E5%AE%9A%E4%B9%89"><span class="nav-text">1 类定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">2 构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E4%BE%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E5%92%8C%E7%B1%BB%E6%88%90%E5%91%98"><span class="nav-text">3 实例、原型和类成员</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%9E%E4%BE%8B%E6%88%90%E5%91%98"><span class="nav-text">3.1 实例成员</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95%E4%B8%8E%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-text">3.2 原型方法与访问器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E9%9D%99%E6%80%81%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-text">3.3 静态类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E7%B1%BB%E5%A4%96%E6%B7%BB%E5%8A%A0"><span class="nav-text">3.4 类外添加</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%BB%A7%E6%89%BF"><span class="nav-text">4 继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E7%BB%A7%E6%89%BF%E5%9F%BA%E7%A1%80"><span class="nav-text">4.1 继承基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB"><span class="nav-text">4.2 抽象基类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%8F%82%E8%80%83"><span class="nav-text">5 参考</span></a></li></ol>
     </div>
 </div>
         </aside>
