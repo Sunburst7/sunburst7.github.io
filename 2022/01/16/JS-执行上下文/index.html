@@ -219,12 +219,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>3.2k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>5.8k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>12 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>22 Mins</span>
         </span>
     
     
@@ -240,20 +240,40 @@
         
 
         <div class="article-content markdown-body">
-            <p>JavaScript 的**可执行代码(Executable Code)**的类型有哪些？其实很简单，就三种：</p>
+            <p>JavaScript 的可执行代码(Executable Code)的类型有哪些？其实很简单，就三种：</p>
 <ul>
 <li>全局代码(最外层的代码)</li>
 <li>函数代码(声明的函数以及嵌套函数内的代码)</li>
 <li>eval代码。</li>
 </ul>
 <p>每当执行到一段代码时，JS引擎总是先扫描一遍这段代码，创建一个相关的<strong>执行上下文</strong>（全局上下文、函数上下文、eval上下文）再执行。变量或函数的执行上下文决定了它们可以访问哪些数据，以及它们的行为。对于每个执行上下文，都有三个重要属性，它们影响着<strong>变量的解析</strong>，<strong>变量作用域</strong>和<strong>函数this的指向</strong>。：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/16/JS-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/2011123113224058.png"
+                      class="" title="img"
+                >
+
 <ul>
 <li>变量对象(Variable object，VO)：变量对象是与执行上下文相关的数据作用域，存储了在上下文中定义的变量和函数声明。不同执行上下文下的变量对象稍有不同</li>
 <li>作用域链(Scope chain)</li>
 <li>this</li>
 </ul>
 <h1 id="1-执行上下文栈"><a href="#1-执行上下文栈" class="headerlink" title="1 执行上下文栈"></a>1 执行上下文栈</h1><p>JavaScript 引擎会维护一个执行上下文栈（Execution context stack，ECS）来管理执行上下文，每个函数调用都有自己的上下文。当代码执行流进入函数时，函数的上下文被推到一个上下文栈上。在函数执行完之后，上下文栈会弹出该函数上下文，将控制权返还给之前的执行上下文。ECMAScript程序的执行流就是通过这个上下文栈进行控制的。</p>
-<p>为了模拟执行上下文栈的行为，我们定义执行上下文栈是一个数组：</p>
+<blockquote>
+<p>一个执行上下文可以激活另一个上下文，就好比一个函数调用了另一个函数(或者全局的上下文调用了一个全局函数)，然后一层一层调用下去。逻辑上来说，这种实现方式是栈，我们可以称之为上下文堆栈。</p>
+<p>激活其它上下文的某个上下文被称为<strong>调用者(caller)</strong> 。被激活的上下文被称为**被调用者(callee)**。被调用者同时也可能是调用者(比如一个在全局上下文中被调用的函数调用某些自身的内部方法)。</p>
+<p>当一个caller激活了一个callee，那么这个caller就会暂停它自身的执行，然后将控制权交给这个callee. 于是这个callee被放入堆栈，称为进行中的上下文[running/active execution context]. 当这个callee的上下文结束之后，会把控制权再次交给它的caller，然后caller会在刚才暂停的地方继续执行。在这个caller结束之后，会继续触发其他的上下文。一个callee可以用返回（return）或者抛出异常（exception）来结束自身的上下文。</p>
+<p>如下图，所有的ECMAScript的程序执行都可以看做是一个执行上下文堆栈[execution context (EC) stack]。堆栈的顶部就是处于激活状态的上下文。</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/16/JS-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/2011123113153760.png"
+                      class="" title="img"
+                >
+
+<p>为了模拟执行上下文栈的行为，我们定义执行上下文栈：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [];</span><br></pre></td></tr></table></figure>
 
 <p>当 JavaScript 开始要解释执行代码的时候，最先遇到的就是全局代码，所以初始化的时候首先就会向执行上下文栈压入一个全局执行上下文，我们用<code>globalContext</code>表示它，并且只有当整个应用程序结束的时候，ECStack 才会被清空，所以程序结束之前， ECStack 最底部永远有个<code> globalContext</code>，以下面这个程序为例：</p>
@@ -262,11 +282,23 @@
 <p>当执行一个函数的时候，就会创建一个执行上下文，并且压入执行上下文栈，当函数执行完毕的时候，就会将函数的执行上下文从栈中弹出。知道了这样的工作原理，让我们来看看如何处理上面这段代码：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// ECStack = [globalContext]</span><br><span class="line"></span><br><span class="line">// fun1()</span><br><span class="line">ECStack.push(&lt;fun1&gt; functionContext);</span><br><span class="line"></span><br><span class="line">// fun1中调用了fun2，创建fun2的执行上下文</span><br><span class="line">ECStack.push(&lt;fun2&gt; functionContext);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// fun2还调用了fun3，创建fun2的执行上下文</span><br><span class="line">ECStack.push(&lt;fun3&gt; functionContext);</span><br><span class="line"></span><br><span class="line">// fun3执行完毕</span><br><span class="line">ECStack.pop();</span><br><span class="line"></span><br><span class="line">// fun2执行完毕</span><br><span class="line">ECStack.pop();</span><br><span class="line"></span><br><span class="line">// fun1执行完毕</span><br><span class="line">ECStack.pop();</span><br><span class="line">// ECStack = [globalContext]</span><br></pre></td></tr></table></figure>
 
-<h1 id="2-变量对象"><a href="#2-变量对象" class="headerlink" title="2 变量对象"></a>2 变量对象</h1><p>变量对象是与执行上下文相关的数据作用域，存储了在上下文中定义的变量和函数声明。因为不同执行上下文下的变量对象稍有不同，分别讨论全局上下文下的变量对象和函数上下文下的变量对象。</p>
+<h1 id="2-变量对象"><a href="#2-变量对象" class="headerlink" title="2 变量对象"></a>2 变量对象</h1><blockquote>
+<p>A variable object is a scope of data related with the execution context. It’s a special object associated with the context and which stores variables and function declarations are being defined within the context.</p>
+<p>变量对象(variable object) 是与执行上下文相关的 数据作用域(scope of data) 。它是与上下文关联的特殊对象，用于存储被定义在上下文中的 变量(variables) 和 函数声明(function declarations) 。</p>
+</blockquote>
 <h2 id="2-1-全局上下文中的变量对象"><a href="#2-1-全局上下文中的变量对象" class="headerlink" title="2.1 全局上下文中的变量对象"></a>2.1 全局上下文中的变量对象</h2><p>全局上下文是最外层的上下文。根据 ECMAScript 实现的宿主环境，表示全局上下文的对象可能不一样。<strong>在浏览器中，全局上下文就是我们常说的 window 对象</strong>，上下文在其所有代码都执行完毕后会被销毁，包括定义在它上面的所有变量和函数（全局上下文在应用程序退出前才会被销毁，比如关闭网页或退出浏览器）。</p>
 <p>所有通过 var 定义的全局变量和函数都会成为 window 对象的属性和方法。使用 let 和 const 的顶级声明不会定义在全局上下文中，但在作用域链解析上效果是一样的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;&#125; <span class="comment">//  函数声明</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>) </span>&#123;&#125;); <span class="comment">// 函数表达式，函数作为表达式的一部分</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(</span><br><span class="line">  <span class="built_in">this</span>.foo == foo, <span class="comment">// true</span></span><br><span class="line">  <span class="built_in">window</span>.bar == bar <span class="comment">// true</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/16/JS-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/2011123113340977.png"
+                      class="" title="img"
+                >
+
 <p>因此全局上下文中的变量对象就是全局对象</p>
-<h2 id="2-2-函数上下文中的变量对象"><a href="#2-2-函数上下文中的变量对象" class="headerlink" title="2.2 函数上下文中的变量对象"></a>2.2 函数上下文中的变量对象</h2><p>在函数上下文中，我们用**活动对象(activation object, AO)**来表示变量对象。</p>
+<h2 id="2-2-函数上下文中的变量对象"><a href="#2-2-函数上下文中的变量对象" class="headerlink" title="2.2 函数上下文中的变量对象"></a>2.2 函数上下文中的变量对象</h2><p>在函数上下文中，我们用<code>活动对象(activation object, AO)</code>来表示变量对象。</p>
 <blockquote>
 <p>活动对象和变量对象其实是一个东西，只是变量对象是规范上的或者说是引擎实现上的，不可在 JavaScript 环境中访问，只有到当进入一个执行上下文中，这个执行上下文的变量对象才会被激活，所以才叫 activation object ，而只有被激活的变量对象，也就是活动对象上的各种属性才能被访问。</p>
 </blockquote>
@@ -330,14 +362,20 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> o3 = <span class="built_in">Object</span>.freeze(&#123;&#125;);</span><br><span class="line">o3.name = <span class="string">&#x27;Jake&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(o3.name); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 
 <p>由于const 声明暗示变量的值是单一类型且不可修改，JavaScript 运行时编译器可以将其所有实例都替换成实际的值，而不会通过查询表进行变量查找。</p>
-<h1 id="3-作用域链"><a href="#3-作用域链" class="headerlink" title="3 作用域链"></a>3 作用域链</h1><p>由多个执行上下文的变量对象构成的链表就叫做<strong>作用域链</strong>。</p>
+<h1 id="3-作用域链"><a href="#3-作用域链" class="headerlink" title="3 作用域链"></a>3 作用域链</h1><p>由多个执行上下文的变量对象构成的链表就叫做<strong>作用域链</strong>。作用域链是一个对象列表(list of objects) ，用以检索上下文代码中出现的标识符(identifiers) 。</p>
 <p>作用域链中的下一个变量对象来自包含上下文(词法作用域)，再下一个对象来自再下一个包含上下文。以此类推直至全局上下文；全局上下文的变量对象始终是作用域链的最后一个变量对象。</p>
-<p>代码执行时的标识符解析是通过沿作用域链逐级搜索标识符名称完成的。搜索过程始终从作用域链的最前端开始，然后逐级往后，直到找到标识符。（如果没有找到标识符，那么通常会报错。）</p>
 <p>之前提到，<strong>函数的作用域在函数定义的时候就决定了</strong>。这是因为**函数有一个内部属性 [[scope]]**，当函数创建的时候，就会保存所有父变量对象到其中，你可以理解 [[scope]] 就是所有父变量对象的层级链，但是注意：[[scope]] 并不代表完整的作用域链（不包括自身的变量对象/活动对象）！举个例子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="number">20</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> z = <span class="number">30</span>;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>函数创建时，各自的[[scope]]为：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">foo.[[scope]] = [</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">bar.[[scope]] = [</span><br><span class="line">    fooContext.AO,</span><br><span class="line">    globalContext.VO</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/16/JS-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/2011123113534163.png"
+                      class="" title="img"
+                >
 
 <p><strong>以下面的例子为例，结合着之前讲的变量对象和执行上下文栈，我们来总结一下函数执行上下文中作用域链和变量对象的创建过程：</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope2 = <span class="string">&#x27;local scope&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> scope2;</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br></pre></td></tr></table></figure>
@@ -367,15 +405,140 @@
 <li><p>查找到 scope2 的值，返回后函数执行完毕，函数上下文从执行上下文栈中弹出</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h1 id="4-this"><a href="#4-this" class="headerlink" title="4 this"></a>4 this</h1><p>当JavaScript代码执行一段可执行代码(executable code)时，会创建对应的执行上下文(execution context)。对于每个执行上下文，都有三个重要属性</p>
+<h1 id="4-this"><a href="#4-this" class="headerlink" title="4 this"></a>4 this</h1><p>当JavaScript代码执行一段可执行代码(executable code)时，会创建对应的执行上下文(execution context)。对于每个执行上下文，都有三个重要属性，<code>this</code>也是其中之一。通常，this 被错误地描述为变量对象的属性。请牢记：</p>
+<blockquote>
+<p>a this value is a property of the execution context, but not a property of the variable object.</p>
+<p>this是执行上下文环境的一个属性，而不是某个变量对象的属性</p>
+</blockquote>
+<p>这个特点很重要，因为和变量不同，<code>this</code>是没有一个类似搜寻变量的过程。当你在代码中使用了<code>this</code>，这个<code>this</code>的值就直接从执行的上下文中获取了，而不会从作用域链中搜寻。<code>this</code>的值只取决于进入上下文时的情况。</p>
+<p><strong>在通常的函数调用中，this是由激活上下文代码的调用者(caller)来提供的，即调用函数的父上下文(parent context)。this取决于调用函数的方式。</strong>【5】</p>
+<blockquote>
+<p>正是<strong>调用函数的方式影响了调用的上下文中的this值</strong>，没有别的什么（我们可以在一些文章，甚至是在关于javascript的书籍中看到，它们称：“this值取决于函数如何定义，如果它是全局函数，this设置为全局对象，如果函数是一个对象的方法，this将总是指向这个对象。–这绝对不正确”）。即使是正常的全局函数也会被调用方式的不同形式激活，这些不同的调用方式导致了不同的this值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>);</span><br><span class="line">&#125;</span><br><span class="line">      </span><br><span class="line"><span class="built_in">console</span>.log(foo === foo.prototype.constructor); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 但是同一个function的不同的调用表达式，this是不同的</span></span><br><span class="line">foo(); <span class="comment">// global  </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;---------------&#x27;</span>)</span><br><span class="line">foo.prototype.constructor(); <span class="comment">// foo.prototype</span></span><br></pre></td></tr></table></figure>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/16/JS-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/image-20220117151655171.png"
+                      class="" title="image-20220117151655171"
+                >
+</blockquote>
+<p>那么，调用函数的方式如何影响<code>this</code>值？为了充分理解<code>this</code>值的确定，需要详细分析其内部类型之一——<strong>引用类型（Reference type）。</strong></p>
+<h1 id="5-引用类型解释this"><a href="#5-引用类型解释this" class="headerlink" title="5 引用类型解释this"></a>5 引用类型解释this</h1><p>由冴羽大佬的博客<a class="link"   target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/7" >JavaScript深入之从ECMAScript规范解读this · Issue #7 · mqyqingfeng/Blog (github.com)<i class="fas fa-external-link-alt"></i></a>中我们得知：</p>
+<p>ECMAScript 的类型分为语言类型和规范类型：</p>
 <ul>
-<li>变量对象(Variable object，VO)</li>
-<li>作用域链(Scope chain)</li>
-<li>this</li>
+<li><p>语言类型是开发者直接使用 ECMAScript 可以操作的。其实就是我们常说的Undefined, Null, Boolean, String, Number, 和 Object。</p>
+</li>
+<li><p>规范类型相当于 meta-values，是用来用算法描述 ECMAScript 语言结构和 ECMAScript 语言类型的。规范类型包括：<strong>Reference</strong>, List, Completion, Property Descriptor, Property Identifier, Lexical Environment, 和 Environment Record。</p>
+</li>
 </ul>
+<p><strong>引用类型用来说明 delete，typeof，赋值运算符这些运算符的行为</strong>，但并不存在于实际的 js 代码中。Reference 的构成，由三个组成部分，分别是：</p>
+<ul>
+<li>base value：引用所在的对象或者就是 EnvironmentRecord，它的值只可能是 undefined, an Object, a Boolean, a String, a Number, or an environment record 其中的一种。</li>
+<li>referenced name：引用的名称</li>
+<li>strict reference：标识是否严格引用</li>
+</ul>
+<p>引用类型的值只有两种情况：</p>
+<ol>
+<li>  标示符：标识符是变量名，函数名，函数参数名和全局对象中未识别的属性名。</li>
+</ol>
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fooReference = &#123;</span><br><span class="line">  <span class="attr">base</span>: <span class="built_in">global</span>,</span><br><span class="line">  <span class="attr">referencedName</span>: <span class="string">&#x27;foo&#x27;</span>,</span><br><span class="line">  strict reference:<span class="literal">false</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> barReference = &#123;</span><br><span class="line">  <span class="attr">base</span>: <span class="built_in">global</span>,</span><br><span class="line">  <span class="attr">referencedName</span>: <span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">  strict reference:<span class="literal">false</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ol start="2">
+<li>  属性访问器：有两种变体，点（.）语法（此时属性名是正确的标示符，且事先知道），或括号语法（[]）。</li>
+</ol>
+<pre><code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">foo.bar();</span><br><span class="line">foo[<span class="string">&#x27;bar&#x27;</span>]();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fooBarReference = &#123;</span><br><span class="line">  <span class="attr">base</span>: foo,</span><br><span class="line">  <span class="attr">referencedName</span>: <span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">  strict reference:<span class="literal">false</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">GetValue(fooBarReference); <span class="comment">// function object &quot;bar&quot; 从 Reference 类型获取对应值的方法： GetValue</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<p>引用类型与函数上下文中的this值如何相关？一个函数上下文中确定this值的通用规则如下：</p>
+<p><strong>在一个函数上下文中，this由调用者提供，由调用函数的方式来决定。如果调用括号()的左边是引用类型的值，this将设为引用类型值的base value，在其他情况下（与引用类型不同的任何其它属性），this被设置为undefined。</strong>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  <span class="attr">value</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">bar</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//示例1</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.bar());<span class="comment">//2</span></span><br><span class="line"><span class="comment">//示例2 ()返回执行Expression的结果，它可能是Reference类型。</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar)());<span class="comment">//2</span></span><br><span class="line"><span class="comment">//示例3 = 令rval（右侧表达式）为GetValue(rref)，返回rval 不是Reference类型。</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar = foo.bar)());<span class="comment">//underfined</span></span><br><span class="line"><span class="comment">//示例4 || 返回 GetValue(rref)不是Reference类型。</span></span><br><span class="line"><span class="built_in">console</span>.log((<span class="literal">false</span> || foo.bar)());<span class="comment">//underfined</span></span><br><span class="line"><span class="comment">//示例5</span></span><br><span class="line"><span class="built_in">console</span>.log((foo.bar, foo.bar)());<span class="comment">//underfined</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="6-执行上下文总结"><a href="#6-执行上下文总结" class="headerlink" title="6 执行上下文总结"></a>6 执行上下文总结</h1><p>结合着所有内容，讲讲执行上下文的具体处理过程。</p>
+<p>提出这样一道思考题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br></pre></td></tr></table></figure>
+
+<p>两段代码都会打印’local scope’。虽然两段代码执行的结果一样，但是两段代码究竟有哪些不同呢？</p>
+<h2 id="6-1-第一段代码"><a href="#6-1-第一段代码" class="headerlink" title="6.1 第一段代码"></a>6.1 第一段代码</h2><p>我们分析第一段代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope();</span><br></pre></td></tr></table></figure>
+
+<p>执行过程如下：</p>
+<ol>
+<li><p>执行全局代码，创建全局执行上下文，全局上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>全局上下文初始化</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">    VO: [global],</span><br><span class="line">    Scope: [globalContext.VO],</span><br><span class="line">    this: globalContext.VO</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>初始化的同时，checkscope 函数被创建，保存作用域链到函数的内部属性[[scope]]</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">checkscope.[[scope]] = [</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>执行 checkscope 函数，创建 checkscope 函数执行上下文，checkscope 函数执行上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    checkscopeContext,</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>checkscope 函数执行上下文初始化：</p>
+<ul>
+<li>复制函数 [[scope]] 属性创建作用域链，</li>
+<li>用 arguments 创建活动对象，</li>
+<li>初始化活动对象，即加入形参、函数声明、变量声明，</li>
+<li>将活动对象压入 checkscope 作用域链顶端。</li>
+</ul>
+<p> 同时 f 函数被创建，保存作用域链到 f 函数的内部属性[[scope]]</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">checkscopeContext = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        arguments: &#123;</span><br><span class="line">            length: 0</span><br><span class="line">        &#125;,</span><br><span class="line">        scope: undefined,</span><br><span class="line">        f: reference to function f()&#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    Scope: [AO, globalContext.VO],</span><br><span class="line">    this: undefined</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f.[[scope]] =[</span><br><span class="line">	checkscopeContext.AO,</span><br><span class="line">	globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+<li><p>执行 f 函数，创建 f 函数执行上下文，f 函数执行上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    fContext,</span><br><span class="line">    checkscopeContext,</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>f 函数执行上下文初始化, 以下跟第 4 步相同：</p>
+<ul>
+<li>复制函数 [[scope]] 属性创建作用域链</li>
+<li>用 arguments 创建活动对象</li>
+<li>初始化活动对象，即加入形参、函数声明、变量声明</li>
+<li>将活动对象压入 f 作用域链顶端</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fContext = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        arguments: &#123;</span><br><span class="line">            length: 0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    Scope: [AO, checkscopeContext.AO, globalContext.VO],</span><br><span class="line">    this: undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>f 函数执行，沿着作用域链查找 scope 值，返回 scope 值</p>
+</li>
+<li><p>f 函数执行完毕，f 函数上下文从执行上下文栈中弹出</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    checkscopeContext,</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>checkscope 函数执行完毕，checkscope 执行上下文从执行上下文栈中弹出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="5-2-第二段代码"><a href="#5-2-第二段代码" class="headerlink" title="5.2 第二段代码"></a>5.2 第二段代码</h2><p>第二段代码类似，区别在于checkscpoe函数返回的不是f函数运行的结果而是f函数自身。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">&quot;global scope&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> scope = <span class="string">&quot;local scope&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scope;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()();</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>执行全局代码，创建全局执行上下文，全局上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>全局上下文初始化</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">globalContext = &#123;</span><br><span class="line">    VO: [global],</span><br><span class="line">    Scope: [globalContext.VO],</span><br><span class="line">    this: globalContext.VO</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>初始化的同时，checkscope 函数被创建，保存作用域链到函数的内部属性[[scope]]</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">checkscope.[[scope]] = [</span><br><span class="line">  globalContext.VO</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>执行 checkscope 函数，创建 checkscope 函数执行上下文，checkscope 函数执行上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    checkscopeContext,</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>checkscope 函数执行上下文初始化：</p>
+<ul>
+<li>复制函数 [[scope]] 属性创建作用域链，</li>
+<li>用 arguments 创建活动对象，</li>
+<li>初始化活动对象，即加入形参、函数声明、变量声明，</li>
+<li>将活动对象压入 checkscope 作用域链顶端。</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkscopeContext = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        arguments: &#123;</span><br><span class="line">            length: 0</span><br><span class="line">        &#125;,</span><br><span class="line">        scope: undefined,</span><br><span class="line">        f: reference to function f()&#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    Scope: [AO, globalContext.VO],</span><br><span class="line">    this: undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>checkscope 函数执行完毕，checkscope 执行上下文从执行上下文栈中弹出，返回f函数</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">      globalContext</span><br><span class="line">  ];</span><br></pre></td></tr></table></figure></li>
+<li><p>创建f函数，保存作用域链到函数的内部属性[[scope]]，创建 f 函数执行上下文，f 函数执行上下文被压入执行上下文栈</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f.[[scope]] =[</span><br><span class="line">	checkscopeContext.AO,</span><br><span class="line">	globalContext.VO</span><br><span class="line">]</span><br><span class="line">ECStack = [</span><br><span class="line">    fContext,</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+<li><p>f 函数执行上下文初始化, 以下跟第 4 步相同：</p>
+<ul>
+<li>复制函数 [[scope]] 属性创建作用域链</li>
+<li>用 arguments 创建活动对象</li>
+<li>初始化活动对象，即加入形参、函数声明、变量声明</li>
+<li>将活动对象压入 f 作用域链顶端</li>
+</ul>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fContext = &#123;</span><br><span class="line">    AO: &#123;</span><br><span class="line">        arguments: &#123;</span><br><span class="line">            length: 0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    Scope: [AO, checkscopeContext.AO, globalContext.VO],</span><br><span class="line">    this: undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>f 函数执行，沿着作用域链查找 scope 值，返回 scope 值</p>
+</li>
+<li><p>f 函数执行完毕，f 函数上下文从执行上下文栈中弹出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ECStack = [</span><br><span class="line">    globalContext</span><br><span class="line">];</span><br></pre></td></tr></table></figure></li>
+</ol>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>【1】JavaScript高级程序设计（第四版）</p>
 <p>【2】<a class="link"   target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/4" >JavaScript深入之执行上下文栈 · Issue #4 · mqyqingfeng/Blog (github.com)<i class="fas fa-external-link-alt"></i></a></p>
 <p>【3】<a class="link"   target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/5" >JavaScript深入之变量对象 · Issue #5 · mqyqingfeng/Blog (github.com)<i class="fas fa-external-link-alt"></i></a></p>
+<p>【4】<a class="link"   target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/7" >JavaScript深入之从ECMAScript规范解读this · Issue #7 · mqyqingfeng/Blog (github.com)<i class="fas fa-external-link-alt"></i></a></p>
+<p>【5】<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/TomXu/archive/2012/01/17/2310479.html" >深入理解JavaScript系列（13）：This? Yes,this! - 汤姆大叔 - 博客园 (cnblogs.com)<i class="fas fa-external-link-alt"></i></a></p>
 <p>【6】<a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/f8e628b5c312" >彻底理解js的执行上下文，以及变量对象 - 简书 (jianshu.com)<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
@@ -416,6 +579,21 @@
         
             <div class="article-nav">
                 
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/01/17/JS-%E5%87%BD%E6%95%B0%E4%B8%8E%E9%97%AD%E5%8C%85/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS深入学习(6)：函数与闭包</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
                 
                     <div class="article-next">
                         <a class="next"
@@ -451,7 +629,7 @@
         <div class="copyright-info info-item">
             &copy;
             
-              <span>2020</span>
+              <span>2021</span>
               -
             
             2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
@@ -548,7 +726,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%A0%88"><span class="nav-text">1 执行上下文栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2 变量对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.1 全局上下文中的变量对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.2 函数上下文中的变量对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E8%BF%9B%E5%85%A5%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">2.2.1 进入上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="nav-text">2.2.2 代码执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%80%BB%E7%BB%93"><span class="nav-text">2.2.3 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-text">2.3 变量声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-var"><span class="nav-text">2.3.1 var</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-let"><span class="nav-text">2.3.2 let</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-const"><span class="nav-text">2.3.3 const</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-text">3 作用域链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-this"><span class="nav-text">4 this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%A0%88"><span class="nav-text">1 执行上下文栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2 变量对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.1 全局上下文中的变量对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%87%BD%E6%95%B0%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.2 函数上下文中的变量对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E8%BF%9B%E5%85%A5%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-text">2.2.1 进入上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="nav-text">2.2.2 代码执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E6%80%BB%E7%BB%93"><span class="nav-text">2.2.3 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-text">2.3 变量声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-var"><span class="nav-text">2.3.1 var</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-let"><span class="nav-text">2.3.2 let</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-const"><span class="nav-text">2.3.3 const</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="nav-text">3 作用域链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-this"><span class="nav-text">4 this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%A7%A3%E9%87%8Athis"><span class="nav-text">5 引用类型解释this</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E6%80%BB%E7%BB%93"><span class="nav-text">6 执行上下文总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E7%AC%AC%E4%B8%80%E6%AE%B5%E4%BB%A3%E7%A0%81"><span class="nav-text">6.1 第一段代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E7%AC%AC%E4%BA%8C%E6%AE%B5%E4%BB%A3%E7%A0%81"><span class="nav-text">5.2 第二段代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
     </div>
 </div>
         </aside>
