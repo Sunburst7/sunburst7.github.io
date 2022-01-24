@@ -344,7 +344,7 @@
 </li>
 <li><p>这个新对象内部的[[Prototype]]特性被赋值为构造函数的prototype 属性。</p>
 </li>
-<li><p>构造函数内部的this 被赋值为这个新对象（即this 指向新对象）。</p>
+<li><p>构造函数内部的 this 被赋值为这个新对象（即this 指向新对象）。</p>
 </li>
 <li><p>执行构造函数内部的代码（给新对象添加属性）。</p>
 </li>
@@ -361,7 +361,7 @@
 <h3 id="2-2-1-构造函数与普通函数"><a href="#2-2-1-构造函数与普通函数" class="headerlink" title="2.2.1 构造函数与普通函数"></a>2.2.1 构造函数与普通函数</h3><p>构造函数与普通函数唯一的区别就是调用方式不同。任何函数只要使用 new 操作符调用就是构造函数，而不使用 new 操作符调用的函数就是普通函数。比如，前面的例子中定义的 Person()可以像下面这样调用：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 作为构造函数</span></span><br><span class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> Person(<span class="string">&quot;Nicholas&quot;</span>, <span class="number">29</span>, <span class="string">&quot;Software Engineer&quot;</span>);</span><br><span class="line">person.sayName(); <span class="comment">// &quot;Nicholas&quot;</span></span><br><span class="line"><span class="comment">// 作为函数调用</span></span><br><span class="line">Person(<span class="string">&quot;Greg&quot;</span>, <span class="number">27</span>, <span class="string">&quot;Doctor&quot;</span>); <span class="comment">// 添加到window 对象</span></span><br><span class="line"><span class="built_in">window</span>.sayName(); <span class="comment">// &quot;Greg&quot;</span></span><br><span class="line"><span class="comment">// 在另一个对象的作用域中调用</span></span><br><span class="line"><span class="keyword">let</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">Person.call(o, <span class="string">&quot;Kristen&quot;</span>, <span class="number">25</span>, <span class="string">&quot;Nurse&quot;</span>);</span><br><span class="line">o.sayName(); <span class="comment">// &quot;Kristen&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>普通函数没有使用new 操作符调用<code>Person()</code>，结果会将属性和方法添加到 window 对象。这里要记住，在调用一个函数而没有明确设置this 值的情况下（即没有作为对象的方法调用，或者没有使用call()/apply()调用），<strong>this 始终指向 Global 对象（在浏览器中就是window 对象）</strong></p>
+<p>普通函数没有使用new操作符调用<code>Person()</code>，结果会将属性和方法添加到 window 对象。这里要记住，在调用一个函数而没有明确设置this 值的情况下（即没有作为对象的方法调用，或者没有使用call()/apply()调用），<strong>this 始终指向 Global 对象（在浏览器中就是window 对象）</strong></p>
 <h3 id="2-2-2-构造函数的问题"><a href="#2-2-2-构造函数的问题" class="headerlink" title="2.2.2 构造函数的问题"></a>2.2.2 构造函数的问题</h3><p>构造函数的主要问题在于，其定义的方法会在每个实例上都创建一遍。因此对前面的例子而言，person1 和person2 都有名为<code>sayName()</code>的方法，但这两个方法不是同一个Function 实例。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(person1.sayName === person2.sayName)<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
