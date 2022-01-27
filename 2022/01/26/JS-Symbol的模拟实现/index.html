@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            JS深入学习(12)：Symbol的模拟实现 |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"sunburst7.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS深入学习(12)：Symbol的模拟实现</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-26 18:25:46</span>
+        <span class="mobile">2022-01-26 18:25</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/JavaScript/JS%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/">JS深入学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/">模拟实现</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>12 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>本模拟实现主要参考<a class="link"   target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/87" >ES6 系列之模拟实现 Symbol 类型 · Issue #87 · mqyqingfeng/Blog (github.com)<i class="fas fa-external-link-alt"></i></a></p>
+<p>根据之前分析的Symbol的11个特性：</p>
+<ol>
+<li><p>Symbol 值通过 Symbol 函数生成，使用 typeof，结果为 “symbol”</p>
+</li>
+<li><p>Symbol 函数前不能使用 new 命令，否则会报错。这是因为生成的 Symbol 是一个原始类型的值，不是对象。因此instanceof 的结果为 false</p>
+</li>
+<li><p>Symbol 函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。</p>
+</li>
+<li><p>如果 Symbol 的参数是一个对象，就会调用该对象的 toString 方法，将其转为字符串，然后才生成一个 Symbol 值。</p>
+</li>
+<li><p>Symbol 函数的参数只是表示对当前 Symbol 值的描述，相同参数的 Symbol 函数的返回值是不相等的。</p>
+</li>
+<li><p>Symbol 值不能与其他类型的值进行运算，会报错。</p>
+</li>
+<li><p>Symbol 值可以显式转为字符串。</p>
+</li>
+<li><p>Symbol 值可以作为标识符，用于对象的属性名，可以保证不会出现同名的属性。</p>
+</li>
+<li><p>Symbol 作为属性名，该属性不会出现在 for…in、for…of 循环中，也不会被 Object.keys()、Object.getOwnPropertyNames()、JSON.stringify() 返回。但是，它也不是私有属性，有一个 Object.getOwnPropertySymbols 方法，可以获取指定对象的所有 Symbol 属性名。</p>
+</li>
+<li><p>如果我们希望使用同一个 Symbol 值，可以使用 Symbol.for。它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的 Symbol 值。如果有，就返回这个 Symbol 值，否则就新建并返回一个以该字符串为名称的 Symbol 值。</p>
+</li>
+<li><p>Symbol.keyFor 方法返回一个已登记的 Symbol 类型值的 key。</p>
+</li>
+</ol>
+<p>我们尝试实现一个Symbol类型。我们先看看调用 Symbol 时到底做了哪些工作：</p>
+<blockquote>
+<p>Symbol ( [ description ] )</p>
+<p>When Symbol is called with optional argument description, the following steps are taken:</p>
+<ol>
+<li>If NewTarget is not undefined, throw a TypeError exception.</li>
+<li>If description is undefined, var descString be undefined.</li>
+<li>Else, var descString be ToString(description).</li>
+<li>ReturnIfAbrupt(descString).</li>
+<li>Return a new unique Symbol value whose [[Description]] value is descString.</li>
+</ol>
+</blockquote>
+<p>当调用 Symbol 的时候，会采用以下步骤：</p>
+<ol>
+<li>如果使用 new ，就报错</li>
+<li>如果 description 是 undefined，让 descString 为 undefined</li>
+<li>否则 让 descString 为 ToString(description)</li>
+<li>如果报错，就返回</li>
+<li>返回一个新的唯一的 Symbol 值，它的内部属性 [[Description]] 值为 descString</li>
+</ol>
+<p>考虑到还需要定义一个 [[Description]] 属性，如果直接返回一个基本类型的值，是无法做到这一点的，所以我们最终还是返回一个对象。</p>
+<h1 id="1-第一版-实现2、4、5"><a href="#1-第一版-实现2、4、5" class="headerlink" title="1 第一版(实现2、4、5)"></a>1 第一版(实现2、4、5)</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> root = <span class="built_in">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> SymbolImp = <span class="function"><span class="keyword">function</span> <span class="title">Symbol</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实现特性第 2 点：Symbol 函数前不能使用 new 命令</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span> <span class="keyword">instanceof</span> SymbolImp) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实现特性第 4 点：如果 Symbol 的参数是一个对象，就会调用该对象的 toString 方法，将其转为字符串，然后才生成一个 Symbol 值。</span></span><br><span class="line">        <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Object</span>.defineProperties(symbol, &#123;</span><br><span class="line">            <span class="string">&#x27;__Description__&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">value</span>: descString,</span><br><span class="line">                <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 实现特性第 5 点，因为调用该方法，返回的是一个新对象，两个对象之间，只要引用不同，就不会相同</span></span><br><span class="line">        <span class="keyword">return</span> symbol;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    root.SymbolImp = SymbolImp;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">//测试</span></span><br><span class="line"><span class="keyword">let</span> s1 = SymbolImp(<span class="string">&#x27;11&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> s2 = SymbolImp(<span class="string">&#x27;11&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1 === s2)<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="2-第二版-实现7，无法实现1、3"><a href="#2-第二版-实现7，无法实现1、3" class="headerlink" title="2 第二版(实现7，无法实现1、3)"></a>2 第二版(实现7，无法实现1、3)</h1><p>我们来看看其他的特性该如何实现：</p>
+<p><strong>1. 使用 typeof，结果为 “symbol”。</strong></p>
+<p>利用 ES5，我们并不能修改 typeof 操作符的结果，所以这个无法实现。</p>
+<p><strong>3. Symbol 函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述。主要是为了在控制台显示，或者转为字符串时，比较容易区分。</strong></p>
+<p>当我们打印一个原生 Symbol 值的时候：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>(<span class="string">&#x27;1&#x27;</span>)); <span class="comment">// Symbol(1)</span></span><br></pre></td></tr></table></figure>
+
+<p>可是我们模拟实现的时候返回的却是一个对象，所以这个也是无法实现的</p>
+<p><strong>7 Symbol 值可以显式转为字符串。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sym = <span class="built_in">Symbol</span>(<span class="string">&#x27;My symbol&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(sym)); <span class="comment">// &#x27;Symbol(My symbol)&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(sym.toString()); <span class="comment">// &#x27;Symbol(My symbol)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>当调用 String 方法的时候，如果该对象有 toString 方法，就会调用该 toString 方法，所以我们只要给返回的对象添加一个 toString 方法，即可实现这两个效果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> root = <span class="built_in">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> SymbolImp = <span class="function"><span class="keyword">function</span> <span class="title">Symbol</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 实现特性第 2 点：Symbol 函数前不能使用 new 命令</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">this</span> <span class="keyword">instanceof</span> SymbolImp) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 实现特性第 4 点：如果 Symbol 的参数是一个对象，就会调用该对象的 toString 方法，将其转为字符串，然后才生成一个 Symbol 值。</span></span><br><span class="line">      <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">      <span class="built_in">Object</span>.defineProperties(symbol, &#123;</span><br><span class="line">          <span class="string">&#x27;__Description__&#x27;</span>: &#123;</span><br><span class="line">              <span class="attr">value</span>: descString,</span><br><span class="line">              <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="comment">// 实现特性7： Symbol 值可以显式转为字符串。</span></span><br><span class="line">          <span class="string">&#x27;toString&#x27;</span>:&#123;</span><br><span class="line">            <span class="attr">value</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="string">`Symbol(<span class="subst">$&#123;<span class="built_in">this</span>.__Description__&#125;</span>)`</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">      <span class="comment">// 实现特性第 5 点，因为调用该方法，返回的是一个新对象，两个对象之间，只要引用不同，就不会相同</span></span><br><span class="line">      <span class="keyword">return</span> symbol;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  root.SymbolImp = SymbolImp;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s1 = SymbolImp(<span class="string">&#x27;11&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> s2 = SymbolImp(<span class="string">&#x27;11&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.toString())</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(s2))</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-第三版-实现8，无法实现7"><a href="#3-第三版-实现8，无法实现7" class="headerlink" title="3 第三版(实现8，无法实现7)"></a>3 第三版(实现8，无法实现7)</h1><p><strong>8. Symbol 值可以作为标识符，用于对象的属性名，可以保证不会出现同名的属性。</strong></p>
+<p>看着好像没什么，这点其实和第 7 点是冲突的，我们模拟的所谓 Symbol 值其实是一个有着 toString 方法的对象，当对象作为对象的属性名的时候，就会进行隐式类型转换，还是会调用我们添加的 toString 方法，对于 Symbol(‘foo’) 和 Symbol(‘foo’)两个 Symbol 值，虽然描述一样，但是因为是两个对象，所以并不相等，但是当作为对象的属性名的时候，都会隐式转换为 <code>Symbol(foo)</code> 字符串，这个时候就会造成同名的属性。举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = SymbolPolyfill(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> b = SymbolPolyfill(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a ===  b); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line">o[a] = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line">o[b] = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o); <span class="comment">// &#123;Symbol(foo): &#x27;hi&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了防止不会出现同名的属性，毕竟这是一个非常重要的特性，迫不得已，我们需要修改 toString 方法，让它返回一个唯一值，所以第 7 点就无法实现了，而且我们还需要再写一个用来生成 唯一值的方法，就命名为 generateName，我们将该唯一值添加到返回对象的 <strong>Name</strong> 属性中保存下来：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第三版</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> root = <span class="built_in">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> generateName = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> postfix = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">descString</span>)</span>&#123;</span><br><span class="line">            postfix++;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;@@&#x27;</span> + descString + <span class="string">&#x27;_&#x27;</span> + postfix</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> SymbolImp = <span class="function"><span class="keyword">function</span> <span class="title">Symbol</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span> <span class="keyword">instanceof</span> SymbolImp) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(&#123;</span><br><span class="line">            <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.__Name__;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Object</span>.defineProperties(symbol, &#123;</span><br><span class="line">            <span class="string">&#x27;__Description__&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">value</span>: descString,</span><br><span class="line">                <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&#x27;__Name__&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">value</span>: generateName(descString),</span><br><span class="line">                <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">                <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> symbol;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    root.SymbolImp = SymbolImp;</span><br><span class="line"></span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> a = SymbolImp(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> b = SymbolImp(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a ===  b); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line">o[a] = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line">o[b] = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o); <span class="comment">// Object &#123; &quot;@@foo_1&quot;: &quot;hello&quot;, &quot;@@foo_2&quot;: &quot;hi&quot; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-第四版-实现6"><a href="#4-第四版-实现6" class="headerlink" title="4 第四版(实现6)"></a>4 第四版(实现6)</h1><p>我们再看看接下来的特性。</p>
+<p><strong>6.Symbol 值不能与其他类型的值进行运算，会报错。</strong></p>
+<p>以 <code>+</code> 操作符为例，当进行隐式类型转换的时候，会先调用对象的 valueOf 方法，如果没有返回基本值，就会再调用 toString 方法，所以我们考虑在 valueOf 方法中进行报错，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(&#123;</span><br><span class="line">    <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Cannot convert a Symbol value&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;1&#x27;</span> + symbol); <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+
+<p>看着很简单的解决了这个问题，可是如果我们是显式调用 valueOf 方法呢？对于一个原生的 Symbol 值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.valueOf()); <span class="comment">// Symbol(foo)</span></span><br></pre></td></tr></table></figure>
+
+<p>是的，对于原生 Symbol，显式调用 valueOf 方法，会直接返回该 Symbol 值，而我们又无法判断是显式还是隐式的调用，所以这个我们就只能实现一半，要不然实现隐式调用报错，要不然实现显式调用返回该值，那……我们选择不报错的那个吧，即后者。</p>
+<p>我们迫不得已的修改 valueOf 函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第四版</span></span><br><span class="line"><span class="comment">// 前面面代码相同 ……</span></span><br><span class="line"><span class="comment">// 第三版</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> root = <span class="built_in">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> generateName = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> postfix = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">descString</span>)</span>&#123;</span><br><span class="line">          postfix++;</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;@@&#x27;</span> + descString + <span class="string">&#x27;_&#x27;</span> + postfix</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> SymbolImp = <span class="function"><span class="keyword">function</span> <span class="title">Symbol</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">this</span> <span class="keyword">instanceof</span> SymbolImp) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(&#123;</span><br><span class="line">          <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="built_in">this</span>.__Name__;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      <span class="built_in">Object</span>.defineProperties(symbol, &#123;</span><br><span class="line">          <span class="string">&#x27;__Description__&#x27;</span>: &#123;</span><br><span class="line">              <span class="attr">value</span>: descString,</span><br><span class="line">              <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&#x27;__Name__&#x27;</span>: &#123;</span><br><span class="line">              <span class="attr">value</span>: generateName(descString),</span><br><span class="line">              <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> symbol;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  root.SymbolImp = SymbolImp;</span><br><span class="line"></span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">var</span> a = SymbolImp(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> b = SymbolImp(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a ===  b); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line">o[a] = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line">o[b] = <span class="string">&#x27;hi&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(o); <span class="comment">// Object &#123; &quot;@@foo_1&quot;: &quot;hello&quot;, &quot;@@foo_2&quot;: &quot;hi&quot; &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(a.valueOf())</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-第五版-实现10、11，无法实现9"><a href="#5-第五版-实现10、11，无法实现9" class="headerlink" title="5 第五版(实现10、11，无法实现9)"></a>5 第五版(实现10、11，无法实现9)</h1><p><strong>11. 有时，我们希望重新使用同一个Symbol值，Symbol.for方法可以做到这一点。它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的Symbol值。如果有，就返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。</strong></p>
+<p>这个实现类似于函数记忆，我们建立一个对象，用来储存已经创建的 Symbol 值即可。</p>
+<p><strong>12. Symbol.keyFor 方法返回一个已登记的 Symbol 类型值的 key。</strong></p>
+<p>遍历 forMap,查找该值对应的键值即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> root = <span class="built_in">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> generateName = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> postfix = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">descString</span>)</span>&#123;</span><br><span class="line">          postfix++;</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;@@&#x27;</span> + descString + <span class="string">&#x27;_&#x27;</span> + postfix</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> SymbolImp = <span class="function"><span class="keyword">function</span> <span class="title">Symbol</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">this</span> <span class="keyword">instanceof</span> SymbolImp) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line">	  <span class="comment">// 使用create()内的对象来提供新创建的对象的__proto__</span></span><br><span class="line">      <span class="keyword">var</span> symbol = <span class="built_in">Object</span>.create(&#123;</span><br><span class="line">          <span class="attr">toString</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="built_in">this</span>.__Name__;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">valueOf</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">	</span><br><span class="line">      <span class="built_in">Object</span>.defineProperties(symbol, &#123;</span><br><span class="line">          <span class="string">&#x27;__Description__&#x27;</span>: &#123;</span><br><span class="line">              <span class="attr">value</span>: descString,</span><br><span class="line">              <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&#x27;__Name__&#x27;</span>: &#123;</span><br><span class="line">              <span class="attr">value</span>: generateName(descString),</span><br><span class="line">              <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">              <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">          &#125;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> symbol;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> forMap = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperties(SymbolImp, &#123;</span><br><span class="line">      <span class="string">&#x27;for&#x27;</span>: &#123;</span><br><span class="line">          <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params">description</span>) </span>&#123;</span><br><span class="line">              <span class="keyword">var</span> descString = description === <span class="literal">undefined</span> ? <span class="literal">undefined</span> : <span class="built_in">String</span>(description)</span><br><span class="line">              <span class="keyword">return</span> forMap[descString] ? forMap[descString] : forMap[descString] = SymbolImp(descString);</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">writable</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">          <span class="attr">configurable</span>: <span class="literal">true</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">&#x27;keyFor&#x27;</span>: &#123;</span><br><span class="line">          <span class="attr">value</span>: <span class="function"><span class="keyword">function</span>(<span class="params">symbol</span>) </span>&#123;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> forMap) &#123;</span><br><span class="line">                  <span class="keyword">if</span> (forMap[key] === symbol) <span class="keyword">return</span> key;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">writable</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">enumerable</span>: <span class="literal">false</span>,</span><br><span class="line">          <span class="attr">configurable</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  root.SymbolImp = SymbolImp;</span><br><span class="line"></span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = SymbolImp(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> b = SymbolImp(<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> copy_a = SymbolImp.for(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;&#125;</span><br><span class="line">o[a] = <span class="string">&#x27;symbol_a&#x27;</span>,</span><br><span class="line">o[b] = <span class="string">&#x27;symbol_b&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(o); <span class="comment">// Object &#123; &quot;@@foo_1&quot;: &quot;hello&quot;, &quot;@@foo_2&quot;: &quot;hi&quot; &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(SymbolImp.for(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(SymbolImp.keyFor(copy_a))</span><br></pre></td></tr></table></figure>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/26/JS-Symbol%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/image-20220126182353679.png"
+                      class="" title="image-20220126182353679"
+                >
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：JS深入学习(12)：Symbol的模拟实现</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-26 18:25:46</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/26/JS-Symbol的模拟实现/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0/">#模拟实现</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/25/JS-%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS深入学习(11)：语法进阶</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%80%E7%89%88-%E5%AE%9E%E7%8E%B02%E3%80%814%E3%80%815"><span class="nav-text">1 第一版(实现2、4、5)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%AC%AC%E4%BA%8C%E7%89%88-%E5%AE%9E%E7%8E%B07%EF%BC%8C%E6%97%A0%E6%B3%95%E5%AE%9E%E7%8E%B01%E3%80%813"><span class="nav-text">2 第二版(实现7，无法实现1、3)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%AC%AC%E4%B8%89%E7%89%88-%E5%AE%9E%E7%8E%B08%EF%BC%8C%E6%97%A0%E6%B3%95%E5%AE%9E%E7%8E%B07"><span class="nav-text">3 第三版(实现8，无法实现7)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E7%AC%AC%E5%9B%9B%E7%89%88-%E5%AE%9E%E7%8E%B06"><span class="nav-text">4 第四版(实现6)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E7%AC%AC%E4%BA%94%E7%89%88-%E5%AE%9E%E7%8E%B010%E3%80%8111%EF%BC%8C%E6%97%A0%E6%B3%95%E5%AE%9E%E7%8E%B09"><span class="nav-text">5 第五版(实现10、11，无法实现9)</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
