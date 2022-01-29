@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            JS深入学习(15)：EventLoop |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"sunburst7.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">JS深入学习(15)：EventLoop</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-01-28 15:58:39</span>
+        <span class="mobile">2022-01-28 15:58</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        &gt; <a href="/categories/JavaScript/JS%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0/">JS深入学习</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>2.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>9 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-浏览器的进程与线程"><a href="#1-浏览器的进程与线程" class="headerlink" title="1 浏览器的进程与线程"></a>1 浏览器的进程与线程</h1><ul>
+<li>主进程<ul>
+<li>协调控制其他子进程（创建、销毁）</li>
+<li>浏览器界面显示，用户交互，前进、后退、收藏</li>
+<li>将渲染进程得到的内存中的Bitmap，绘制到用户界面上</li>
+<li>处理不可见操作，网络请求，文件访问等</li>
+</ul>
+</li>
+<li>第三方插件进程<ul>
+<li>每种类型的插件对应一个进程，仅当使用该插件时才创建</li>
+</ul>
+</li>
+<li>GPU进程<ul>
+<li>用于3D绘制等</li>
+</ul>
+</li>
+<li>渲染进程：就是我们说的<strong>浏览器内核</strong><ul>
+<li>负责页面渲染，脚本执行，事件处理等</li>
+<li>每个tab页一个渲染进程</li>
+</ul>
+</li>
+</ul>
+<p>而<strong>浏览器内核</strong>是多线程，在内核控制下各线程相互配合以保持同步，一个浏览器通常由以下常驻线程组成：</p>
+<ul>
+<li><p>GUI渲染线程</p>
+<ul>
+<li><p>负责渲染页面，布局和绘制页面</p>
+</li>
+<li><p>需要重绘和回流时，该线程就会执行。</p>
+</li>
+<li><p>与js引擎线程互斥，防止渲染结果不可预期</p>
+</li>
+</ul>
+</li>
+<li><p>JS引擎线程：</p>
+<ul>
+<li><p>负责处理解析和执行javascript脚本程序</p>
+</li>
+<li><p>只有一个JS引擎线程（单线程）</p>
+</li>
+<li><p>与GUI渲染线程互斥，防止渲染结果不可预期</p>
+</li>
+</ul>
+</li>
+<li><p>事件触发线程：</p>
+<ul>
+<li><p>用来控制事件循环（鼠标点击、setTimeout、ajax等）</p>
+</li>
+<li><p>当事件满足触发条件时，将事件放入到JS引擎所在的执行队列中</p>
+</li>
+</ul>
+</li>
+<li><p>定时触发器线程：setInterval与setTimeout所在的线程</p>
+<ul>
+<li><p>定时任务并不是由JS引擎计时的，是由定时触发线程来计时的</p>
+</li>
+<li><p>计时完毕后，通知事件触发线程</p>
+</li>
+</ul>
+</li>
+<li><p>异步http请求线程：</p>
+<ul>
+<li>浏览器有一个单独的线程用于处理AJAX请求</li>
+<li>当请求完成时，若有回调函数，通知事件触发线程</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>为什么 javascript 是单线程的</strong></p>
+<ul>
+<li>因为多线程的复杂性，多线程操作需要加锁，编码的复杂性会增高。而且，如果同时操作 DOM ，在多线程不加锁的情况下，最终会导致 DOM 渲染的结果不可预期。</li>
+</ul>
+<p><strong>为什么 GUI 渲染线程与 JS 引擎线程互斥</strong></p>
+<ul>
+<li><p>这是由于 JS 是可以操作 DOM 的，如果同时修改元素属性并同时渲染界面(即 <code>JS线程</code>和<code>UI线程</code>同时运行)， 那么渲染线程前后获得的元素就可能不一致了。</p>
+</li>
+<li><p>因此，为了防止渲染出现不可预期的结果，浏览器设定 <code>GUI渲染线程</code>和<code>JS引擎线程</code>为互斥关系， 当<code>JS引擎线程</code>执行时<code>GUI渲染线程</code>会被挂起，GUI更新则会被保存在一个队列中等待<code>JS引擎线程</code>空闲时立即被执行。</p>
+</li>
+</ul>
+</blockquote>
+<h1 id="2-事件循环"><a href="#2-事件循环" class="headerlink" title="2 事件循环"></a>2 事件循环</h1><p>在了解事件循环之前，先看JS引擎中支持事件循环的数据结构：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/bg2014100802.png"
+                      class="" title="Event Loop"
+                >
+
+<ul>
+<li>Heap：存放引用类型的对象</li>
+<li>执行上下文栈（简称为执行栈）：当执行全局代码或调用函数时，创建对应的执行上下文压入栈中。</li>
+<li>任务(事件)队列：一个 JavaScript 运行时包含了一个待处理任务的任务队列。每一个任务都关联着一个用以处理这个任务的回调函数。</li>
+</ul>
+<p>进入正文，前面说过JS引擎是单线程，意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。如果排队是因为计算量大，CPU忙不过来，倒也算了，但是很多时候CPU是闲着的，因为IO设备（输入输出设备）很慢（比如Ajax操作从网络读取数据），不得不等着结果出来，再往下执行。</p>
+<p>JavaScript语言的设计者意识到，这时主线程完全可以不管IO设备，挂起处于等待中的任务，先运行排在后面的任务。等到IO设备返回了结果，再回过头，把挂起的任务继续执行下去。</p>
+<p>于是，所有任务可以分成两种，一种是<strong>同步任务（synchronous）</strong>，另一种是<strong>异步任务（asynchronous）</strong>：</p>
+<ol>
+<li><p>所有同步任务都在主线程上执行，形成一个<strong>执行栈（execution context stack）</strong>。</p>
+</li>
+<li><p>主线程之外，还存在一个**”任务队列”（task queue）**。只要异步任务触发条件达成，将回调事件放到任务队列中</p>
+</li>
+<li><p>一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开始执行。</p>
+</li>
+<li><p>主线程不断重复上面的第三步。</p>
+</li>
+</ol>
+<p>整个过程一直循环往复构成了JS的EventLoop：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/164974fb89da87c5tplv-t2oaga2asx-watermark.awebp"
+                      class="" title="cmd-markdown-logo"
+                >
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> timerCallback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;wait one second&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> httpCallback = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;get server data success&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line"><span class="comment">// 同步任务</span></span><br><span class="line"><span class="comment">// 创建一个异步任务：通知定时器线程 1s 后将 timerCallback 交由事件触发线程处理</span></span><br><span class="line"><span class="comment">// 1s 后事件触发线程将 timerCallback 加入到事件队列中</span></span><br><span class="line"><span class="built_in">setTimeout</span>(timerCallback,<span class="number">1000</span>);</span><br><span class="line"><span class="comment">// 同步任务</span></span><br><span class="line"><span class="comment">// 创建一个异步任务：通知异步http请求线程发送网络请求，请求成功后将 httpCallback 交由事件触发线程处理</span></span><br><span class="line"><span class="comment">// 请求成功后事件触发线程将 httpCallback 加入到事件队列中</span></span><br><span class="line">$.get(<span class="string">&#x27;www.xxxx.com&#x27;</span>,httpCallback);</span><br><span class="line"><span class="comment">// 同步任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;world&#x27;</span>);</span><br><span class="line"><span class="comment">//hello</span></span><br><span class="line"><span class="comment">//world</span></span><br><span class="line"><span class="comment">//wait one second</span></span><br><span class="line"><span class="comment">//get server data success</span></span><br><span class="line"><span class="comment">// 所有同步任务执行完后</span></span><br><span class="line"><span class="comment">// 询问事件触发线程在事件事件队列中是否有需要执行的回调函数</span></span><br><span class="line"><span class="comment">// 如果没有，一直询问，直到有为止</span></span><br><span class="line"><span class="comment">// 如果有，将回调事件加入执行栈中，开始执行回调代码</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-微任务与宏任务"><a href="#3-微任务与宏任务" class="headerlink" title="3 微任务与宏任务"></a>3 微任务与宏任务</h1><p>异步任务又可以细分为宏任务与微任务。微任务和宏任务皆为异步任务，它们都属于一个队列。主要区别在于他们的执行顺序等。</p>
+<p>博主看来同步异步、宏与微可以用以下的关系图表示：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128202323956.png"
+                      class="" title="image-20220128202323956"
+                >
+
+<h2 id="3-1-宏任务"><a href="#3-1-宏任务" class="headerlink" title="3.1 宏任务"></a>3.1 宏任务</h2><p>**宏任务(macrotask)**：进入执行上下文栈等待主线程执行的主代码块，包括从异步队列里加入到栈的回调函数，如setTimeout()、setInterval()的回调，其中不含异步队列中的微任务如Promise.then回调。</p>
+<p>此时注意事件循环中(event loop)从异步队列加入到栈的宏任务是作为下一个事件来执行的，由于GUI渲染线程机制，每次事件循环后都会进行页面渲染，如下流程：</p>
+<blockquote>
+<p>第一次宏任务完成 → 页面渲染 → 第二次宏任务完成（包含上一次宏任务事件时，异步队列中加入的宏任务） → 页面渲染…</p>
+</blockquote>
+<p>常见宏任务有：</p>
+<ul>
+<li><p>主代码块</p>
+</li>
+<li><p>setTimeout</p>
+</li>
+<li><p>setInterval</p>
+</li>
+</ul>
+<p>引用该文章：<a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903919789801486" >「前端进阶」从多线程到Event Loop全面梳理 - 掘金 (juejin.cn)<i class="fas fa-external-link-alt"></i></a>的例子。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.style = <span class="string">&#x27;background:blue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">document</span>.body.style = <span class="string">&#x27;background:black&#x27;</span></span><br><span class="line">&#125;,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/16caca3ed44e6b16tplv-t2oaga2asx-watermark.awebp"
+                      class="" title="img"
+                >
+
+<p>我会看到，页面先显示成蓝色背景，然后瞬间变成了黑色背景，这是因为以上代码属于两次<code>宏任务</code>，第一次<code>宏任务</code>执行的代码是将背景变成蓝色，然后触发渲染，将页面变成蓝色，再触发第二次宏任务将背景变成黑色。</p>
+<blockquote>
+<p>但其实实际上并没有宏任务这一说，只是在ES6中引入了微任务，为了区分原来的任务与微任务，引入了这一概念。</p>
+</blockquote>
+<h2 id="3-2-微任务"><a href="#3-2-微任务" class="headerlink" title="3.2 微任务"></a>3.2 微任务</h2><p>**微任务(microtask)**：是异步队列中，在当前这一次宏任务执行完后，页面渲染之前要执行的任务。</p>
+<p>也就是说，当<code>宏任务</code>执行完，会在渲染前，将执行期间所产生的所有<code>微任务</code>都执行完。此时注意，<strong>即使当前微任务执行过程中，产生了新的微任务，也会在下一个宏任务开始执行之前且当前事件循环结束之前执行完所有的微任务。</strong></p>
+<blockquote>
+<p>第一次宏任务 → 第一次所有微任务 → 页面渲染 → 第二次宏任务（包含上一次宏任务事件时，异步队列中加入的宏任务）→ 第二次所有微任务 → 页面渲染…</p>
+</blockquote>
+<p>常见微任务有：</p>
+<ul>
+<li><p>process.nextTick()</p>
+</li>
+<li><p>Promise</p>
+</li>
+<li><p>Object.observe</p>
+</li>
+</ul>
+<p>下图可以很清楚的表示所有的概念：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/165a8667bb6e623etplv-t2oaga2asx-watermark.awebp"
+                      class="" title="browser-eventloop"
+                >
+
+<h1 id="4-EventLoop实例"><a href="#4-EventLoop实例" class="headerlink" title="4 EventLoop实例"></a>4 EventLoop实例</h1><p>来看<a class="link"   target="_blank" rel="noopener" href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" >Tasks, microtasks, queues and schedules - JakeArchibald.com<i class="fas fa-external-link-alt"></i></a>经典的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script start&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout&#x27;</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise1&#x27;</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise2&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;script end&#x27;</span>);</span><br><span class="line"><span class="comment">//script start</span></span><br><span class="line"><span class="comment">//script end</span></span><br><span class="line"><span class="comment">//promise1</span></span><br><span class="line"><span class="comment">//promise2</span></span><br><span class="line"><span class="comment">//setTimeout</span></span><br></pre></td></tr></table></figure>
+
+<p>逐步演示执行的过程，黄色为正在执行的任务，图中：</p>
+<ul>
+<li>Task：表示同步任务与加入的宏任务的任务队列</li>
+<li>Microtask：模拟出的表示微任务的任务队列，实际上不存在</li>
+<li>JS Stack：表示执行上下文栈</li>
+<li>log：控制台输出</li>
+</ul>
+<ol>
+<li><p>进入全局代码，创建第一个宏任务(全局执行)，将全局上下文压入栈中：</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128195328192.png"
+                      class="" title="image-20220128195328192"
+                ></li>
+<li><p>打印 ‘script start’</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128195407633.png"
+                      class="" title="image-20220128195407633"
+                ></li>
+<li><p>将setTimeout异步宏任务的回调函数加入到任务队列中</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128195726261.png"
+                      class="" title="image-20220128195726261"
+                ></li>
+<li><p>执行到Promise，将Promise的回调函数加入到微任务的任务队列</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128195848407.png"
+                      class="" title="image-20220128195848407"
+                ></li>
+<li><p>执行到全局代码末尾，打印</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128195958051.png"
+                      class="" title="image-20220128195958051"
+                ></li>
+<li><p>全局上下文出栈</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200041969.png"
+                      class="" title="image-20220128200041969"
+                ></li>
+<li><p>在第一个同步任务结束后，执行所有微任务</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200136666.png"
+                      class="" title="image-20220128200136666"
+                ></li>
+<li><p>将第一个微任务的onReslove回调函数的执行上下文加入栈中</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200240153.png"
+                      class="" title="image-20220128200240153"
+                ></li>
+<li><p>执行回调函数，因为第一个then的返回值是undefined，返回Promise.resolve(undefined)，触发第二个then回调函数作为微任务，将该微任务加入到队列中。</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200500252.png"
+                      class="" title="image-20220128200500252"
+                ></li>
+<li><p>第一个then的onResolved回调函数执行完成，执行上下文出栈。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200651252.png"
+                      class="" title="image-20220128200651252"
+                ></li>
+<li><p>第一个微任务结束，出队列，准备执行第二个微任务，将第二个微任务的onResolved回调函数的执行上下文加入栈中</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200729812.png"
+                      class="" title="image-20220128200729812"
+                ></li>
+<li><p>同理，打印玩后弹栈出队列</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200848790.png"
+                      class="" title="image-20220128200848790"
+                ></li>
+<li><p>所有微任务都执行完毕，浏览器更新，进行渲染</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128200948336.png"
+                      class="" title="image-20220128200948336"
+                ></li>
+<li><p>第一个同步任务彻底执行完毕，同步任务出队列。进入第二个宏任务</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128201106085.png"
+                      class="" title="image-20220128201106085"
+                ></li>
+<li><p>宏任务的回调函数上下文入栈，打印</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128201225585.png"
+                      class="" title="image-20220128201225585"
+                ></li>
+<li><p>执行完毕，回调函数上下文出栈</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128201316979.png"
+                      class="" title="image-20220128201316979"
+                ></li>
+<li><p>宏任务结束，退出任务队列，代码执行完毕。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/01/28/JS-EventLoop/image-20220128201339460.png"
+                      class="" title="image-20220128201339460"
+                ></li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>【1】<a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903919789801486" >「前端进阶」从多线程到Event Loop全面梳理 - 掘金 (juejin.cn)<i class="fas fa-external-link-alt"></i></a></p>
+<p>【2】<a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/post/6844903638238756878" >JS事件循环机制（event loop）之宏任务/微任务 - 掘金 (juejin.cn)<i class="fas fa-external-link-alt"></i></a></p>
+<p>【3】<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45888701/article/details/116781078" >(29条消息) 微任务/宏任务和同步/异步之间的关系_矢臻镶的博客-CSDN博客_宏任务是异步任务吗<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：JS深入学习(15)：EventLoop</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-01-28 15:58:39</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/01/28/JS-EventLoop/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/01/27/leetcode-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">leetcode-合并两个有序链表</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="nav-text">1 浏览器的进程与线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-text">2 事件循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%BE%AE%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="nav-text">3 微任务与宏任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="nav-text">3.1 宏任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="nav-text">3.2 微任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-EventLoop%E5%AE%9E%E4%BE%8B"><span class="nav-text">4 EventLoop实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-text">参考</span></a></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
