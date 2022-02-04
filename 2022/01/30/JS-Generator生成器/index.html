@@ -9,7 +9,7 @@
     
     <title>
         
-            JS-Generator生成器 |
+            JS深入学习(16)：Generator基础篇 |
         
         Sunburst7&#39;s Blog
     </title>
@@ -165,7 +165,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">JS-Generator生成器</span>
+            <span class="title-hover-animation">JS深入学习(16)：Generator基础篇</span>
         </div>
 
         
@@ -223,12 +223,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i>&nbsp;<span>3.5k Words</span>
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.2k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i>&nbsp;<span>16 Mins</span>
+            <i class="fas fa-clock"></i>&nbsp;<span>18 Mins</span>
         </span>
     
     
@@ -244,7 +244,36 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="1-Generator函数"><a href="#1-Generator函数" class="headerlink" title="1 Generator函数"></a>1 Generator函数</h1><p>Generator 函数是一个状态机，封装了多个内部状态。执行 <code>Generator</code> 函数会返回一个<strong>迭代器对象</strong>，可以依次遍历 <code>Generator</code> 函数内部的每一个状态。</p>
+            <p>异步编程对 JavaScript 语言太重要。JavaScript 语言的执行环境是“单线程”的，如果没有异步编程，根本没法用，非卡死不可。ES6 诞生以前，异步编程的方法，大概有下面四种。</p>
+<ul>
+<li><p>回调函数</p>
+<p>  JavaScript 语言对异步编程的实现，就是回调函数。所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。回调函数的英语名字<code>callback</code>，直译过来就是”重新调用”。</p>
+<p>  读取文件进行处理，是这样写的。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(<span class="string">&#x27;/etc/passwd&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>  上面代码中，<code>readFile</code>函数的第三个参数，就是回调函数，也就是任务的第二段。等到操作系统返回了<code>/etc/passwd</code>这个文件以后，回调函数才会执行。</p>
+<blockquote>
+<p>一个有趣的问题是，为什么 Node 约定，回调函数的第一个参数，必须是错误对象<code>err</code>（如果没有错误，该参数就是<code>null</code>）？</p>
+<p>原因是执行分成两段，第一段执行完以后，任务所在的上下文环境就已经结束了。在这以后抛出的错误，原来的上下文环境已经无法捕捉，只能当作参数，传入第二段。</p>
+</blockquote>
+<p>  回调函数本身并没有问题，它的问题出现在多个回调函数嵌套。假定读取<code>A</code>文件之后，再读取<code>B</code>文件，代码如下。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(fileA, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">  fs.readFile(fileB, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>  不难想象，如果依次读取两个以上的文件，就会出现多重嵌套。代码不是纵向发展，而是横向发展，很快就会乱成一团，无法管理。因为多个异步操作形成了强耦合，只要有一个操作需要修改，它的上层回调函数和下层回调函数，可能都要跟着修改。这种情况就称为**”回调函数地狱”（callback hell）**。</p>
+</li>
+<li><p>Promise 对象</p>
+<p>  为了解决回调地狱而提出的。允许将回调函数的嵌套，改成链式调用。采用 Promise，连续读取多个文件，写法如下。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = <span class="built_in">require</span>(<span class="string">&#x27;fs-readfile-promise&#x27;</span>);</span><br><span class="line"></span><br><span class="line">readFile(fileA)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> readFile(fileB);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>  可以看到，Promise 的写法只是回调函数的改进，使用<code>then</code>方法以后，异步任务的两段执行看得更清楚了，除此以外，并无新意。<strong>Promise 的最大问题是代码冗余，原来的任务被 Promise 包装了一下，不管什么操作，一眼看去都是一堆<code>then</code>，原来的语义变得很不清楚。</strong></p>
+</li>
+<li><p>事件监听</p>
+</li>
+<li><p>发布/订阅</p>
+</li>
+</ul>
+<p>Generator 函数将 JavaScript 异步编程带入了一个全新的阶段。</p>
+<h1 id="1-Generator函数"><a href="#1-Generator函数" class="headerlink" title="1 Generator函数"></a>1 Generator函数</h1><p>Generator 函数是一个状态机，封装了多个内部状态。执行 <code>Generator</code> 函数会返回一个<strong>迭代器对象</strong>，可以依次遍历 <code>Generator</code> 函数内部的每一个状态。</p>
 <p>形式上，<code>Generator</code>函数是一个普通函数，但是有两个特征：</p>
 <ul>
 <li><code>function</code>关键字与函数名之间有一个星号</li>
@@ -353,7 +382,7 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li>Post title：JS-Generator生成器</li>
+        <li>Post title：JS深入学习(16)：Generator基础篇</li>
         <li>Post author：Sunburst7</li>
         <li>Create time：2022-01-30 14:46:39</li>
         <li>
@@ -394,7 +423,7 @@
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">JS-Promise应用篇</span>
+                                <span class="post-nav-title-item">JS深入学习(17)：Promise应用篇</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>
