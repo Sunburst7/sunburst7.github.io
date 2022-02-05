@@ -302,7 +302,15 @@
 <p>要检查超过两个值，递归地利用相等性传递，这个博主没太看懂。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursivelyCheckEqual</span>(<span class="params">x, ...rest</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Object</span>.is(x, rest[<span class="number">0</span>]) &amp;&amp;</span><br><span class="line">	(rest.length &lt; <span class="number">2</span> || recursivelyCheckEqual(...rest));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-5-对象迭代"><a href="#1-5-对象迭代" class="headerlink" title="1.5 对象迭代"></a>1.5 对象迭代</h2><p>ECMAScript 2017 新增了两个静态方法，用于将对象内容转换为序列化的——更重要的是可迭代的——格式。这两个静态方法<code>Object.values()</code>和<code>Object.entries()</code>接收一个对象，返回它们内容的数组。<code>Object.values()</code>返回对象值的数组，<code>Object.entries()</code>返回键/值对的数组：</p>
+<h2 id="1-5-对象迭代"><a href="#1-5-对象迭代" class="headerlink" title="1.5 对象迭代"></a>1.5 对象迭代</h2><p>ECMAScript 2017 新增了两个静态方法，用于将对象内容转换为可迭代的格式。这两个静态方法<code>Object.values()</code>和<code>Object.entries()</code>接收一个对象，返回它们内容的数组：</p>
+<ul>
+<li><p><code>Object.keys()</code>返回属性名的数组</p>
+</li>
+<li><p><code>Object.values()</code>返回对象值的数组</p>
+</li>
+<li><p><code>Object.entries()</code>返回键/值对的数组</p>
+</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const o = &#123;</span><br><span class="line">    foo: &#x27;bar&#x27;,</span><br><span class="line">    baz: 1,</span><br><span class="line">    qux: &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">console.log(Object.values(o));// [&quot;bar&quot;, 1, &#123;&#125;]</span><br><span class="line">console.log(Object.entries((o)));// [[&quot;foo&quot;, &quot;bar&quot;], [&quot;baz&quot;, 1], [&quot;qux&quot;, &#123;&#125;]]</span><br></pre></td></tr></table></figure>
 
 <p>注意，非字符串属性会被转换为字符串输出。另外，这两个方法执行对象的浅复制，符号属性会被忽略：</p>
