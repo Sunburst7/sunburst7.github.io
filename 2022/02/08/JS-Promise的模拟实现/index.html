@@ -42,117 +42,313 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            <header class="header-wrapper">
+            $logo-title-font-size = 2rem;
+$pc-search-icon-font-size = 1.5rem;
+$menu-bar-line-height = 2.5px;
+$logo-image-box-width = 46px;
 
-    <div class="header-content">
-        <div class="left">
-            
-                <a class="logo-image" href="/">
-                    <img src="/images/cat50.svg">
-                </a>
-            
-            <a class="logo-title" href="/">
-                Sunburst7&#39;s Blog
-            </a>
-        </div>
+.header-wrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-color);
+  padding-top: $scroll-progress-bar-height;
 
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                首页
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                时间线
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/categories"
-                            >
-                                分类
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/tag"
-                            >
-                                标签
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/about"
-                            >
-                                关于
-                            </a>
-                        </li>
-                    
-                    
-                        <li class="menu-item search search-popup-trigger">
-                            <i class="fas fa-search"></i>
-                        </li>
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+  hover-style(false, 0, 0);
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">首页</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">时间线</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/categories">分类</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/tag">标签</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/about">关于</a>
-                </li>
-            
-        </ul>
-    </div>
+  .header-content {
+    position: relative;
+    height: 100%;
+    width: $main-content-width;
+    max-width: $content-max-width;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: $z-index-5;
 
-    <div class="window-mask"></div>
 
-</header>
+    &.has-first-screen {
+      max-width: $content-max-width * 1.2;
+    }
 
+    +keep-tablet() {
+      width: $main-content-width-tablet;
+    }
+
+    +keep-mobile() {
+      width: $main-content-width-mobile;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      transition-t("transform", "0", "0.2", "linear");
+
+      .header-shrink & {
+        transform: scale(0.72);
+        transform-origin: left;
+      }
+
+
+      if (hexo-config('base_info.logo_img') && hexo-config('base_info.logo_img') != '') {
+        .logo-image {
+          width: $logo-image-box-width;
+          height: $logo-image-box-width;
+          margin-right: 8px;
+
+
+          +keep-tablet() {
+            width: $logo-image-box-width * 0.9;
+            height: $logo-image-box-width * 0.9;
+          }
+
+          +keep-mobile() {
+            width: $logo-image-box-width * 0.8;
+            height: $logo-image-box-width * 0.8;
+          }
+
+          img {
+            border-radius: 6px;
+            width: 100%;
+          }
+        }
+
+      }
+
+      .logo-title {
+        font-size: $logo-title-font-size;
+        font-weight: bold;
+        letter-spacing: 1px;
+        line-height: 1;
+        color: var(--first-text-color);
+
+        +keep-tablet() {
+          font-size: $logo-title-font-size * 0.9;
+        }
+
+        +keep-mobile() {
+          font-size: $logo-title-font-size * 0.8;
+        }
+      }
+
+    }
+
+
+    .right {
+
+      .pc {
+
+        .menu-list {
+          display: flex;
+          align-items: center;
+
+          +keep-tablet() {
+            display: none;
+          }
+
+
+          .menu-item {
+            float: left;
+            position: relative;
+            margin-left: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--default-text-color);
+
+            &:first-child {
+              margin-left: 0;
+            }
+
+
+            a:hover, .active {
+
+              &::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                width: 100%;
+                height: 2px;
+                transform: translateX(-50%);
+                background: var(--primary-color);
+                transition-t("transform, bottom", "0, 0", "0.2, 0.2", "linear, linear");
+
+                .header-shrink & {
+                  bottom: -($header-shrink-height / 2 - 12);
+                }
+              }
+            }
+
+            &.search {
+              font-size: $pc-search-icon-font-size;
+              margin-left: 26px;
+
+              i {
+                color: var(--default-text-color);
+              }
+
+            }
+          }
+
+
+        }
+
+      }
+
+
+      .mobile {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .icon-item {
+          display: none;
+          position: relative;
+          cursor: pointer;
+          font-size: 18px;
+          margin-left: 12px;
+          width: 20px;
+          height: 20px;
+          color: var(--default-text-color);
+
+          i {
+            color: var(--default-text-color);
+          }
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          +keep-tablet() {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+
+        .menu-bar {
+
+          .menu-bar-middle {
+            width: 18px;
+            height: $menu-bar-line-height;
+            position: relative;
+            background: var(--default-text-color);
+
+            .header-drawer-show & {
+              background: transparent;
+            }
+
+
+            &::before, &::after {
+              content: '';
+              position: absolute;
+              left: 0;
+              width: 100%;
+              height: $menu-bar-line-height;
+              background: var(--default-text-color);
+              transition-t("transform", "0", "0.38", "ease");
+            }
+
+
+            &::before {
+              top: -6px;
+
+              .header-drawer-show & {
+                transform: translateY(6px) rotate(45deg);
+              }
+            }
+
+
+            &::after {
+              bottom: -6px;
+
+              .header-drawer-show & {
+                transform: translateY(-6px) rotate(-45deg);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    width: 100%;
+    padding: $header-height 0 20px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    z-index: $z-index-2;
+    background: var(--background-color);
+    transition-t("transform", "0", "0.38", "ease");
+
+    .header-drawer-show & {
+      transform: scaleY(1);
+    }
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .drawer-menu-item {
+        font-size: 1rem;
+        margin: 6px 0;
+        height: 38px;
+
+        a {
+          padding: 6px 20px;
+          border-radius: 20px;
+          color: var(--default-text-color);
+
+          &:hover {
+            color: var(--second-text-color);
+            border: 1px solid var(--default-text-color);
+          }
+
+
+          &.active {
+            border: 1px solid var(--default-text-color);
+            color: var(--second-text-color);
+          }
+        }
+
+
+      }
+    }
+  }
+
+
+  .window-mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: $z-index-1;
+    visibility: hidden;
+    opacity: 0;
+    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease");
+
+    .header-drawer-show & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+}
+
+.header-drawer-show {
+  overflow: hidden;
+}
 
         </div>
 
@@ -570,8 +766,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">A pending</span><br><span class="line">B fulfilled</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 
 <p>发现只有两组状态被输出，这两组都在<code>console.log(4)</code>前被输出，证明<code>setTimeout</code>里面的状态都被输出了，只有<code>then</code>里面的状态没有被输出</p>
-<p>这基本就可以确定是因为<code>then</code>里的状态判断出了问题</p>
-<p>这里涉及到事件循环，我们详细解读一下：</p>
+<p>这基本就可以确定是因为<code>then</code>里的状态判断出了问题。这里涉及到事件循环，我们详细解读一下：</p>
 <p>▪ <strong>首先</strong>，执行<code>console.log(1)</code>，输出<code>1</code></p>
 <p>▪ <strong>第二步</strong>，创建promise，执行函数体里的<code>console.log(2)</code>，输出<code>2</code></p>
 <p>▪ <strong>第三步</strong>，遇到<code>setTimeout</code>，<code>setTimeout</code>是宏任务，将<code>setTimeout</code>加入宏任务队列，等待执行</p>
@@ -579,7 +774,7 @@
 <p>▪ <strong>第五步</strong>，执行<code>console.log(3)</code>，输出<code>3</code>，此时当前执行栈已经清空</p>
 <p>▪ <strong>第六步</strong>，当前执行栈已经清空，先执行微任务队列的任务 <code>promise.then()</code>，发现promise的状态并没有改变，还是<code>pending</code>，所以没有输出。状态并没有改变的原因是：<code>resolve(&#39;这次一定&#39;)</code>是在<code>setTimeout</code>里的，但此时还没开始执行<code>setTimeout</code>，因为<code>setTimeout</code>是宏任务，宏任务在微任务后面执行</p>
 <p>▪ <strong>第七步</strong>，微任务队列已经清空，开始执行宏任务 <code>setTimeout</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(&#x27;A&#x27;,promise1.PromiseState);</span><br><span class="line">    resolve(&#x27;这次一定&#x27;);</span><br><span class="line">    console.log(&#x27;B&#x27;,promise1.PromiseState);</span><br><span class="line">    console.log(4);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;A&#x27;</span>,promise1.PromiseState);</span><br><span class="line">    resolve(<span class="string">&#x27;这次一定&#x27;</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;B&#x27;</span>,promise1.PromiseState);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
 <p>▪ <strong>第八步</strong>，执行 <code>console.log(&#39;A&#39;,promise1.PromiseState)</code>，此时promise状态还没发生变化，还是<code>pending</code>，所以输出 <code>A pending</code></p>
 <p>▪ <strong>第九步</strong>，执行 <code>resolve(&#39;这次一定&#39;);</code>，改变promise的状态为<code>fulfilled</code></p>
@@ -590,7 +785,7 @@
 </blockquote>
 <p>◾ 分析完上面的代码，我们知道了，因为先执行了<code>then</code>方法，但发现这个时候状态依旧是 <code>pending</code>，而我们手写部分没有定义<code>pending</code>待定状态的时候应该做什么，因此就少了<code>fulfilled: 这次一定</code> 这句话的输出</p>
 <p>所以我们就 <strong>直接给<code>then</code>方法里面添加待定状态的情况就可以了</strong>，也就是用<code>if</code>进行判断:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class myPromise &#123;</span><br><span class="line">	...</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        onFulfilled = typeof onFulfilled === &#x27;function&#x27; ? onFulfilled : value =&gt; value;</span><br><span class="line">        onRejected = typeof onRejected === &#x27;function&#x27; ? onRejected : reason =&gt; &#123;</span><br><span class="line">            throw reason;</span><br><span class="line">        &#125;;</span><br><span class="line">+       if (this.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">+ 		</span><br><span class="line">+ 		&#125;</span><br><span class="line">        if (this.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">            setTimeout(() =&gt; &#123;</span><br><span class="line">                onFulfilled(this.PromiseResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        if (this.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">            setTimeout(() =&gt; &#123;</span><br><span class="line">                onRejected(this.PromiseResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPromise</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="function"><span class="title">then</span>(<span class="params">onFulfilled, onRejected</span>)</span> &#123;</span><br><span class="line">        onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">&#x27;function&#x27;</span> ? onFulfilled : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">&#x27;function&#x27;</span> ? onRejected : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;;</span><br><span class="line">+       <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">+ 		</span><br><span class="line">+ 		&#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>◾ 但是问题来了，当<code>then</code>里面判断到 <code>pending</code> 待定状态时我们要干什么？</p>
 <p>因为这个时候<code>resolve</code>或者<code>reject</code>还没获取到任何值，因此我们必须让<code>then</code>里的函数稍后再执行，等<code>resolve</code>执行了以后，再执行<code>then</code></p>
@@ -751,7 +946,7 @@
 <p><strong>下面我们就根据总结的两点，结合 <code>Promises/A+ 规范</code> 来实现 <code>then</code> 方法的链式调用 💪💪💪</strong></p>
 <h2 id="3-then-方法返回一个新的Promise"><a href="#3-then-方法返回一个新的Promise" class="headerlink" title="3. then 方法返回一个新的Promise"></a>3. then 方法返回一个新的Promise</h2><p>◾ <strong>2.2.7规范 then 方法必须返回一个 promise 对象</strong></p>
 <p>我们在<code>then</code>方法里面返回一个 <code>新的手写Promise实例</code>，再把原来的代码复制上去：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class myPromise &#123;</span><br><span class="line">	...</span><br><span class="line">    then(onFulfilled, onRejected) &#123;</span><br><span class="line">        onFulfilled = typeof onFulfilled === &#x27;function&#x27; ? onFulfilled : value =&gt; value;</span><br><span class="line">        onRejected = typeof onRejected === &#x27;function&#x27; ? onRejected : reason =&gt; &#123;</span><br><span class="line">            throw reason;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">+       const promise2 = new myPromise((resolve, reject) =&gt; &#123;</span><br><span class="line">            if (this.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">                setTimeout(() =&gt; &#123;</span><br><span class="line">                    onFulfilled(this.PromiseResult);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; else if (this.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">                setTimeout(() =&gt; &#123;</span><br><span class="line">                    onRejected(this.PromiseResult);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; else if (this.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">                this.onFulfilledCallbacks.push(onFulfilled);</span><br><span class="line">                this.onRejectedCallbacks.push(onRejected);</span><br><span class="line">            &#125;</span><br><span class="line">+       &#125;)</span><br><span class="line">        </span><br><span class="line">+       return promise2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPromise</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="function"><span class="title">then</span>(<span class="params">onFulfilled, onRejected</span>)</span> &#123;</span><br><span class="line">        onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">&#x27;function&#x27;</span> ? onFulfilled : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">&#x27;function&#x27;</span> ? onRejected : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;;</span><br><span class="line">        </span><br><span class="line">+       <span class="keyword">const</span> promise2 = <span class="keyword">new</span> myPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.push(onFulfilled);</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.push(onRejected);</span><br><span class="line">            &#125;</span><br><span class="line">+       &#125;)</span><br><span class="line">        </span><br><span class="line">+       <span class="keyword">return</span> promise2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>◾ 2.2.7.1规范</strong> 如果 <code>onFulfilled</code> 或者 <code>onRejected</code> 返回一个值 <code>x</code> ，则运行下面的 <strong>Promise 解决过程：<code>[[Resolve]](promise2, x)</code></strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPromise</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="function"><span class="title">then</span>(<span class="params">onFulfilled, onRejected</span>)</span> &#123;</span><br><span class="line">        onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">&#x27;function&#x27;</span> ? onFulfilled : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">&#x27;function&#x27;</span> ? onRejected : +<span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> promise2 = <span class="keyword">new</span> myPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">+                   <span class="keyword">let</span> x = onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">+                   resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">+                   <span class="keyword">let</span> x = onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">+                   resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.push(onFulfilled);</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.push(onRejected);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> promise2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+<span class="comment">/**</span></span><br><span class="line"><span class="comment">+ * 对resolve()、reject() 进行改造增强 针对resolve()和reject()中不同值情况 进行处理</span></span><br><span class="line"><span class="comment">+ * <span class="doctag">@param  <span class="type">&#123;promise&#125;</span> </span>promise2 promise1.then方法返回的新的promise对象</span></span><br><span class="line"><span class="comment">+ * <span class="doctag">@param  <span class="type">&#123;[type]&#125;</span> </span>x         promise1中onFulfilled或onRejected的返回值</span></span><br><span class="line"><span class="comment">+ * <span class="doctag">@param  <span class="type">&#123;[type]&#125;</span> </span>resolve   promise2的resolve方法</span></span><br><span class="line"><span class="comment">+ * <span class="doctag">@param  <span class="type">&#123;[type]&#125;</span> </span>reject    promise2的reject方法</span></span><br><span class="line"><span class="comment">+ */</span></span><br><span class="line">+ <span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">promise2, x, resolve, reject</span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
@@ -820,7 +1015,7 @@
 <p>这里为大家提供了两个完整的 Promises/A+ 实现版本：</p>
 <h2 id="1-清爽简洁-无注释版"><a href="#1-清爽简洁-无注释版" class="headerlink" title="1. 清爽简洁 无注释版"></a>1. 清爽简洁 无注释版</h2><p><strong>完整的 Promises/A+ 实现 <code>(清爽简洁 无注释版)</code>：</strong></p>
 <p><em>完整版的代码较长，这里如果看不清楚的可以去我的GitHub上看，我专门维护了一个 手写 Promsie 的仓库</em>：<a class="link"   target="_blank" rel="noopener" href="https://github.com/yuanyuanbyte/Promise%E2%80%8D" >https://github.com/yuanyuanbyte/Promise‍<i class="fas fa-external-link-alt"></i></a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&#x27;fulfilled&#x27;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECTED = <span class="string">&#x27;rejected&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">func</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.PromiseState = myPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.PromiseResult = <span class="literal">null</span>;</span><br><span class="line">        <span class="built_in">this</span>.onFulfilledCallbacks = [];</span><br><span class="line">        <span class="built_in">this</span>.onRejectedCallbacks = [];</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            func(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>), <span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="built_in">this</span>.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">result</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.PromiseState = myPromise.FULFILLED;</span><br><span class="line">                <span class="built_in">this</span>.PromiseResult = result;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.forEach(<span class="function"><span class="params">callback</span> =&gt;</span> &#123;</span><br><span class="line">                    callback(result)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.PromiseState = myPromise.REJECTED;</span><br><span class="line">                <span class="built_in">this</span>.PromiseResult = reason;</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.forEach(<span class="function"><span class="params">callback</span> =&gt;</span> &#123;</span><br><span class="line">                    callback(reason)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">then</span>(<span class="params">onFulfilled, onRejected</span>)</span> &#123;</span><br><span class="line">        onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">&#x27;function&#x27;</span> ? onFulfilled : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">&#x27;function&#x27;</span> ? onRejected : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> promise2 = <span class="keyword">new</span> myPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">let</span> x = onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                        resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                        reject(e);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">let</span> x = onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                        resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                        reject(e)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="keyword">let</span> x = onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                            resolvePromise(promise2, x, resolve, reject)</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                            reject(e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="keyword">let</span> x = onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                            reject(e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> promise2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">promise2, x, resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x === promise2) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Chaining cycle detected for promise&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (x <span class="keyword">instanceof</span> myPromise) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            x.then(<span class="function"><span class="params">y</span> =&gt;</span> &#123;</span><br><span class="line">                resolvePromise(promise2, y, resolve, reject)</span><br><span class="line">            &#125;, reject);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">            resolve(x.PromiseResult);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">            reject(x.PromiseResult);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x !== <span class="literal">null</span> &amp;&amp; ((<span class="keyword">typeof</span> x === <span class="string">&#x27;object&#x27;</span> || (<span class="keyword">typeof</span> x === <span class="string">&#x27;function&#x27;</span>)))) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> then = x.then;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">return</span> reject(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> then === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> called = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                then.call(</span><br><span class="line">                    x,</span><br><span class="line">                    <span class="function"><span class="params">y</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                        called = <span class="literal">true</span>;</span><br><span class="line">                        resolvePromise(promise2, y, resolve, reject);</span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="params">r</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                        called = <span class="literal">true</span>;</span><br><span class="line">                        reject(r);</span><br><span class="line">                    &#125;</span><br><span class="line">                )</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                called = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">                reject(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            resolve(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> resolve(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myPromise</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> PENDING = <span class="string">&#x27;pending&#x27;</span>;</span><br><span class="line">    <span class="keyword">static</span> FULFILLED = <span class="string">&#x27;fulfilled&#x27;</span>;</span><br><span class="line">    <span class="keyword">static</span> REJECTED = <span class="string">&#x27;rejected&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">func</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.PromiseState = myPromise.PENDING;</span><br><span class="line">        <span class="built_in">this</span>.PromiseResult = <span class="literal">null</span>;</span><br><span class="line">        <span class="built_in">this</span>.onFulfilledCallbacks = [];</span><br><span class="line">        <span class="built_in">this</span>.onRejectedCallbacks = [];</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            func(<span class="built_in">this</span>.resolve.bind(<span class="built_in">this</span>), <span class="built_in">this</span>.reject.bind(<span class="built_in">this</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="built_in">this</span>.reject(error)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">resolve</span>(<span class="params">result</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.PromiseState = myPromise.FULFILLED;</span><br><span class="line">                <span class="built_in">this</span>.PromiseResult = result;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.forEach(<span class="function"><span class="params">callback</span> =&gt;</span> &#123;</span><br><span class="line">                    callback(result)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">reject</span>(<span class="params">reason</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.PromiseState = myPromise.REJECTED;</span><br><span class="line">                <span class="built_in">this</span>.PromiseResult = reason;</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.forEach(<span class="function"><span class="params">callback</span> =&gt;</span> &#123;</span><br><span class="line">                    callback(reason)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="title">then</span>(<span class="params">onFulfilled, onRejected</span>)</span> &#123;</span><br><span class="line">        onFulfilled = <span class="keyword">typeof</span> onFulfilled === <span class="string">&#x27;function&#x27;</span> ? onFulfilled : <span class="function"><span class="params">value</span> =&gt;</span> value;</span><br><span class="line">        onRejected = <span class="keyword">typeof</span> onRejected === <span class="string">&#x27;function&#x27;</span> ? onRejected : <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> promise2 = <span class="keyword">new</span> myPromise(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">let</span> x = onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                        resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                        reject(e);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">let</span> x = onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                        resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                        reject(e)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">                <span class="built_in">this</span>.onFulfilledCallbacks.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="keyword">let</span> x = onFulfilled(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                            resolvePromise(promise2, x, resolve, reject)</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                            reject(e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="built_in">this</span>.onRejectedCallbacks.push(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            <span class="keyword">let</span> x = onRejected(<span class="built_in">this</span>.PromiseResult);</span><br><span class="line">                            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                            reject(e);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> promise2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolvePromise</span>(<span class="params">promise2, x, resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x === promise2) &#123;</span><br><span class="line">        <span class="keyword">return</span> reject(<span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">&#x27;Chaining cycle detected for promise&#x27;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (x <span class="keyword">instanceof</span> myPromise) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x.PromiseState === myPromise.PENDING) &#123;</span><br><span class="line">            x.then(<span class="function"><span class="params">y</span> =&gt;</span> &#123;</span><br><span class="line">                resolvePromise(promise2, y, resolve, reject)</span><br><span class="line">            &#125;, reject);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x.PromiseState === myPromise.FULFILLED) &#123;</span><br><span class="line">            resolve(x.PromiseResult);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x.PromiseState === myPromise.REJECTED) &#123;</span><br><span class="line">            reject(x.PromiseResult);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (x !== <span class="literal">null</span> &amp;&amp; ((<span class="keyword">typeof</span> x === <span class="string">&#x27;object&#x27;</span> || (<span class="keyword">typeof</span> x === <span class="string">&#x27;function&#x27;</span>)))) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> then = x.then;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">return</span> reject(e);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> then === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">let</span> called = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                then.call(x, </span><br><span class="line">                         <span class="function"><span class="params">y</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                        called = <span class="literal">true</span>;</span><br><span class="line">                        resolvePromise(promise2, y, resolve, reject);</span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="params">r</span> =&gt;</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                        called = <span class="literal">true</span>;</span><br><span class="line">                        reject(r);</span><br><span class="line">                    &#125;</span><br><span class="line">                )</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                <span class="keyword">if</span> (called) <span class="keyword">return</span>;</span><br><span class="line">                called = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">                reject(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            resolve(x);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> resolve(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-按步分析-注释加持版"><a href="#2-按步分析-注释加持版" class="headerlink" title="2. 按步分析 注释加持版"></a>2. 按步分析 注释加持版</h2><p><strong>完整的 Promises/A+ 实现 <code>(按步分析 注释加持版)</code>：</strong></p>
 <p><em>完整版的代码较长，这里如果看不清楚的可以去我的GitHub上看，我专门维护了一个 手写 Promsie 的仓库</em>：<a class="link"   target="_blank" rel="noopener" href="https://github.com/yuanyuanbyte/Promise%E2%80%8D" >https://github.com/yuanyuanbyte/Promise‍<i class="fas fa-external-link-alt"></i></a></p>
