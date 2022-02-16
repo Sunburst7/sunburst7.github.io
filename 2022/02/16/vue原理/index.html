@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            Vue深入学习(1)：Vue2内部运行原理 |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"sunburst7.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Vue深入学习(1)：Vue2内部运行原理</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-16 17:23:23</span>
+        <span class="mobile">2022-02-16 17:23</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Vue/">Vue</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue/">vue</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>4.2k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>17 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-响应式系统基本原理"><a href="#1-响应式系统基本原理" class="headerlink" title="1 响应式系统基本原理"></a>1 响应式系统基本原理</h1><p>本节主要参考：</p>
+<p>【1】<a class="link"   target="_blank" rel="noopener" href="https://juejin.cn/book/6844733705089449991" >剖析 Vue.js 内部运行机制 - 染陌同学 - 掘金小册 (juejin.cn)<i class="fas fa-external-link-alt"></i></a></p>
+<p>【2】<a class="link"   target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1d4411v7UX?p=6&spm_id_from=pageDriver" >尤雨溪教你写vue 高级vue教程 源码分析 中文字幕翻译完毕_哔哩哔哩_bilibili<i class="fas fa-external-link-alt"></i></a></p>
+<p>Vue.js 是一款 MVVM 框架，数据模型仅仅是普通的 JavaScript 对象，但是对这些对象进行操作时，却能影响对应视图，它的核心实现就是「<strong>响应式系统</strong>」。</p>
+<p>响应式系统是 Vue 的一个核心特性，用于监听视图中绑定的数据，当数据发生改变时视图自动更新。人们往往对响应性这个术语有一些误解或困惑，会认为响应性就是响应性编程。但是在这里只要状态发生改变，系统依赖部分发生<strong>自动更新</strong>就可以称为响应性。在 web应用中，数据的变化如何响应到DOM中，就是Vue解决的问题。</p>
+<p>本节主要介绍vue2的响应式系统原理，学完后再学习vue3事半功倍。总结vue运行时机制如下图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/01db136b4380b1804c072899e92daa3d_1752x1216.gif"
+                      class="" title="img"
+                >
+
+<h2 id="1-1-基本原理"><a href="#1-1-基本原理" class="headerlink" title="1.1 基本原理"></a>1.1 基本原理</h2><p>在 <code>new Vue()</code> 之后。 Vue 会调用 <code>_init</code> 函数进行初始化，也就是这里的 <code>init</code> 过程，它会初始化生命周期、事件、 props、 methods、 data、 computed 与 watch 等。其中最重要的是通过 <code>Object.defineProperty</code> 设置 <code>setter</code> 与 <code>getter</code> 函数，用来实现「<strong>响应式</strong>」以及「<strong>依赖收集</strong>」：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/c4dd695d1c4423aeb8ea55e67fff486d_828x336.gif"
+                      class="" title="img"
+                >
+
+<p>首先我们来介绍一下 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"><code>Object.defineProperty</code></a>，Vue.js就是基于它实现「<strong>响应式系统</strong>」的。</p>
+<p>首先是使用方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    obj: 目标对象</span></span><br><span class="line"><span class="comment">    prop: 需要操作的目标对象的属性名</span></span><br><span class="line"><span class="comment">    descriptor: 描述符</span></span><br><span class="line"><span class="comment">    	- `enumerable`，属性是否可枚举，默认 false。</span></span><br><span class="line"><span class="comment">		- `configurable`，属性是否可以被修改或者删除，默认 false。</span></span><br><span class="line"><span class="comment">		- `get`，获取属性的方法。</span></span><br><span class="line"><span class="comment">		- `set`，设置属性的方法。</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    return value 传入对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, prop, descriptor)</span><br></pre></td></tr></table></figure>
+
+<p>如何通过 <code>Object.defineProperty</code> 来实现对对象的「<strong>响应式</strong>」化？在这里你只要先了解当Vue 会调用 <code>_init</code> 函数进行初始化时，会将Vue实例data属性（实际是一个函数，返回一个对象）作为参数调用<code>Object.defineProperty</code>，给每个数据添加<code>setter</code> 与 <code>getter</code> 函数：</p>
+<ul>
+<li><p>当数据被声明时触发 <code>getter</code> ，添加依赖项（什么是依赖请看下一节）</p>
+</li>
+<li><p>当数据修改时触发<code>setter</code>，通知所有依赖项更新视图</p>
+</li>
+</ul>
+<p><strong>练习：getter和setter</strong></p>
+<p>实现一个 <code>convert</code>函数，要求如下:</p>
+<ul>
+<li>接收一个对象作为参数</li>
+<li>利用getter/setters转换对象的属性</li>
+<li>转换后的对象不但要保持原有行为，而且在执行读/写操作时打印日志。</li>
+</ul>
+<p>使用案例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123; foo: 123 &#125;</span><br><span class="line">convert(obj)</span><br><span class="line"></span><br><span class="line">obj.foo // 需要打印: &#x27;getting key &quot;foo&quot;: 123&#x27;</span><br><span class="line">obj.foo = 234 // 需要打印: &#x27;setting key &quot;foo&quot; to 234&#x27;</span><br><span class="line">obj.foo // 需要打印: &#x27;getting key &quot;foo&quot;: 234&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>实现如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isObject</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span></span><br><span class="line">    &amp;&amp; !<span class="built_in">Array</span>.isArray(obj)<span class="comment">// 数组是高阶对象</span></span><br><span class="line">    &amp;&amp; obj !== <span class="literal">null</span> <span class="comment">//null也是对象</span></span><br><span class="line">    &amp;&amp; obj !== <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convert</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!isObject(obj)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> internalValue = obj[key]</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">      get () &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`getting key &quot;<span class="subst">$&#123;key&#125;</span>&quot;: <span class="subst">$&#123;internalValue&#125;</span>`</span>)</span><br><span class="line">        <span class="keyword">return</span> internalValue</span><br><span class="line">      &#125;,</span><br><span class="line">      set (newValue) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`setting key &quot;<span class="subst">$&#123;key&#125;</span>&quot; to: <span class="subst">$&#123;newValue&#125;</span>`</span>)</span><br><span class="line">        internalValue = newValue</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-依赖收集追踪原理"><a href="#1-2-依赖收集追踪原理" class="headerlink" title="1.2 依赖收集追踪原理"></a>1.2 依赖收集追踪原理</h2><p>假设我们现在有一个全局的对象，我们可能会在多个 Vue 对象中用到它进行展示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> globalObj = &#123;</span><br><span class="line">    <span class="attr">text1</span>: <span class="string">&#x27;text1&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o1 = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    <span class="attr">template</span>:</span><br><span class="line">        <span class="string">`&lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;&#123;&#123;text1&#125;&#125;&lt;/span&gt; </span></span><br><span class="line"><span class="string">        &lt;div&gt;`</span>,</span><br><span class="line">    <span class="attr">data</span>: globalObj</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o2 = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    <span class="attr">template</span>:</span><br><span class="line">        <span class="string">`&lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;&#123;&#123;text1&#125;&#125;&lt;/span&gt; </span></span><br><span class="line"><span class="string">        &lt;div&gt;`</span>,</span><br><span class="line">    <span class="attr">data</span>: globalObj</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这个时候，我们执行了如下操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">globalObj.text1 = <span class="string">&#x27;hello,text1&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们应该需要通知 <code>o1</code> 以及 <code>o2</code> 两个vm实例进行视图的更新，「<strong>依赖收集</strong>」会让 <code>text1</code> 这个数据知道有两个地方依赖我的数据，我变化的时候需要通知它们。</p>
+<p>实现依赖收集的这个过程主要依靠两个模式：</p>
+<ul>
+<li><strong>发布订阅模式</strong></li>
+<li><strong>观察者模式</strong></li>
+</ul>
+<p>为了模拟依赖收集的过程，我们模拟一个场景：新建一个包含<code>depend()</code>方法和<code>notify()</code>方法的<strong>订阅者</strong><code>Dep</code>类。</p>
+<ul>
+<li><code>depend()</code>用于声明一段代码依赖于某个变量</li>
+<li><code>notify()</code>用于通知所有订阅者更新视图</li>
+</ul>
+<p>同时我们需要一个<code>autorun()</code>函数，参数是一个<strong>声明了某个数据的视图更新函数</strong>。<code>autorun()</code>获取更新函数并在更新函数订阅的属性发生突变时重新运行它。 如果更新函数依赖于该属性，则称该更新函数正在“订阅”该属性。 </p>
+<p>借助2.1节的<code>convert()</code>（改名为<code>observe()</code>表示添加一个观察者）实现一个小型的观察者，通过在getter和setter中调用<code>depend</code>方法和<code>notfiy</code>方法，就可以实现自动更新数据的目地，这也是Vue实现自动更新的核心原理。期望实现的调用效果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">observe(state)</span><br><span class="line"></span><br><span class="line">autorun(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(state.count)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 打印&quot;count is: 0&quot;</span></span><br><span class="line"></span><br><span class="line">state.count++</span><br><span class="line"><span class="comment">// 打印&quot;count is: 1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>最终整合代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  <span class="title">constructor</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.subscribers = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  depend () &#123;</span><br><span class="line">    <span class="keyword">if</span> (activeUpdate) &#123;</span><br><span class="line">      <span class="built_in">this</span>.subscribers.add(activeUpdate)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  notify () &#123;</span><br><span class="line">    <span class="built_in">this</span>.subscribers.forEach(<span class="function"><span class="params">sub</span> =&gt;</span> sub())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> internalValue = obj[key]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> dep = <span class="keyword">new</span> Dep()</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">      <span class="comment">// 在getter收集依赖项，当触发notify时重新运行</span></span><br><span class="line">      get () &#123;</span><br><span class="line">        dep.depend()<span class="comment">// 收集依赖</span></span><br><span class="line">        <span class="keyword">return</span> internalValue</span><br><span class="line">      &#125;,</span><br><span class="line"></span><br><span class="line">      <span class="comment">// setter用于调用notify</span></span><br><span class="line">      set (newVal) &#123;</span><br><span class="line">        <span class="keyword">const</span> changed = internalValue !== newVal</span><br><span class="line">        internalValue = newVal</span><br><span class="line">        <span class="keyword">if</span> (changed) &#123;</span><br><span class="line">          dep.notify()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> activeUpdate = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">autorun</span> (<span class="params">update</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> watcher = <span class="function">() =&gt;</span> &#123;<span class="comment">// 定义一个观察者</span></span><br><span class="line">    activeUpdate = watcher</span><br><span class="line">    update()</span><br><span class="line">    activeUpdate = <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">  watcher()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">  <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">observe(state)</span><br><span class="line"></span><br><span class="line">autorun(<span class="function">() =&gt;</span> &#123;<span class="comment">//声明了一个视图函数</span></span><br><span class="line">  <span class="built_in">console</span>.log(state.count)</span><br><span class="line">&#125;)<span class="comment">//0</span></span><br><span class="line"></span><br><span class="line">state.count++<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+
+<p>仔细分析这个代码：</p>
+<ul>
+<li><code>Dep</code>类定义了一个订阅者，用与存储观察者的更新函数</li>
+<li><code>activeUpdate</code>变量用于保存观察者，确保在<code>autorun</code>的作用域外也能拿到观察者</li>
+<li><code>observe(obj)</code>用于添加<code>setter</code> 与 <code>getter</code> 函数<ul>
+<li>当数据被调用时（第一次被调用是在 render function 进行渲染，那么其中的依赖的对象都会被「读取」），触发<code>getter</code>，将<code>activeUpdate</code>变量代表的观察者存储在订阅集合中</li>
+<li>当数据被修改时，发布订阅，依次执行所有的观察者代表某个数据的视图函数</li>
+</ul>
+</li>
+<li><code>autorun(update)</code>用于保存观察者<code>watcher</code>到<code>activeUpdate</code>，同时第一次执行更新函数（类似 render function的作用）</li>
+</ul>
+<h2 id="1-3-总结"><a href="#1-3-总结" class="headerlink" title="1.3 总结"></a>1.3 总结</h2><p>首先在 <code>observer</code> 的过程中会注册 <code>get</code> 方法，该方法用来进行「<strong>依赖收集</strong>」。转换接收到的对象中的属性并使它们具有响应性。 对于每个转换后的属性，它都会被分配一个“Dep”实例，该实例维护一个订阅更新函数的列表，并在数据变化时，<code>setter</code> 会调用 <code>Dep</code> 对象的 <code>notify</code> 方法通知它内部所有的观察者对象进行<strong>视图更新</strong>（触发它们重新运行 ）。</p>
+<p>这是 <code>Object.defineProperty</code> 的 <code>set/get</code> 方法处理的事情，那么「<strong>依赖收集</strong>」的前提条件还有两个：</p>
+<ol>
+<li>触发 <code>get</code> 方法；</li>
+<li>新建一个 <code>watcher</code> 对象。</li>
+</ol>
+<p>这个我们在 Vue 的构造类中处理。新建一个 <code>watcher</code> 对象只需要对每个变量调用<code>autorun()</code> 出来。而触发 <code>get</code> 方法也很简单，实际上只要把 render function 进行渲染，那么其中的依赖的对象都会被「读取」，这里我们通过打印来模拟这个过程，读取 count 来触发 <code>get</code> 进行「依赖收集」。</p>
+<p>我们再编写一个Vue类实现这个过程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="comment">//2.2的代码</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">options</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>._data = options.data();</span><br><span class="line">        observe(<span class="built_in">this</span>._data);</span><br><span class="line">        <span class="built_in">Object</span>.keys(<span class="built_in">this</span>._data).forEach(<span class="function">(<span class="params">key</span>)=&gt;</span>&#123;<span class="comment">// 为每个数据声明一个视图函数</span></span><br><span class="line">        	autorun(<span class="function">()=&gt;</span>&#123;<span class="built_in">console</span>.log(<span class="string">`render: <span class="subst">$&#123;<span class="built_in">this</span>._data[key]&#125;</span>`</span>)&#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">     <span class="function"><span class="title">data</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span>&#123;</span><br><span class="line">        	<span class="attr">count</span>:<span class="number">0</span> </span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;)<span class="comment">//render: 0</span></span><br><span class="line"></span><br><span class="line">vm._data.count++<span class="comment">//render: 1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-编译"><a href="#2-编译" class="headerlink" title="2 编译"></a>2 编译</h1><p>初始化之后调用 <code>$mount</code> 会挂载组件，如果是运行时编译，即不存在 render function 但是存在 template 的情况，需要进行「<strong>编译</strong>」步骤。</p>
+<p>compile编译可以分成 <code>parse</code>、<code>optimize</code> 与 <code>generate</code> 三个阶段，最终需要得到 render function。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/image-20220216123137056.png"
+                      class="" title="image-20220216123137056"
+                >
+
+<p>以下面的模板为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">&quot;c&quot;</span> <span class="attr">class</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;isShow&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-for</span>=<span class="string">&quot;item in sz&quot;</span>&gt;</span>&#123;&#123;item&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>parse：<code>parse</code> 会用正则等方式解析 template 模板中的指令、class、style等数据，形成AST。</p>
+<p>  模板会被解析成这样的AST：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">/* 标签属性的map，记录了标签上属性 */</span></span><br><span class="line">    <span class="string">&#x27;attrsMap&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;:class&#x27;</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;demo&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;v-if&#x27;</span>: <span class="string">&#x27;isShow&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/* 解析得到的:class */</span></span><br><span class="line">    <span class="string">&#x27;classBinding&#x27;</span>: <span class="string">&#x27;c&#x27;</span>,</span><br><span class="line">    <span class="comment">/* 标签属性v-if */</span></span><br><span class="line">    <span class="string">&#x27;if&#x27;</span>: <span class="string">&#x27;isShow&#x27;</span>,</span><br><span class="line">    <span class="comment">/* v-if的条件 */</span></span><br><span class="line">    <span class="string">&#x27;ifConditions&#x27;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;exp&#x27;</span>: <span class="string">&#x27;isShow&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">/* 标签属性class */</span></span><br><span class="line">    <span class="string">&#x27;staticClass&#x27;</span>: <span class="string">&#x27;demo&#x27;</span>,</span><br><span class="line">    <span class="comment">/* 标签的tag */</span></span><br><span class="line">    <span class="string">&#x27;tag&#x27;</span>: <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">    <span class="comment">/* 子标签数组 */</span></span><br><span class="line">    <span class="string">&#x27;children&#x27;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&#x27;attrsMap&#x27;</span>: &#123;</span><br><span class="line">                <span class="string">&#x27;v-for&#x27;</span>: <span class="string">&quot;item in sz&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="comment">/* for循环的参数 */</span></span><br><span class="line">            <span class="string">&#x27;alias&#x27;</span>: <span class="string">&quot;item&quot;</span>,</span><br><span class="line">            <span class="comment">/* for循环的对象 */</span></span><br><span class="line">            <span class="string">&#x27;for&#x27;</span>: <span class="string">&#x27;sz&#x27;</span>,</span><br><span class="line">            <span class="comment">/* for循环是否已经被处理的标记位 */</span></span><br><span class="line">            <span class="string">&#x27;forProcessed&#x27;</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="string">&#x27;tag&#x27;</span>: <span class="string">&#x27;span&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;children&#x27;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">/* 表达式，_s是一个转字符串的函数 */</span></span><br><span class="line">                    <span class="string">&#x27;expression&#x27;</span>: <span class="string">&#x27;_s(item)&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;text&#x27;</span>: <span class="string">&#x27;&#123;&#123;item&#125;&#125;&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>optimize：<code>optimize</code> 的主要作用是标记 static 静态节点，这是 Vue 在编译过程中的一处优化，后面当 <code>update</code> 更新界面时，会有一个 <code>patch</code> 的过程， diff 算法会直接跳过静态节点，从而减少了比较的过程，优化了 <code>patch</code> 的性能。</p>
+<p>  经过 <code>optimize</code> 这层的处理，每个节点会加上 <code>static</code> 属性，用来标记是否是静态的。</p>
+</li>
+<li><p>generate：<code>generate</code> 是将 AST 转化成 render function 字符串的过程，得到结果是 render 的字符串以及 staticRenderFns 字符串。下面是真实Vue.js编译的<strong>Render Function</strong>：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">with</span>(<span class="params"><span class="built_in">this</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (isShow) ? </span><br><span class="line">    _c(</span><br><span class="line">        <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">staticClass</span>: <span class="string">&quot;demo&quot;</span>,</span><br><span class="line">            <span class="attr">class</span>: c</span><br><span class="line">        &#125;,</span><br><span class="line">        _l(</span><br><span class="line">            (sz),</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> _c(<span class="string">&#x27;span&#x27;</span>,[_v(_s(item))])</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    : _e()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>在经历过 <code>parse</code>、<code>optimize</code> 与 <code>generate</code> 这三个阶段以后，组件中就会存在渲染 Virtual DOM 所需的 <strong>render function</strong> 了。</p>
+<p><strong>参考</strong>：[VueDemo/《template 模板是怎样通过 Compile 编译的》.js at master · answershuto/VueDemo (github.com)](<a class="link"   target="_blank" rel="noopener" href="https://github.com/answershuto/VueDemo/blob/master/%E3%80%8Atemplate" >https://github.com/answershuto/VueDemo/blob/master/《template<i class="fas fa-external-link-alt"></i></a> 模板是怎样通过 Compile 编译的》.js)</p>
+<h1 id="3-Render-Function"><a href="#3-Render-Function" class="headerlink" title="3 Render Function"></a>3 Render Function</h1><p>在Vue中，<strong>渲染系统</strong>是组成响应系统的另外一半，Vue的templates实际上被编译为上一节提到的render function，通过<code>render(h)</code>调用 render function 渲染成virtual DOM，最后转换成真实DOM：</p>
+<blockquote>
+<p>如果你把模版直接传入Vue实例那Vue会执行完整的编译过程，把传入的template编译为浏览器可运行的DOM。如果使用Vue CLI构建项目，会用到webpack和vue-loader，实际上vue-loader会在构建阶段实现预编译，把模版代码编译为浏览器可直接解析的DOM代码。</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/webp.webp"
+                      class="" title="img"
+                >
+
+<h2 id="3-1-Virtual-DOM"><a href="#3-1-Virtual-DOM" class="headerlink" title="3.1 Virtual DOM"></a>3.1 Virtual DOM</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/Screenshot020-08-219.19.20-8699982.1b4fcb04-16449937258642.png"
+                      class="" title="Screenshot020-08-219.19.20"
+                >
+
+<p>Vue 通过建立一个<strong>虚拟 DOM</strong> 来追踪自己要如何改变真实 DOM。请仔细看这行代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> h(<span class="string">&#x27;h1&#x27;</span>, &#123;&#125;, <span class="built_in">this</span>.blogTitle)</span><br></pre></td></tr></table></figure>
+
+<p>告诉 Vue 页面上需要渲染什么样的节点，包括及其子节点的描述信息。我们把这样的节点描述为“**虚拟节点 (virtual node)**”，也常简写它为 <strong>VNode</strong>。“虚拟 DOM”是我们对由 Vue 组件树建立起来的整个 <strong>VNode 树</strong>的称呼。</p>
+<p><strong>虚拟DOM和真实的DOM的差异</strong>：</p>
+<ol>
+<li><p>资源消耗问题：使用javascript操作真实DOM是非常消耗资源的，虽然很多浏览器做了优化但是效果不大。你看到虚拟DOM是一个纯javascript对象。假设你有1000个节点，那会相应创建1000个节点，那也是非常节省资源的，但是如果创建1000个DOM节点就不同了。</p>
+</li>
+<li><p>执行效率问题：如果你要修改一个真实DOM，一般调用<code>innerHTML</code>方法，那浏览器会把旧的节点移除再添加新的节点，但是在虚拟DOM中，只需要修改一个对象的属性，再把虚拟DOM渲染到真实DOM上。很多人会误解虚拟DOM比真实DOM速度快，<strong>其实虚拟DOM只是把DOM变更的逻辑提取出来，使用javascript计算差异，减少了操作真实DOM的次数</strong>，只在最后一次才操作真实DOM，所以如果你的应用有复杂的DOM变更操作，虚拟DOM会比较快。</p>
+</li>
+<li><p>跨平台：因为只是抽象节点，可以把它编译成其他平台，例如android、ios。市面上利用形同架构模式的应用有React Native，Weeks，Native script，就是利用虚拟DOM的特点实现的。</p>
+</li>
+</ol>
+<h2 id="3-2-render-API"><a href="#3-2-render-API" class="headerlink" title="3.2 render API"></a>3.2 render API</h2><p><code>render(h)</code>函数接收一个参数<code>h</code>， <code>h()</code> 函数是一个用于创建 VNode 的实用程序。也许可以更准确地将其命名为 <code>createVNode()</code>，但由于频繁使用和简洁，它被称为 <code>h()</code> 。</p>
+<blockquote>
+<p>将 <code>h</code> 作为 <code>createElement</code> 的别名是 Vue 生态系统中的一个通用惯例，实际上也是 JSX 所要求的。从 Vue 的 Babel 插件的 <a class="link"   target="_blank" rel="noopener" href="https://github.com/vuejs/babel-plugin-transform-vue-jsx#h-auto-injection" >3.4.0 版本<i class="fas fa-external-link-alt"></i></a>开始，我们会在以 ES2015 语法声明的含有 JSX 的任何方法和 getter 中 (不是函数或箭头函数中) 自动注入 <code>const h = this.$createElement</code>，这样你就可以去掉 <code>render(h)</code> 里的h参数了。</p>
+</blockquote>
+<p>它接受三个参数，返回一个虚拟节点：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @returns &#123;VNode&#125;</span></span><br><span class="line">h(</span><br><span class="line">  <span class="comment">// &#123;String | Object | Function&#125; tag</span></span><br><span class="line">  <span class="comment">// 一个 HTML 标签名、一个组件、一个异步组件、或</span></span><br><span class="line">  <span class="comment">// 一个函数式组件。</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="comment">// 必需的。</span></span><br><span class="line">  <span class="string">&#x27;div&#x27;</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#123;Object&#125; props</span></span><br><span class="line">  <span class="comment">// 与 attribute、prop 和事件相对应的对象。</span></span><br><span class="line">  <span class="comment">// 这会在模板中用到。</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="comment">// 可选的。</span></span><br><span class="line">  &#123;&#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// &#123;String | Array | Object&#125; children</span></span><br><span class="line">  <span class="comment">// 子 VNodes, 使用 `h()` 构建,</span></span><br><span class="line">  <span class="comment">// 或使用字符串获取 &quot;文本 VNode&quot; 或者</span></span><br><span class="line">  <span class="comment">// 有插槽的对象。</span></span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">  <span class="comment">// 可选的。</span></span><br><span class="line">  [</span><br><span class="line">    <span class="string">&#x27;Some text comes first.&#x27;</span>,</span><br><span class="line">    h(<span class="string">&#x27;h1&#x27;</span>, <span class="string">&#x27;A headline&#x27;</span>),</span><br><span class="line">    h(MyComponent, &#123;</span><br><span class="line">      <span class="attr">someProp</span>: <span class="string">&#x27;foobar&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>详细的render API可以查看官网：<a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/render-function.html#%E7%BA%A6%E6%9D%9F" >渲染函数 | Vue.js (vuejs.org)<i class="fas fa-external-link-alt"></i></a></p>
+<p><strong>其实你也可以把组件作为参数传入给<code>h</code>函数进行渲染。</strong>让我们分析一下Vue2通过CLI创建的项目的根实例：main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> h(App),</span><br><span class="line">  router,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>h=&gt;h(App)</code>实际上就是我们讨论的<code>render(h)</code>，只是用箭头函数简化的版本。根实例不是做完整的渲染返回一个Vnode，只渲染返回了App这个组件。</p>
+<p>这是因为我们希望分离根节点与其他节点的职责，在根节点中我们注入了实体路由在根节点。同时分离根节点与应用程序的组件使得应用程序可以<code>hot reloadable</code></p>
+<h2 id="3-3-整合渲染函数和响应系统"><a href="#3-3-整合渲染函数和响应系统" class="headerlink" title="3.3 整合渲染函数和响应系统"></a>3.3 整合渲染函数和响应系统</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/16/vue%E5%8E%9F%E7%90%86/Screenshot2020-08-2922.50.01.8443bb85.png"
+                      class="" title="Screenshot2020-08-2922.50.01"
+                >
+
+<p>上图是Vue的响应性系统和渲染系统的运行流程，可以看到每个组件有自己的渲染函数，这个渲染函数实际上是运行在我们之前封装的<code>autorun</code>函数中的，组件开始渲染时会把属性收集到依赖项中，当调用属性的setter方法，会触发<code>watcher</code>执行重新渲染，因为渲染函数放在<code>autorun</code>函数中，所以每当data数据发生变化，就会重新渲染。</p>
+<p>每个组件都有自己独立的循环渲染系统，组件只负责自己的依赖项，这一特性对于你拥有大型组件树时是一个优势，你的数据可以在任何地方改变，因为系统知道数据与组件的对应关系，不会造成过度渲染问题，这一架构优势可以让我们摆脱一些优化工作。</p>
+<h2 id="3-4-练习：动态渲染"><a href="#3-4-练习：动态渲染" class="headerlink" title="3.4 练习：动态渲染"></a>3.4 练习：动态渲染</h2><p>尝试实现一个组件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">example</span> <span class="attr">:tags</span>=<span class="string">&quot;[&#x27;h1&#x27;, &#x27;h2&#x27;, &#x27;h3&#x27;]&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">example</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中的实现效果：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>0<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span>&gt;</span>1<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>2<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用Vue3实现：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;https://unpkg.com/vue@next&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">example</span> <span class="attr">:tags</span>=<span class="string">&quot;[&#x27;h1&#x27;, &#x27;h2&#x27;, &#x27;h3&#x27;]&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">example</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> &#123; createApp, h &#125; = Vue</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> app = createApp(&#123;&#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">app.component(<span class="string">&#x27;example&#x27;</span>, &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">    <span class="attr">tags</span>: &#123;</span></span><br><span class="line"><span class="javascript">      <span class="attr">type</span>: <span class="built_in">Array</span>,</span></span><br><span class="line"><span class="javascript">      validator (arr) &#123; <span class="keyword">return</span> !!arr.length &#125;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> h(<span class="string">&#x27;div&#x27;</span>, <span class="built_in">this</span>.tags.map(<span class="function">(<span class="params">tag, index</span>) =&gt;</span> h(tag, index)))</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">app.mount(<span class="string">&#x27;#app&#x27;</span>)</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Vue深入学习(1)：Vue2内部运行原理</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-02-16 17:23:23</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/02/16/vue原理/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/vue/">#vue</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/02/12/JS-%E6%9C%80%E7%AE%80%E5%AE%9E%E7%8E%B0Promise%E9%93%BE%E5%BC%8F%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">JS深入学习(23)：最简实现Promise链式异步调用</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%93%8D%E5%BA%94%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-text">1 响应式系统基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-text">1.1 基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E4%BE%9D%E8%B5%96%E6%94%B6%E9%9B%86%E8%BF%BD%E8%B8%AA%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 依赖收集追踪原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E6%80%BB%E7%BB%93"><span class="nav-text">1.3 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%BC%96%E8%AF%91"><span class="nav-text">2 编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Render-Function"><span class="nav-text">3 Render Function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Virtual-DOM"><span class="nav-text">3.1 Virtual DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-render-API"><span class="nav-text">3.2 render API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E6%95%B4%E5%90%88%E6%B8%B2%E6%9F%93%E5%87%BD%E6%95%B0%E5%92%8C%E5%93%8D%E5%BA%94%E7%B3%BB%E7%BB%9F"><span class="nav-text">3.3 整合渲染函数和响应系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E7%BB%83%E4%B9%A0%EF%BC%9A%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93"><span class="nav-text">3.4 练习：动态渲染</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
