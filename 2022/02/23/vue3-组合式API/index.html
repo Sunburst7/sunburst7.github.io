@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sunburst7">
+    
+    <title>
+        
+            Vue深入学习(3)：Vue3 Composition API |
+        
+        Sunburst7&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/blog.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"sunburst7.github.io","root":"/","language":"en","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/希露菲.jpg","favicon":"/images/blog.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":true,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"遍履城山不求仙，独羇花月欲穷年，一罢掷杯秋泓饮，胜却青锋十三弦。"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":false},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/cat50.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sunburst7&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                时间线
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tag"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">时间线</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tag">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Vue深入学习(3)：Vue3 Composition API</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/%E5%B8%8C%E9%9C%B2%E8%8F%B2.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sunburst7</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-02-23 19:45:40</span>
+        <span class="mobile">2022-02-23 19:45</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Vue/">Vue</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JavaScript/">JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vue3/">vue3</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fas fa-file-word"></i>&nbsp;<span>5.4k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fas fa-clock"></i>&nbsp;<span>23 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="1-Vue2-Option-API的问题"><a href="#1-Vue2-Option-API的问题" class="headerlink" title="1 Vue2 Option API的问题"></a>1 Vue2 Option API的问题</h1><p>通过创建 Vue 组件，我们可以将界面中重复的部分连同其功能一起提取为可重用的代码段。仅此一项就可以使我们的应用在可维护性和灵活性方面走得相当远。然而，我们的经验已经证明，光靠这一点可能并不够，尤其是当你的应用变得非常大的时候——想想几百个组件。处理这样的大型应用时，共享和重用代码变得尤为重要。</p>
+<p>使用 (<code>data</code>、<code>computed</code>、<code>methods</code>、<code>watch</code>) 组件Option API来组织逻辑通常都很有效。然而会导致以下的问题：</p>
+<ul>
+<li>当你的组件变得越来越大时，可读性就会变得困难。</li>
+<li>当前的代码重用模式都有缺点</li>
+<li>Vue 2提供了有限的TypeScript开箱即用支持。</li>
+</ul>
+<h2 id="1-1-代码维护"><a href="#1-1-代码维护" class="headerlink" title="1.1 代码维护"></a>1.1 代码维护</h2><p>假设我们需要编写一个搜索框组件，就像下面这样：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/1570466230395_01-search-1.gif"
+                      class="" title="1570466230395_01-search-1"
+                >
+
+<p>搜索框有搜索与排序的功能，在Vue2中我们可能这样组织代码，当功能模块变多，Vue实例的不同的Option中都有每种模块的代码，这样使得代码的可读性显著下降：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220222183847924.png"
+                      class="" title="image-20220222183847924"
+                >
+
+<p>Vue3的Composition API从setup()函数开始，在setup()函数内部可以使用组合式API语法，当然这些语法也是可选的，在Vue3中你任然可以继续使用之前的Option API：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220222185038949.png"
+                      class="" title="image-20220222185038949"
+                >
+
+<p>读到这里，你是否认为我们实际上编写了一个巨大的有很多代码的setup()函数？答案是否定的，在Vue3中，我们最终将要编写Composition Function，这些组合函数可能在同一个组件文件中，也可能在不同的文件中</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/1570466262485_06-composition-functions.jpg"
+                      class="" title="1570466262485_06-composition-functions"
+                >
+
+<h2 id="1-2-组件之间的逻辑重用"><a href="#1-2-组件之间的逻辑重用" class="headerlink" title="1.2 组件之间的逻辑重用"></a>1.2 组件之间的逻辑重用</h2><p>在Vue 2中，有3种很好的解决方案可以跨组件重用代码，但每种解决方案都有其局限性。 让我们通过我们的例子来了解每一种方法。 </p>
+<p>回到搜索组件，我们有三种方法提取这些代码以重复利用：</p>
+<ol>
+<li><p>Mixins</p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/1570466274710_08-mixins.jpg"
+                      class="" title="1570466274710_08-mixins"
+                >
+
+<p> 好处：mixin可以根据特性来组织。</p>
+<p> 坏处</p>
+<ul>
+<li>会导致属性命名冲突</li>
+<li>不清楚这些mixin是否以及如何相互作用</li>
+<li>不能轻易的重用这些代码</li>
+</ul>
+</li>
+<li><p><strong>Mixin Factories</strong></p>
+ 
+
+<p> 正如你在上面看到的，Mixin工厂允许我们通过发送配置来定制Mixin。 现在我们可以配置这段代码以跨多个组件使用。  </p>
+<p> 这些函数返回mixin的定制版本。虽然更方便的重用代码，也知道哪些特性如何相互作用的关系。但是命名空间需要强大的约定和规则来做正确的事情，我们还是需要关注每个mixin内部，了解它暴露的属性，而且mixin和factories都不能动态生成。</p>
+</li>
+<li><p><strong>作用域插槽Scoped Slots</strong></p>
+ <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/1570466291762_10-scoped-slots.jpg"
+                      class="" title="1570466291762_10-scoped-slots"
+                >
+
+<ul>
+<li>弥补了mixin的缺点</li>
+<li>但是降低了代码的可读性 increases indentation</li>
+<li>需要大量的配置,在理想状态下仅仅渲染我们想要的内容也只暴露那些可用的属性</li>
+<li>代码中有多个组件实例而不是一个组件实例意味着它的性能更差</li>
+</ul>
+</li>
+</ol>
+<p>因此，正如您所看到的，每个解决方案都有局限性。 Vue 3的复合API为我们提供了第四种提取可重用代码的方法，它可能看起来像这样:  </p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/1570466297345_11-composition-api-1.jpg"
+                      class="" title="1570466297345_11-composition-api-1"
+                >
+
+<p>现在，我们正在使用在setup方法中导入和使用的函数中的复合API创建组件，在setup方法中，我们可以进行任何配置。  </p>
+<p>需要强调的是，组合式API只是另外一种组件编写方式。Vue2中熟悉的代码依然可以正常的使用。Composition API只是一个更高级的选项。</p>
+<p>应该在什么时候使用composition api？</p>
+<ul>
+<li>Typescript 支持</li>
+<li>巨型组件需要按特性/功能（feature）组织代码</li>
+<li>跨组件重用代码</li>
+</ul>
+<h1 id="2-setup与ref"><a href="#2-setup与ref" class="headerlink" title="2 setup与ref()"></a>2 setup与ref()</h1><h2 id="2-1-setup"><a href="#2-1-setup" class="headerlink" title="2.1 setup"></a>2.1 setup</h2><p>setup方法在Vue实例的组件选项之前被调用的，包括：</p>
+<ul>
+<li>components </li>
+<li>Props </li>
+<li>Data </li>
+<li> Methods </li>
+<li>Computed Properties</li>
+<li>Lifecycle methods：生命周期方法</li>
+</ul>
+<p>所以 <code>setup()</code> 内部的 <code>this</code> 的行为与其它选项中的 <code>this</code> 完全不同。这使得 <code>setup()</code> 在和其它选项式 API 一起使用时可能会导致混淆。</p>
+<p>使用 <code>setup</code> 函数时，它将接收两个参数<code>setup(props,context)&#123;&#125;</code></p>
+<h3 id="2-1-1-props"><a href="#2-1-1-props" class="headerlink" title="2.1.1 props"></a>2.1.1 props</h3><p><code>props</code>用于访问组件的props选项。</p>
+<p><code>setup</code> 函数中的 <code>props</code> 是响应式的，当传入新的 prop 时，它将被更新。但是，因为 <code>props</code> 是响应式的，你<strong>不能使用 ES6 解构</strong>，它会消除 prop 的响应性。</p>
+<p>如果需要解构 prop，可以在 <code>setup</code> 函数中使用 <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/reactivity-fundamentals.html#%E5%93%8D%E5%BA%94%E5%BC%8F%E7%8A%B6%E6%80%81%E8%A7%A3%E6%9E%84"><code>toRefs</code></a> 函数来完成此操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyBook.vue</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; toRefs &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="built_in">String</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">  	<span class="keyword">const</span> &#123; title &#125; = toRefs(props)</span><br><span class="line">  	<span class="built_in">console</span>.log(title.value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>title</code> 是可选的 prop，则传入的 <code>props</code> 中可能没有 <code>title</code> 。在这种情况下，<code>toRefs</code> 将不会为 <code>title</code> 创建一个 ref 。你需要使用 <code>toRef</code> 替代它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyBook.vue</span></span><br><span class="line"><span class="keyword">import</span> &#123; toRef &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="function"><span class="title">setup</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> title = toRef(props, <span class="string">&#x27;title&#x27;</span>)</span><br><span class="line">  <span class="built_in">console</span>.log(title.value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>setup返回任何你需要在template模板中需要用到的变量或方法，使用return包裹。Methods的定义没有什么区别</p>
+<p>注意，从 <code>setup</code> 返回的 <a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref" >refs<i class="fas fa-external-link-alt"></i></a> 在模板中访问时是<a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/reactivity-fundamentals.html#ref-%E8%A7%A3%E5%8C%85" >被自动浅解包<i class="fas fa-external-link-alt"></i></a>的，因此不应在模板中使用 <code>.value</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    	&#123;&#123;capacity&#125;&#125;<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increaseCapacity()&quot;</span>&gt;</span>num++<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123;ref&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">    <span class="attr">capacity</span>:<span class="built_in">Number</span></span></span><br><span class="line"><span class="javascript">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> capacity = ref(<span class="number">3</span>)</span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      capacity.value++</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      capacity,</span></span><br><span class="line"><span class="javascript">      increaseCapacity</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;  </span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-2-context"><a href="#2-1-2-context" class="headerlink" title="2.1.2 context"></a>2.1.2 context</h3><p>我们用<code>context</code>访问之前用<code>this</code>访问的上下文属性，<code>context</code> 是一个普通的 JavaScript 对象，也就是说，它不是响应式的，这意味着你可以安全地对 <code>context</code> 使用 ES6 解构。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MyBook.vue</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params">props, &#123; attrs, slots, emit, expose &#125;</span>)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>setup</code> 时，你只能访问context里的property换句话说，你<strong>将无法访问</strong>以下组件选项：</p>
+<ul>
+<li><code>data</code></li>
+<li><code>computed</code></li>
+<li><code>methods</code></li>
+<li><code>refs</code> (模板 ref)</li>
+</ul>
+<h2 id="2-2-ref"><a href="#2-2-ref" class="headerlink" title="2.2 ref"></a>2.2 ref</h2><p><code>ref()</code>接受一个内部值并返回一个响应式且可变的 ref 对象。ref 对象具有指向内部值的单个 property：value。允许我们跟踪ref对象的变化。</p>
+<p>对比Vue2，我们使用data()选项，data将数据包裹在一个对象里并且允许我们跟踪它。</p>
+<p><code>ref</code> 接收参数并将其包裹在一个带有 <code>value</code> property 的对象中返回，然后可以使用该 property 访问或更改响应式变量的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> counter = ref(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(counter) <span class="comment">// &#123; value: 0 &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(counter.value) <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">counter.value++</span><br><span class="line"><span class="built_in">console</span>.log(counter.value) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-computed"><a href="#3-computed" class="headerlink" title="3 computed()"></a>3 computed()</h1><p>可以使用从 Vue 导入的 <code>computed</code> 函数在setup()中创建计算属性。</p>
+<p><code>computed()</code>函数接受一个 getter 函数，并根据 getter 的返回值返回一个<strong>不可变的响应式 <a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref" >ref<i class="fas fa-external-link-alt"></i></a> 对象</strong>。或者，接受一个具有 <code>get</code> 和 <code>set</code> 函数的对象，用来创建可写的 ref 对象。</p>
+<p>我们希望添加一个人员名单，以此名单计算容量剩余：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        capacity: &#123;&#123;capacity&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increaseCapacity()&quot;</span>&gt;</span></span><br><span class="line">      capacity++</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Spases Left: &#123;&#123; spacesLeft &#125;&#125; out of &#123;&#123; capacity &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(name,index) in attending&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">      &#123;&#123;name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123;ref,computed&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;</span></span><br><span class="line"><span class="javascript">    <span class="attr">capacity</span>:<span class="built_in">Number</span></span></span><br><span class="line"><span class="javascript">  &#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> capacity = ref(<span class="number">3</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> attending = ref([<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Jack&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>])<span class="comment">// 参加人员名单</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> spacesLeft = computed(<span class="function">()=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> capacity.value - attending.value.length;</span></span><br><span class="line"><span class="javascript">    &#125;)<span class="comment">// 剩余空间</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      capacity.value++</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      capacity,</span></span><br><span class="line"><span class="javascript">      attending,</span></span><br><span class="line"><span class="javascript">      spacesLeft,</span></span><br><span class="line"><span class="javascript">      increaseCapacity</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;  </span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="4-reactive与toRefs"><a href="#4-reactive与toRefs" class="headerlink" title="4 reactive与toRefs"></a>4 reactive与toRefs</h1><p><code>reactive()</code>接收一个对象参数，返回对象的响应式副本。响应式转换是“深层”的——它影响所有嵌套 property。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = reactive(&#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><code>reactive</code> 将解包所有深层的 <a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref" >refs<i class="fas fa-external-link-alt"></i></a>，同时维持 ref 的响应性。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = ref(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> obj = reactive(&#123; count &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ref 会被解包</span></span><br><span class="line"><span class="built_in">console</span>.log(obj.count === count.value) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>我们使用<code>reactive()</code>重构之前的组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ref,computed,reactive&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">capacity</span>:<span class="built_in">Number</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> event = reactive(&#123;</span><br><span class="line">      <span class="attr">capacity</span>: <span class="number">4</span>,</span><br><span class="line">      <span class="attr">attending</span>: [<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Jack&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">      <span class="attr">spacesLeft</span>: computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> event.capacity - event.attending.length;</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      event.capacity++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      event,</span><br><span class="line">      increaseCapacity</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>如果按照这样编写的话，我们的模板也需要相应的改变：所有的数据前都需要加上<code>event.</code>。这样太麻烦了。所以我们想到在return的时候解构我们的event对象，但以下两种方法都不可以：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;...event&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> &#123;event.capacity, event.attending, event.spaceLeft&#125;</span><br></pre></td></tr></table></figure>
+
+<p>问题在于拆分响应性对象会消除它的响应性。我们希望拆分后每个属性都保留自己的响应性，Vue3中<code>toRef/toRefs()</code>就是用于这个目的：</p>
+<ul>
+<li><p><code>toRefs()</code>：将响应式对象转换为普通对象，其中结果对象的每个 property 都是指向原始对象相应 property 的 <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref"><code>ref</code></a>。</p>
+</li>
+<li><p><code>toRef()</code>：可以用来为源响应式对象上的某个 property 新创建一个 <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#ref"><code>ref</code></a>。然后，ref 可以被传递，它会保持对其源 property 的响应式连接。下面的例子中，我们为foo属性又创建了一个ref对象指向它</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">  <span class="attr">foo</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">bar</span>: <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fooRef = toRef(state, <span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fooRef.value++</span><br><span class="line"><span class="built_in">console</span>.log(state.foo) <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">state.foo++</span><br><span class="line"><span class="built_in">console</span>.log(fooRef.value) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p>  当你要将 prop 的 ref 传递给复合函数时，<code>toRef</code> 很有用：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">    useSomeFeature(toRef(props, <span class="string">&#x27;foo&#x27;</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  即使源 property 不存在，<code>toRef</code> 也会返回一个可用的 ref。这使得它在使用可选 prop 时特别有用，可选 prop 并不会被 <a target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/refs-api.html#torefs"><code>toRefs</code></a> 处理。</p>
+</li>
+</ul>
+<p>重构我们的组件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;outer&quot;</span>&gt;</span></span><br><span class="line">        capacity: &#123;&#123;capacity&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increaseCapacity()&quot;</span>&gt;</span></span><br><span class="line">      capacity++</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Spases Left: &#123;&#123; spacesLeft &#125;&#125; out of &#123;&#123; capacity &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(name,index) in attending&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">      &#123;&#123;name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123;ref, computed, reactive, toRefs&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;&#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> event = reactive(&#123;</span></span><br><span class="line"><span class="javascript">      <span class="attr">capacity</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="javascript">      <span class="attr">attending</span>: [<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Jack&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span></span><br><span class="line"><span class="javascript">      <span class="attr">spacesLeft</span>: computed(<span class="function">()=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> event.capacity - event.attending.length;</span></span><br><span class="line"><span class="javascript">      &#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      event.capacity++;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      ...toRefs(event),</span></span><br><span class="line"><span class="javascript">      increaseCapacity</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;  </span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="5-模块化"><a href="#5-模块化" class="headerlink" title="5 模块化"></a>5 模块化</h1><p>我们使用Composition API的两大原因是：</p>
+<ul>
+<li>按照特征组织代码</li>
+<li>并使得代码在其他组件之间可以重用</li>
+</ul>
+<p>为了按照功能组织代码，我们把代码移出setup组成一个复合函数。在setup中调用这个复合函数：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123;ref, computed, reactive, toRefs&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;&#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> useEeventSpace();</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">useEventSpace</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> event = reactive(&#123;</span></span><br><span class="line"><span class="javascript">      <span class="attr">capacity</span>: <span class="number">4</span>,</span></span><br><span class="line"><span class="javascript">      <span class="attr">attending</span>: [<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Jack&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span></span><br><span class="line"><span class="javascript">      <span class="attr">spacesLeft</span>: computed(<span class="function">()=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> event.capacity - event.attending.length;</span></span><br><span class="line"><span class="javascript">      &#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      event.capacity++;</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      ...toRefs(event),</span></span><br><span class="line"><span class="javascript">      increaseCapacity</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;    </span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为跨组件使用，我们把这个复合函数放到一个单独文件中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// event-space.js</span></span><br><span class="line"><span class="keyword">import</span> &#123;ref, computed, reactive, toRefs&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">useEventSpace</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> event = reactive(&#123;</span><br><span class="line">      <span class="attr">capacity</span>: <span class="number">4</span>,</span><br><span class="line">      <span class="attr">attending</span>: [<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Jack&#x27;</span>,<span class="string">&#x27;Bob&#x27;</span>],</span><br><span class="line">      <span class="attr">spacesLeft</span>: computed(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> event.capacity - event.attending.length;</span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">increaseCapacity</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      event.capacity++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...toRefs(event),</span><br><span class="line">      increaseCapacity</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>组件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;outer&quot;</span>&gt;</span></span><br><span class="line">        capacity: &#123;&#123;capacity&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;increaseCapacity()&quot;</span>&gt;</span></span><br><span class="line">      capacity++</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>Spases Left: &#123;&#123; spacesLeft &#125;&#125; out of &#123;&#123; capacity &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;(name,index) in attending&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;index&quot;</span>&gt;</span></span><br><span class="line">      &#123;&#123;name&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123;ref, computed, reactive, toRefs&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> useEventSpace <span class="keyword">from</span> <span class="string">&#x27;./event-space&#x27;</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  <span class="attr">props</span>: &#123;&#125;,</span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> useEventSpace()</span></span><br><span class="line"><span class="javascript">  &#125;</span></span><br><span class="line"><span class="javascript">&#125;  </span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>需要添加多个组合函数我们可以这样写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ref, computed, reactive, toRefs&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> useEventSpace <span class="keyword">from</span> <span class="string">&#x27;./event-space&#x27;</span></span><br><span class="line"><span class="keyword">import</span> useEventMap <span class="keyword">from</span> <span class="string">&#x27;./event-map&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;&#125;,</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 错误写法 return &#123;useEventSpace(),useEventMap()&#125;</span></span><br><span class="line">    <span class="comment">// 正确写法 return &#123;...useEeventSpace(),...useEventMap()&#125;</span></span><br><span class="line">    <span class="comment">// 这样写会出现像Mixin同样的问题，不知道什么对象注入进来</span></span><br><span class="line">    <span class="comment">// 所以我们可以用这些复合函数创建对象再导出，这样更明确什么对象来自什么函数</span></span><br><span class="line">    <span class="keyword">const</span> &#123;capacity,attending,spaceLeft,increaseCapacity&#125; = useEventSpace()</span><br><span class="line">    <span class="keyword">const</span> &#123;map,embedId&#125; = useEventMap()</span><br><span class="line">    <span class="keyword">return</span> &#123;capacity,attending,spaceLeft,increaseCapacity,map,embedId&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h1 id="6-生命周期-Hooks"><a href="#6-生命周期-Hooks" class="headerlink" title="6 生命周期 Hooks"></a>6 生命周期 Hooks</h1><p> review the typical LifeCycle hooks as you know them:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/lifecycle.svg"
+                      class="" title="实例的生命周期"
+                >
+
+<ul>
+<li><strong>beforeCreate -</strong> 在实例初始化后立即调用，在处理选项之前。</li>
+<li><strong>created -</strong> 在创建实例后调用.</li>
+<li><strong>beforeMount -</strong> 在 DOM 挂载开始之前</li>
+<li><strong>mounted -</strong> 在实例已安装（浏览器更新）时调用。.</li>
+<li><strong>beforeUpdate -</strong> 在响应式数据发生变化时调用，在重新渲染 DOM 之前。</li>
+<li><strong>updated -</strong> 当响应式数据发生变化并且 DOM 被重新渲染时调用。</li>
+<li>**beforeUnmount -**在 Vue 实例被销毁之前调用。</li>
+<li><strong>unmounted -</strong>  在 Vue 实例被销毁后调用。</li>
+</ul>
+<p>Vue2中还有些特殊的生命周期：</p>
+<ul>
+<li><strong>activated -</strong> Used for<keep-alive> , when a component inside is toggled on.</li>
+<li><strong>deactivated -</strong> Used for<keep-alive> , when a component inside is toggled off.</li>
+<li><strong>errorCaptured -</strong> 当捕获来自任何子组件的错误时调用</li>
+</ul>
+<p>在 Vue 3 的 Composition API 中，我们可以通过在 LifeCycle 方法名称中添加 <strong>on</strong> 在 <code>setup()</code> 中创建回调Hooks： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  onBeforeMount,</span><br><span class="line">  onMounted,</span><br><span class="line">  onBeforeUpdate,</span><br><span class="line">  onUpdated,</span><br><span class="line">  onBeforeUnmount,</span><br><span class="line">  onUnmounted,</span><br><span class="line">  onActivated,</span><br><span class="line">  onDeactivated,</span><br><span class="line">  onErrorCaptured</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    onBeforeMount(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Before Mount!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onMounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Mounted!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onBeforeUpdate(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Before Update!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onUpdated(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Updated!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onBeforeUnmount(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Before Unmount!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onUnmounted(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Unmounted!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onActivated(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Activated!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onDeactivated(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Deactivated!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    onErrorCaptured(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&quot;Error Captured!&quot;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p> 使用 Composition API 时不需要 beforeCreate 和 created。 这是因为 <code>beforeCreate()</code> 是在 <code>setup()</code> 之前调用的，而 <code>created()</code> 是在 <code>setup()</code> 之后调用的。 因此，我们只需将通常位于这些钩子中的代码放入 <code>setup()</code> 中，例如 API 调用。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220223151642536.png"
+                      class="" title="image-20220223151642536"
+                >
+
+<p>Vue3同时还新添加了两个生命周期用于调试：</p>
+<ul>
+<li><p><code>onRenderTracked(event)</code> - 在渲染期间首次在渲染函数中访问反应性依赖项时调用。 现在将跟踪此依赖关系。 钩子接收 <code>debugger event</code> 作为参数。此事件告诉你哪个操作跟踪了组件以及该操作的目标对象和键。</p>
+  <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220223152509931.png"
+                      class="" title="image-20220223152509931"
+                ></li>
+<li><p><code>onRenderTriggered(event)</code> - 在触发新渲染时调用，允许您检查哪些依赖项触发了组件重新渲染。接收 <code>debugger event</code> 作为参数。此事件告诉你是什么操作触发了重新渲染，以及该操作的目标对象和键。</p>
+  <img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220223152546858.png"
+                      class="" title="image-20220223152546858"
+                ></li>
+</ul>
+<h1 id="7-watchEffect与watch"><a href="#7-watchEffect与watch" class="headerlink" title="7 watchEffect与watch"></a>7 watchEffect与watch</h1><h2 id="7-1-watchEffect"><a href="#7-1-watchEffect" class="headerlink" title="7.1 watchEffect"></a>7.1 watchEffect</h2><p>为了根据响应式状态自动更新effect，我们可以使用 <code>watchEffect</code> 函数。它立即执行传入的一个函数，同时响应式追踪其依赖，并在其依赖变更时重新运行该函数。</p>
+<p>当 <code>watchEffect(effect:Function)</code> 在组件的 <a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-setup.html" >setup()<i class="fas fa-external-link-alt"></i></a> 函数或<a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-lifecycle-hooks.html" >生命周期钩子<i class="fas fa-external-link-alt"></i></a>被调用时，侦听器会被链接到该组件的生命周期，并在组件卸载时自动停止。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">watchEffect(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(count.value))</span><br><span class="line"><span class="comment">// -&gt; logs 0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  count.value++</span><br><span class="line">  <span class="comment">// -&gt; logs 1</span></span><br><span class="line">&#125;, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="清除-side-effect"><a href="#清除-side-effect" class="headerlink" title="清除 side effect"></a>清除 side effect</h3><p>什么是 side effect ,不可预知的接口请求就是一个 side effect，假设我们现在用一个用户ID去查询用户的详情信息，然后我们监听了这个用户ID， 当用户ID 改变的时候我们就会去发起一次请求，这很简单，用watch 就可以做到。 但是如果在请求数据的过程中，我们的用户ID发生了多次变化，那么我们就会发起多次请求，而最后一次返回的数据将会覆盖掉我们之前返回的所有用户详情。这不仅会导致资源浪费，还无法保证 watch 回调执行的顺序。而使用 <code>watchEffect</code> 我们就可以做到。【参考：<a class="link"   target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000023669309" >浅谈Vue3的watchEffect用途 - SegmentFault 思否<i class="fas fa-external-link-alt"></i></a>】</p>
+<p><code>onInvalidate(fn)</code>传入的回调会在 <code>watchEffect</code> 重新运行或者 <code>watchEffect</code> 停止的时候执行。</p>
+<p><code>onInvalidate(fn)</code>清理函数必须要在 Promise 被 resolve 之前被注册。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watchEffect(<span class="keyword">async</span> onInvalidate =&gt; &#123;</span><br><span class="line">    onInvalidate(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 取消异步api的调用。</span></span><br><span class="line">        apiCall.cancel()</span><br><span class="line">     &#125;)</span><br><span class="line">     <span class="comment">// 异步api调用，返回一个操作对象</span></span><br><span class="line">     <span class="keyword">const</span> apiCall = <span class="keyword">await</span> someAsyncMethod(props.userID)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>借助 <code>onInvalidate</code> 我们就可以对上面所述的情况作出比较优雅的优化。</p>
+<h3 id="effect更新时机"><a href="#effect更新时机" class="headerlink" title="effect更新时机"></a>effect更新时机</h3><p>Vue 的响应性系统会缓存副作用函数，并异步地刷新它们，这样可以避免同一个“tick” 中多个状态改变导致的不必要的重复调用。在核心的具体实现中，组件的 <code>update</code> 函数也是一个被侦听的副作用。当一个用户定义的副作用函数进入队列时，默认情况下，会在所有的组件 <code>update</code> <strong>前</strong>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    const count = ref(0)</span><br><span class="line"></span><br><span class="line">    watchEffect(() =&gt; &#123;</span><br><span class="line">      console.log(count.value)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      count</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中：</p>
+<ul>
+<li><code>count</code> 会在初始运行时同步打印出来</li>
+<li>更改 <code>count</code> 时，将在组件<strong>更新前</strong>执行副作用。</li>
+</ul>
+<p>如果需要在组件更新(例如：当与<a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/composition-api-template-refs.html#%E4%BE%A6%E5%90%AC%E6%A8%A1%E6%9D%BF%E5%BC%95%E7%94%A8" >模板引用<i class="fas fa-external-link-alt"></i></a>一起)<strong>后</strong>重新运行侦听器副作用，我们可以传递带有 <code>flush</code> 选项的附加 <code>options</code> 对象 (默认为 <code>&#39;pre&#39;</code>)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在组件更新后触发，这样你就可以访问更新的 DOM。</span></span><br><span class="line">watchEffect(</span><br><span class="line">  <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">flush</span>: <span class="string">&#x27;post&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：这也将推迟副作用的初始运行，直到组件的首次渲染完成。</strong></p>
+<p><code>flush</code> 选项还接受 <code>sync</code>，这将强制效果始终同步触发。然而，这是低效的，应该很少需要。</p>
+<p>从 Vue 3.2.0 开始，<code>watchPostEffect</code> 和 <code>watchSyncEffect</code> 别名也可以用来让代码意图更加明显。</p>
+<h2 id="7-2-watch"><a href="#7-2-watch" class="headerlink" title="7.2 watch"></a>7.2 watch</h2><p><code>watch</code> API 完全等同于组件<a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/guide/computed.html#%E4%BE%A6%E5%90%AC%E5%99%A8" >侦听器<i class="fas fa-external-link-alt"></i></a> property。<code>watch</code> 需要侦听特定的数据源，并在回调函数中执行副作用。默认情况下，它也是惰性的，即只有当被侦听的源发生变化时才执行回调。</p>
+<h3 id="侦听单个数据源"><a href="#侦听单个数据源" class="headerlink" title="侦听单个数据源"></a>侦听单个数据源</h3><p>侦听器数据源可以是返回值的 getter 函数，也可以直接是 <code>ref</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 侦听一个 getter</span></span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br><span class="line">watch(</span><br><span class="line">  <span class="function">() =&gt;</span> state.count,</span><br><span class="line">  <span class="function">(<span class="params">count, prevCount</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/* ... */</span></span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接侦听ref</span></span><br><span class="line"><span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line">watch(count, <span class="function">(<span class="params">count, prevCount</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">/* ... */</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="侦听多个数据源"><a href="#侦听多个数据源" class="headerlink" title="侦听多个数据源"></a>侦听多个数据源</h3><p>侦听器还可以使用数组同时侦听多个源：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> firstName = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> lastName = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">watch([firstName, lastName], <span class="function">(<span class="params">newValues, prevValues</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(newValues, prevValues)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">firstName.value = <span class="string">&#x27;John&#x27;</span> <span class="comment">// logs: [&quot;John&quot;, &quot;&quot;] [&quot;&quot;, &quot;&quot;]</span></span><br><span class="line">lastName.value = <span class="string">&#x27;Smith&#x27;</span> <span class="comment">// logs: [&quot;John&quot;, &quot;Smith&quot;] [&quot;John&quot;, &quot;&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p>尽管如此，如果你在同一个函数里同时改变这些被侦听的来源，侦听器仍只会执行一次：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">setup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> firstName = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> lastName = ref(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  watch([firstName, lastName], <span class="function">(<span class="params">newValues, prevValues</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(newValues, prevValues)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> changeValues = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    firstName.value = <span class="string">&#x27;John&#x27;</span></span><br><span class="line">    lastName.value = <span class="string">&#x27;Smith&#x27;</span></span><br><span class="line">    <span class="comment">// 打印 [&quot;John&quot;, &quot;Smith&quot;] [&quot;&quot;, &quot;&quot;]</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; changeValues &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意多个同步更改只会触发一次侦听器。</p>
+<p>通过更改设置 <code>flush: &#39;sync&#39;</code>，我们可以为每个更改都强制触发侦听器，尽管这通常是不推荐的。或者，可以用 <a class="link"   target="_blank" rel="noopener" href="https://v3.cn.vuejs.org/api/global-api.html#nexttick" >nextTick<i class="fas fa-external-link-alt"></i></a> 等待侦听器在下一步改变之前运行。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> changeValues = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  firstName.value = <span class="string">&#x27;John&#x27;</span> <span class="comment">// 打印 [&quot;John&quot;, &quot;&quot;] [&quot;&quot;, &quot;&quot;]</span></span><br><span class="line">  <span class="keyword">await</span> nextTick()</span><br><span class="line">  lastName.value = <span class="string">&#x27;Smith&#x27;</span> <span class="comment">// 打印 [&quot;John&quot;, &quot;Smith&quot;] [&quot;John&quot;, &quot;&quot;]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="侦听响应式对象"><a href="#侦听响应式对象" class="headerlink" title="侦听响应式对象"></a>侦听响应式对象</h3><p>使用侦听器来比较一个数组或对象的值，这些值是响应式的，要求它有一个由值构成的副本。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> numbers = reactive([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">watch(</span><br><span class="line">  <span class="function">() =&gt;</span> [...numbers],</span><br><span class="line">  <span class="function">(<span class="params">numbers, prevNumbers</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(numbers, prevNumbers)</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">numbers.push(<span class="number">5</span>) <span class="comment">// logs: [1,2,3,4,5] [1,2,3,4]</span></span><br></pre></td></tr></table></figure>
+
+<p>尝试检查深度嵌套对象或数组中的 property 变化时，仍然需要 <code>deep</code> 选项设置为 true。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = reactive(&#123; </span><br><span class="line">  <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="attr">attributes</span>: &#123; </span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">watch(</span><br><span class="line">  <span class="function">() =&gt;</span> state,</span><br><span class="line">  <span class="function">(<span class="params">state, prevState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;not deep&#x27;</span>, state.attributes.name, prevState.attributes.name)</span><br><span class="line">  &#125;</span><br><span class="line">)<span class="comment">// 无效侦听</span></span><br><span class="line"></span><br><span class="line">watch(</span><br><span class="line">  <span class="function">() =&gt;</span> state,</span><br><span class="line">  <span class="function">(<span class="params">state, prevState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;deep&#x27;</span>, state.attributes.name, prevState.attributes.name)</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">deep</span>: <span class="literal">true</span> &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">state.attributes.name = <span class="string">&#x27;Alex&#x27;</span> <span class="comment">// 日志: &quot;deep&quot; &quot;Alex&quot; &quot;Alex&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>然而，侦听一个响应式对象或数组将始终返回该对象的当前值和上一个状态值的引用。也就是上面例子中<code>state, prevState</code>都是引用。</p>
+<h2 id="7-3-watchEffect与watch对比"><a href="#7-3-watchEffect与watch对比" class="headerlink" title="7.3 watchEffect与watch对比"></a>7.3 watchEffect与watch对比</h2><p>第一点我们可以从示例代码中看到 <code>watchEffect</code> 不需要指定监听的属性，他会自动的收集依赖， <strong>只要我们回调中引用到了响应式的属性， 那么当这些属性变更的时候，这个回调都会执行</strong>，而 <code>watch</code> 只能监听指定的属性而做出变更(v3开始可以同时指定多个)。</p>
+<p>第二点就是 watch 可以获取到新值与旧值（更新前的值），而 <code>watchEffect</code> 是拿不到的。</p>
+<p>第三点是 watchEffect 如果存在的话，在组件初始化的时候就会执行一次<code>effect</code>（与<code>computed</code>同理），而后收集到的依赖发生变化，这个回调才会再次执行，而 watch 不需要，因为他一开始就指定了依赖。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">setup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> state = reactive(&#123; </span><br><span class="line">    <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">attributes</span>: &#123; </span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">watchEffect(</span><br><span class="line">  <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;deep&#x27;</span>, state.attributes.name)</span><br><span class="line">  &#125;,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">state.attributes.name = <span class="string">&#x27;Alex&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>反映到上面的例子就是在组件初始化前就会执行以下<code>effect</code>函数</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2022/02/23/vue3-%E7%BB%84%E5%90%88%E5%BC%8FAPI/image-20220223181029267.png"
+                      class="" title="image-20220223181029267"
+                >
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>Post title：Vue深入学习(3)：Vue3 Composition API</li>
+        <li>Post author：Sunburst7</li>
+        <li>Create time：2022-02-23 19:45:40</li>
+        <li>
+            Post link：https://sunburst7.github.io/2022/02/23/vue3-组合式API/
+        </li>
+        <li>
+            Copyright Notice：All articles in this blog are licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> unless stating additionally.
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/JavaScript/">#JavaScript</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/vue3/">#vue3</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/02/24/leetcode-%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">leetcode(13)最大子数组</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/02/22/leetcode-%E4%B9%B0%E5%85%A5%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">leetcode(12)买入股票的最佳时机</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2021</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sunburst7</a>
+        </div>
+        
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Vue2-Option-API%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">1 Vue2 Option API的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%BB%A3%E7%A0%81%E7%BB%B4%E6%8A%A4"><span class="nav-text">1.1 代码维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%BB%E8%BE%91%E9%87%8D%E7%94%A8"><span class="nav-text">1.2 组件之间的逻辑重用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-setup%E4%B8%8Eref"><span class="nav-text">2 setup与ref()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-setup"><span class="nav-text">2.1 setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-props"><span class="nav-text">2.1.1 props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-context"><span class="nav-text">2.1.2 context</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-ref"><span class="nav-text">2.2 ref</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-computed"><span class="nav-text">3 computed()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-reactive%E4%B8%8EtoRefs"><span class="nav-text">4 reactive与toRefs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-text">5 模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F-Hooks"><span class="nav-text">6 生命周期 Hooks</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-watchEffect%E4%B8%8Ewatch"><span class="nav-text">7 watchEffect与watch</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-watchEffect"><span class="nav-text">7.1 watchEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4-side-effect"><span class="nav-text">清除 side effect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#effect%E6%9B%B4%E6%96%B0%E6%97%B6%E6%9C%BA"><span class="nav-text">effect更新时机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-watch"><span class="nav-text">7.2 watch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%A6%E5%90%AC%E5%8D%95%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">侦听单个数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%A6%E5%90%AC%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">侦听多个数据源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%A6%E5%90%AC%E5%93%8D%E5%BA%94%E5%BC%8F%E5%AF%B9%E8%B1%A1"><span class="nav-text">侦听响应式对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-watchEffect%E4%B8%8Ewatch%E5%AF%B9%E6%AF%94"><span class="nav-text">7.3 watchEffect与watch对比</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+
+</body>
+</html>
