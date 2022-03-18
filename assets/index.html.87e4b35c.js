@@ -1,0 +1,1 @@
+import{o as e,c as r}from"./app.42e82b3e.js";import{_ as c}from"./plugin-vue_export-helper.21dcd24c.js";const n={};function o(t,_){return e(),r("p",null,"Scene-UI\u7EC4\u4EF6\u5E93\u7684\u7F16\u5199\u5386\u7A0B")}var f=c(n,[["render",o]]);export{f as default};
