@@ -1,7 +1,7 @@
 export const data = {
   "key": "v-65768081",
   "path": "/scene-ui/",
-  "title": "",
+  "title": "Scene-UI组件库",
   "lang": "zh-CN",
   "frontmatter": {},
   "excerpt": "",
