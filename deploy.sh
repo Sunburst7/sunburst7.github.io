@@ -4,4 +4,4 @@ git add -A
 
 git commit -m '@feat:new note'
 
-git push origin main
+git push origin master

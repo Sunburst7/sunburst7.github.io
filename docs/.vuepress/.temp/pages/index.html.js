@@ -5,29 +5,46 @@ export const data = {
   "lang": "zh-CN",
   "frontmatter": {
     "home": true,
-    "heroImage": "https://artice-code-1258339218.cos.ap-beijing.myqcloud.com/vuepress/element-index.png",
-    "heroText": "Element",
-    "features": [
+    "heroText": "Sunburst7's Blog",
+    "actions": [
       {
-        "title": "一致性 Consistency",
-        "details": "与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念"
+        "text": "快速了解",
+        "link": "/note/",
+        "type": "primary"
       },
       {
-        "title": "反馈 Feedback",
-        "details": "通过界面样式和交互动效让用户可以清晰的感知自己的操作"
-      },
-      {
-        "title": "效率 Efficiency",
-        "details": "界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。"
+        "text": "Scene-UI",
+        "link": "/scene-ui/",
+        "type": "secondary"
       }
     ],
-    "footer": "by饿了么"
+    "features": [
+      {
+        "title": "JavaScript",
+        "details": "深入学习JS有关内容"
+      },
+      {
+        "title": "Vue",
+        "details": "Vue的原理分析"
+      },
+      {
+        "title": "Scene-UI",
+        "details": "场景组件库与低代码开发平台"
+      }
+    ],
+    "footer": "MIT Licensed | Copyright © 2018-present Evan You"
   },
   "excerpt": "",
   "headers": [],
   "git": {
-    "updatedTime": null,
-    "contributors": []
+    "updatedTime": 1647617771000,
+    "contributors": [
+      {
+        "name": "sunburst7",
+        "email": "1064658281@qq.com",
+        "commits": 1
+      }
+    ]
   },
   "filePathRelative": "README.md"
 }

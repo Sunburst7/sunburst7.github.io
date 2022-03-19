@@ -1,1 +1,0 @@
-const e={key:"v-24aa629b",path:"/scene-ui/components/number-input.html",title:"\u6570\u5B57\u8F93\u5165\u6846 number-input",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"scene-ui/components/number-input.md"};export{e as data};

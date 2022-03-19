@@ -1,14 +1,22 @@
 export const data = {
   "key": "v-24aa629b",
   "path": "/scene-ui/components/number-input.html",
-  "title": "数字输入框 number-input",
+  "title": "Number Input 数字输入框",
   "lang": "zh-CN",
-  "frontmatter": {},
+  "frontmatter": {
+    "title": "Number Input 数字输入框"
+  },
   "excerpt": "",
   "headers": [],
   "git": {
-    "updatedTime": null,
-    "contributors": []
+    "updatedTime": 1647617771000,
+    "contributors": [
+      {
+        "name": "sunburst7",
+        "email": "1064658281@qq.com",
+        "commits": 1
+      }
+    ]
   },
   "filePathRelative": "scene-ui/components/number-input.md"
 }

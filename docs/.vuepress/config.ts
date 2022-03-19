@@ -1,13 +1,13 @@
 module.exports = {
     // 站点配置
     lang: 'zh-CN',
-    title: '你好， VuePress ！',
-    description: '这是我的第一个 VuePress 站点',
+    title: 'Sunburst7的博客',
+    description: '前端萌新的学习笔记',
   
     // 主题和它的配置
     theme: '@vuepress/theme-default',
     themeConfig: {
-        logo: 'https://vuejs.org/images/logo.png',
+        logo: '/blog.png',
         heme: '/',
         navbar: [
                 { text: '首页', link: '/' },
