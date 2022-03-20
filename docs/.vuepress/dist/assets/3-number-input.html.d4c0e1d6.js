@@ -1,1 +1,0 @@
-const e={key:"v-6f6b8d1e",path:"/scene-code/3-number-input.html",title:"3.\u6570\u5B57\u8F93\u5165\u6846\u7EC4\u4EF6",lang:"zh-CN",frontmatter:{title:"3.\u6570\u5B57\u8F93\u5165\u6846\u7EC4\u4EF6"},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"scene-code/3-number-input.md"};export{e as data};

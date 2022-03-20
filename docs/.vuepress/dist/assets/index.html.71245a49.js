@@ -1,1 +1,0 @@
-const e={key:"v-65768081",path:"/scene-ui/",title:"Scene-UI\u7EC4\u4EF6\u5E93",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1647671185e3,contributors:[{name:"sunburst7",email:"1064658281@qq.com",commits:2}]},filePathRelative:"scene-ui/README.md"};export{e as data};
