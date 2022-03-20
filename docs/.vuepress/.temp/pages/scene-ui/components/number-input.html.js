@@ -7,7 +7,14 @@ export const data = {
     "title": "Number Input 数字输入框"
   },
   "excerpt": "",
-  "headers": [],
+  "headers": [
+    {
+      "level": 2,
+      "title": "基础用法",
+      "slug": "基础用法",
+      "children": []
+    }
+  ],
   "git": {
     "updatedTime": 1647670250000,
     "contributors": [
@@ -19,4 +26,17 @@ export const data = {
     ]
   },
   "filePathRelative": "scene-ui/components/number-input.md"
+}
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
 }

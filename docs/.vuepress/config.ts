@@ -1,3 +1,5 @@
+const { path } = require('@vuepress/utils')
+
 module.exports = {
     // 站点配置
     lang: 'zh-CN',
@@ -12,7 +14,12 @@ module.exports = {
         navbar: [
                 { text: '首页', link: '/' },
                 { text: '学习笔记', link: '/note/'},
-                { text: 'Scene-UI', link: '/scene-ui/' },
+                { text: 'Scene-UI', link: '/scene-ui/', 
+                    children: [
+                        { text: '说明文档', link: '/scene-ui/' },
+                        { text: '组件源码', link: '/scene-code/1-button.md' },
+                    ],
+                },
                 { 
                     text: '成员github', 
                     children: [
@@ -38,9 +45,13 @@ module.exports = {
             ],
             '/scene-ui/': [
                 {
-                    text: '组件编写',
+                    text: '基础组件',
                     collapsible: true,
-                    children: ['/scene-ui/components/number-input.md', ],
+                    children: [
+                        '/scene-ui/basic/button.md',
+                        '/scene-ui/basic/radio.md',
+                        '/scene-ui/basic/number-input.md', 
+                    ],
                 },
                 {
                     text: '编译框架',
@@ -48,6 +59,19 @@ module.exports = {
                     children: ['/scene-ui/frame/vue-generator.md'],
                 },
             ],
+            '/scene-code/': [
+                '/scene-code/1-button.md',
+                '/scene-code/2-radio.md',
+                '/scene-code/3-number-input.md',
+            ],
         },
+        plugins: [
+            [
+              '@vuepress/register-components',
+              {
+                componentsDir: path.resolve(__dirname, './components'),
+              },
+            ],
+        ],
     },
   }

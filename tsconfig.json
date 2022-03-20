@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "strict": false,
+      "jsx": "preserve",
+      "moduleResolution": "node"
+    },
+    "include": [
+        "docs/.vuepress/components/*.vue",
+        "docs/.vuepress/*.ts"
+    ],
+    "exclude": ["node_modules"]
+}

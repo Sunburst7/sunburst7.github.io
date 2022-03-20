@@ -1,4 +1,13 @@
 <template><h1 id="scene-ui组件库" tabindex="-1"><a class="header-anchor" href="#scene-ui组件库" aria-hidden="true">#</a> Scene-UI组件库</h1>
 <p>scene-ui组件库是山东大学软件学院的学生计划维护的一个开源组件库。计划实现一个开箱即用的组件库以及一个基于该组件库的低代码开发平台。同时实现3个示例网站。</p>
-<p>技术栈：Vue3+TypeScript</p>
+<ul>
+<li>
+<p>主要技术栈：Vue3+TypeScript</p>
+</li>
+<li>
+<p>特点：开箱即用、场景组件、低代码开发平台</p>
+</li>
+</ul>
+<p>现在暂时没有上线，组件还在紧锣密鼓的制作中。</p>
+<p>联系我们：1064658281@qq.com</p>
 </template>

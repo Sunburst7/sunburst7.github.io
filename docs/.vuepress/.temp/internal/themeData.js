@@ -12,7 +12,17 @@ export const themeData = {
     },
     {
       "text": "Scene-UI",
-      "link": "/scene-ui/"
+      "link": "/scene-ui/",
+      "children": [
+        {
+          "text": "说明文档",
+          "link": "/scene-ui/"
+        },
+        {
+          "text": "组件源码",
+          "link": "/scene-code/1-button.md"
+        }
+      ]
     },
     {
       "text": "成员github",
@@ -36,10 +46,12 @@ export const themeData = {
     "/note/": [],
     "/scene-ui/": [
       {
-        "text": "组件编写",
+        "text": "基础组件",
         "collapsible": true,
         "children": [
-          "/scene-ui/components/number-input.md"
+          "/scene-ui/basic/button.md",
+          "/scene-ui/basic/radio.md",
+          "/scene-ui/basic/number-input.md"
         ]
       },
       {
@@ -49,8 +61,21 @@ export const themeData = {
           "/scene-ui/frame/vue-generator.md"
         ]
       }
+    ],
+    "/scene-code/": [
+      "/scene-code/1-button.md",
+      "/scene-code/2-radio.md",
+      "/scene-code/3-number-input.md"
     ]
   },
+  "plugins": [
+    [
+      "@vuepress/register-components",
+      {
+        "componentsDir": "E:/my_git/my-blog/docs/.vuepress/components"
+      }
+    ]
+  ],
   "locales": {
     "/": {
       "selectLanguageName": "English"
