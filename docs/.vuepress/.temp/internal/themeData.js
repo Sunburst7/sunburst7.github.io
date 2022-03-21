@@ -74,6 +74,31 @@ export const themeData = {
       {
         "componentsDir": "E:/my_git/my-blog/docs/.vuepress/components"
       }
+    ],
+    [
+      "@vuepress/docsearch",
+      {
+        "apiKey": "f13e2eebec8dabf08c32343ce8b66671",
+        "indexName": "Blog",
+        "locales": {
+          "/": {
+            "placeholder": "Search Documentation",
+            "translations": {
+              "button": {
+                "buttonText": "Search Documentation"
+              }
+            }
+          },
+          "/zh/": {
+            "placeholder": "搜索文档",
+            "translations": {
+              "button": {
+                "buttonText": "搜索文档"
+              }
+            }
+          }
+        }
+      }
     ]
   ],
   "locales": {
