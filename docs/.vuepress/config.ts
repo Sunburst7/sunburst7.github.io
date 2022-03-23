@@ -21,38 +21,43 @@ module.exports = {
                     ],
                 },
                 { 
-                    text: '成员github', 
+                    text: '链接', 
                     children: [
-                        { text: 'Sunburst7', link: 'https://github.com/Sunburst7' },
-                        { text: 'skr305', link: 'https://github.com/skr305' },
-                        { text: 'ahhweb', link: 'https://github.com/ahhweb' },
+                      { 
+                        text: '成员github',
+                        children:[
+                          { text: 'Sunburst7', link: 'https://github.com/Sunburst7' },
+                          { text: 'skr305', link: 'https://github.com/skr305' },
+                          { text: 'ahhweb', link: 'https://github.com/ahhweb' },
+                        ]
+                      },
+                      { 
+                        text: '官方文档',
+                        children:[]
+                      },
                     ],
                 }
         ],
         // 可折叠的侧边栏
         sidebar: {
-            '/note/': [
-                // {
-                //     text: 'VuePress Reference',
-                //     collapsible: true,
-                //     children: ['/reference/cli.md', '/reference/config.md'],
-                // },
-                // {
-                //     text: 'Bundlers Reference',
-                //     collapsible: true,
-                //     children: ['/reference/bundler/vite.md', '/reference/bundler/webpack.md'],
-                // },
-            ],
+            '/note/': [],
             '/scene-ui/': [
                 {
                     text: '基础组件',
                     collapsible: true,
                     children: [
                         '/scene-ui/basic/button.md',
-                        '/scene-ui/basic/radio.md',
-                        '/scene-ui/basic/number-input.md', 
+                        '/scene-ui/basic/link.md',
                     ],
                 },
+                {
+                  text: '表单组件',
+                  collapsible: true,
+                  children: [
+                      '/scene-ui/form/radio.md',
+                      '/scene-ui/form/number-input.md', 
+                  ],
+              },
                 {
                     text: '编译框架',
                     collapsible: true,

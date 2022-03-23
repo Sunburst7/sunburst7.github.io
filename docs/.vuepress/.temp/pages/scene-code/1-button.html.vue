@@ -150,7 +150,7 @@
     <span class="token property">height</span><span class="token punctuation">:</span> 40px<span class="token punctuation">;</span>
     <span class="token property">border-radius</span><span class="token punctuation">:</span> 5px<span class="token punctuation">;</span>
     <span class="token property">font-size</span><span class="token punctuation">:</span> 14px<span class="token punctuation">;</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-flex<span class="token punctuation">;</span>
     <span class="token property">flex-direction</span><span class="token punctuation">:</span> row<span class="token punctuation">;</span>
     <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
     <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>

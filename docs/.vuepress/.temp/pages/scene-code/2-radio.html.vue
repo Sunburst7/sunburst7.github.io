@@ -95,21 +95,21 @@
 <span class="token selector">.scene-radio-default</span><span class="token punctuation">{</span>
     <span class="token property">width</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
     <span class="token property">height</span><span class="token punctuation">:</span> 50px<span class="token punctuation">;</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-flex<span class="token punctuation">;</span>
     <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
     <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span class="token selector">.scene-radio-small</span><span class="token punctuation">{</span>
     <span class="token property">width</span><span class="token punctuation">:</span> 80px<span class="token punctuation">;</span>
     <span class="token property">height</span><span class="token punctuation">:</span> 40px<span class="token punctuation">;</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-flex<span class="token punctuation">;</span>
     <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
     <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span class="token selector">.scene-radio-large</span><span class="token punctuation">{</span>
     <span class="token property">width</span><span class="token punctuation">:</span> 120px<span class="token punctuation">;</span>
     <span class="token property">height</span><span class="token punctuation">:</span> 55px<span class="token punctuation">;</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> flex<span class="token punctuation">;</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-flex<span class="token punctuation">;</span>
     <span class="token property">justify-content</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
     <span class="token property">align-items</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>

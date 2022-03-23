@@ -26,7 +26,7 @@
 
 <script lang='ts'>
 import {defineComponent,nextTick,onMounted,reactive,ref,watch,getCurrentInstance} from 'vue'
-import {isNumber} from '../../utils/typeAssert'
+import {isNumber} from '../../core/utils/typeAssert'
 import {numberInputProps,numberInputEmits} from './number-input'
 
 export default defineComponent({
@@ -112,7 +112,7 @@ export default defineComponent({
         emit('blur', event)
     }
 
-    // 暴漏外部的方法
+    // 暴漏给外部的方法
     const focus = () => {
       input.value?.focus?.()
     }
@@ -139,7 +139,7 @@ export default defineComponent({
 
 <style scoped>
 .scene-number-input-default{
-    display: flex;
+    display: inline-flex;
     width: 100px;
     height: 30px;
     border: black 1px solid;
