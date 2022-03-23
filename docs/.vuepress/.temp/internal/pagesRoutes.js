@@ -9,9 +9,9 @@ const routeItems = [
   ["v-65768081","/scene-ui/",{"title":"Scene-UI组件库"},["/scene-ui/index.html","/scene-ui/README.md"]],
   ["v-09639625","/scene-ui/basic/button.html",{"title":"Button 按钮"},["/scene-ui/basic/button","/scene-ui/basic/button.md"]],
   ["v-2b5f81dd","/scene-ui/basic/link.html",{"title":"Link 链接"},["/scene-ui/basic/link","/scene-ui/basic/link.md"]],
+  ["v-c9a6d320","/scene-ui/frame/vue-generator.html",{"title":"vue模板生成"},["/scene-ui/frame/vue-generator","/scene-ui/frame/vue-generator.md"]],
   ["v-58ff9cee","/scene-ui/form/number-input.html",{"title":"Number Input 数字输入框"},["/scene-ui/form/number-input","/scene-ui/form/number-input.md"]],
   ["v-65f3a148","/scene-ui/form/radio.html",{"title":"Radio 单选框"},["/scene-ui/form/radio","/scene-ui/form/radio.md"]],
-  ["v-c9a6d320","/scene-ui/frame/vue-generator.html",{"title":"vue模板生成"},["/scene-ui/frame/vue-generator","/scene-ui/frame/vue-generator.md"]],
   ["v-3706649a","/404.html",{"title":""},["/404"]],
 ]
 

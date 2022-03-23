@@ -17,12 +17,12 @@ export const pagesComponents = {
   "v-09639625": defineAsyncComponent(() => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.vue")),
   // path: /scene-ui/basic/link.html
   "v-2b5f81dd": defineAsyncComponent(() => import(/* webpackChunkName: "v-2b5f81dd" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/link.html.vue")),
+  // path: /scene-ui/frame/vue-generator.html
+  "v-c9a6d320": defineAsyncComponent(() => import(/* webpackChunkName: "v-c9a6d320" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/frame/vue-generator.html.vue")),
   // path: /scene-ui/form/number-input.html
   "v-58ff9cee": defineAsyncComponent(() => import(/* webpackChunkName: "v-58ff9cee" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/form/number-input.html.vue")),
   // path: /scene-ui/form/radio.html
   "v-65f3a148": defineAsyncComponent(() => import(/* webpackChunkName: "v-65f3a148" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/form/radio.html.vue")),
-  // path: /scene-ui/frame/vue-generator.html
-  "v-c9a6d320": defineAsyncComponent(() => import(/* webpackChunkName: "v-c9a6d320" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/frame/vue-generator.html.vue")),
   // path: /404.html
   "v-3706649a": defineAsyncComponent(() => import(/* webpackChunkName: "v-3706649a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/404.html.vue")),
 }
