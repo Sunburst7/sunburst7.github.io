@@ -127,8 +127,14 @@ export const data = {
     }
   ],
   "git": {
-    "updatedTime": null,
-    "contributors": []
+    "updatedTime": 1648467523000,
+    "contributors": [
+      {
+        "name": "sunburst7",
+        "email": "1064658281@qq.com",
+        "commits": 1
+      }
+    ]
   },
   "filePathRelative": "scene-code/5-select.md"
 }
