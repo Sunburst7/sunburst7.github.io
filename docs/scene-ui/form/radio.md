@@ -101,4 +101,3 @@ const email = ref('email')
     align-items: flex-end
 }
 </style>
-

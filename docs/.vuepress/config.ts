@@ -68,6 +68,7 @@ module.exports = {
                 '/scene-code/1-button.md',
                 '/scene-code/2-radio.md',
                 '/scene-code/3-number-input.md',
+                '/scene-code/5-select.md'
             ],
         },
         plugins: [
