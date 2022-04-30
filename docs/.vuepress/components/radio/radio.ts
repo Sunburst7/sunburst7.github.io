@@ -1,5 +1,5 @@
-import { componentSizes } from "../../core/constants/constant"
-import {isString ,isNumber, isBoolean} from '../../core/utils/typeAssert'
+import { ComponentConstants } from '../../core/constants'; 
+import {isString ,isNumber, isBoolean} from "../../core/lib/type-assert"
 
 export const radioProps = {
     modelValue:{//单选框绑定的值
@@ -18,21 +18,17 @@ export const radioProps = {
         type: Boolean,
         default: false
     },
-    border:{//是否显示边框
-        type: Boolean,
-        default: false
-    },
     size:{//Radio 的尺寸
         type: String,
         default: 'default',
         validator(value: string) {
-            return componentSizes.includes(value)
+            return ComponentConstants.StandardSizeArr.includes(value)
         }
     },
-    
 }
 
 export const radioEmits = {
     // onchange函数的验证函数
     change: (val: string | number | boolean) => isString(val) || isNumber(val) || isBoolean(val),
+    'update:modelValue': (val: string | number | boolean) => isString(val) || isNumber(val) || isBoolean(val),
 }

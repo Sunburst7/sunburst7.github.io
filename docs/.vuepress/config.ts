@@ -13,11 +13,16 @@ module.exports = {
         heme: '/',
         navbar: [
                 { text: '首页', link: '/' },
-                { text: '学习笔记', link: '/note/'},
+                { text: '学习笔记', link: '/note/',
+                    children: [
+                      { text: '目录', link: '/note/' },
+                      { text: '算法', link: '/note/algorithm/' },
+                  ],
+                },
                 { text: 'Scene-UI', link: '/scene-ui/', 
                     children: [
                         { text: '说明文档', link: '/scene-ui/' },
-                        { text: '组件源码', link: '/scene-code/1-button.md' },
+                        { text: '组件源码', link: '/scene-code/button.md' },
                     ],
                 },
                 { 
@@ -47,17 +52,19 @@ module.exports = {
                     collapsible: true,
                     children: [
                         '/scene-ui/basic/button.md',
+                        '/scene-ui/basic/card.md',
+                        '/scene-ui/basic/icon.md',
                         '/scene-ui/basic/link.md',
+                        '/scene-ui/basic/select.md'
                     ],
                 },
                 {
-                  text: '表单组件',
+                  text: '场景组件',
                   collapsible: true,
                   children: [
-                      '/scene-ui/form/radio.md',
-                      '/scene-ui/form/number-input.md', 
+                      '/scene-ui/scene/login-reg.md',
                   ],
-              },
+                },
                 {
                     text: '编译框架',
                     collapsible: true,
@@ -65,10 +72,11 @@ module.exports = {
                 },
             ],
             '/scene-code/': [
-                '/scene-code/1-button.md',
-                '/scene-code/2-radio.md',
-                '/scene-code/3-number-input.md',
-                '/scene-code/5-select.md'
+                '/scene-code/button.md',
+                '/scene-code/card.md',
+                '/scene-code/icon.md',
+                '/scene-code/link.md',
+                '/scene-code/select.md'
             ],
         },
         plugins: [

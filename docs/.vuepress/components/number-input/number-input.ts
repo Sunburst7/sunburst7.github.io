@@ -1,5 +1,5 @@
-import { componentSizes } from "../../core/constants/constant"
-import { isNumber } from "../../core/utils/typeAssert"
+import { ComponentConstants } from '../../core/constants'; 
+import { isNumber } from "../../core/lib/type-assert"
 
 export const numberInputProps = {
     step: {
@@ -21,13 +21,6 @@ export const numberInputProps = {
     disabled: {
         type: Boolean,
         default: false,
-    },
-    size: {
-        type: String,
-        default: 'default',
-        validator(value: string) {
-            return componentSizes.includes(value)
-        }
     },
     name: String,
     label: String,

@@ -1,0 +1,1 @@
+const e={key:"v-3db34e26",path:"/scene-code/--radio.html",title:"2.\u5355\u9009\u6846\u7EC4\u4EF6",lang:"zh-CN",frontmatter:{title:"2.\u5355\u9009\u6846\u7EC4\u4EF6"},excerpt:"",headers:[],git:{updatedTime:null,contributors:[]},filePathRelative:"scene-code/--radio.md"};export{e as data};

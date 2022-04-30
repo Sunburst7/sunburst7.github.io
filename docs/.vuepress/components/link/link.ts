@@ -1,10 +1,12 @@
+import { ComponentConstants } from '../../core/constants'; 
+
 export const linkProps = {
     href: { type: String, default: '' },
-    type: {
+    theme: {
         type: String,
-        default: 'default',
-        validator(value:string){
-            return ['primary', 'success', 'warning', 'info', 'danger', 'default'].includes(value);
+        default: 'main',
+        validator(value:ComponentConstants.StandardColor){
+            return ComponentConstants.StandardColorArr.includes(value)
         },
     },
     underline: {
@@ -12,10 +14,6 @@ export const linkProps = {
         default: true,
     },
     disabled: { type: Boolean, default: false },
-    // icon: {
-    //     type: iconPropType,
-    //     default: '',
-    // },
 }
 
 export const linkEmits = {

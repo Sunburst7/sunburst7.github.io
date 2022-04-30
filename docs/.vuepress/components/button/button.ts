@@ -1,20 +1,26 @@
-import { componentSizes } from "../../core/constants/constant"
+import { ComponentConstants } from '../../core/constants'; 
 
 export const buttonProps = {
     type:{// 按钮类型
         type: String,
         default: 'default',
-        required: true,
         validator(value: string) {
             // 这个值必须与下列字符串中的其中一个相匹配
-            return ['default', 'round', 'text'].includes(value)
+            return ['default', 'round', 'text', 'circle'].includes(value)
         }
+    },
+    theme: {
+        type: String,
+        default: 'main',
+        validator(value:ComponentConstants.StandardColor){
+            return ComponentConstants.StandardColorArr.includes(value)
+        },
     },
     size:{// 按钮的尺寸
         type: String,
         default: 'default',
         validator(value: string) {
-            return componentSizes.includes(value)
+            return ComponentConstants.StandardSizeArr.includes(value)
         }
     },
     disabled:{// 是否禁用

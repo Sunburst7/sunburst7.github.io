@@ -16,6 +16,12 @@ export const data = {
     },
     {
       "level": 2,
+      "title": "设置主题色",
+      "slug": "设置主题色",
+      "children": []
+    },
+    {
+      "level": 2,
       "title": "禁用",
       "slug": "禁用",
       "children": []
