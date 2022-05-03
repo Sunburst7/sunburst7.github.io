@@ -1,0 +1,1 @@
+const e={key:"v-ae42d7e8",path:"/scene-code/info-panel.html",title:"info-panel",lang:"zh-CN",frontmatter:{title:"info-panel"},excerpt:"",headers:[],git:{updatedTime:165157483e4,contributors:[{name:"sunburst7",email:"1064658281@qq.com",commits:1}]},filePathRelative:"scene-code/info-panel.md"};export{e as data};

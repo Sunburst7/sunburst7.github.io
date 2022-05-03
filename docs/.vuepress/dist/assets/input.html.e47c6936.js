@@ -1,0 +1,1 @@
+const t={key:"v-bcb6afd2",path:"/scene-code/input.html",title:"input",lang:"zh-CN",frontmatter:{title:"input"},excerpt:"",headers:[],git:{updatedTime:165157483e4,contributors:[{name:"sunburst7",email:"1064658281@qq.com",commits:1}]},filePathRelative:"scene-code/input.md"};export{t as data};
