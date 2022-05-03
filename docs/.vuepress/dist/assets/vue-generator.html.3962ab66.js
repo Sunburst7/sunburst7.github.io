@@ -1,1 +1,0 @@
-const e={key:"v-c9a6d320",path:"/scene-ui/frame/vue-generator.html",title:"vue\u6A21\u677F\u751F\u6210",lang:"zh-CN",frontmatter:{title:"vue\u6A21\u677F\u751F\u6210"},excerpt:"",headers:[],git:{updatedTime:164767025e4,contributors:[{name:"sunburst7",email:"1064658281@qq.com",commits:2}]},filePathRelative:"scene-ui/frame/vue-generator.md"};export{e as data};

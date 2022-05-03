@@ -1,7 +1,7 @@
 <template>
       <div class="scene-datetime">
         <div class="scene-datetime-input">
-          <s-icon color="#aa00ff" name="calendar2"></s-icon>
+          <s-icon color="#aa00ff" name="calendar2" :size="16"></s-icon>
           <input v-model="datetimeTemplate" @focus="calendarControl(true)" id="scene-datetime-input-input" type="text" readonly/>
         </div>
         <Transition name="scene-datetime">

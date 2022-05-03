@@ -125,8 +125,6 @@ title: Card 卡片
 </style>
 ```
 
-
-
 ## Card 属性
 
 | 属性      | 说明             | 类型   | 可选值            | 默认值 |
@@ -135,7 +133,8 @@ title: Card 卡片
 | shadow    | 显示阴影的时机   | string | always/hover/body | always |
 | bodyStyle | 卡片的body的样式 | object | -                 | -      |
 
-## Card 插槽
+##   Card 插槽
+
 
 | 插槽名     | 说明               |
 | ---------- | ------------------ |
@@ -162,4 +161,11 @@ const disabled = ref(true)
   justify-content: space-between;
   align-items: center;
 }
+.text {
+  font-size: 14px;
+}
+.item {
+  margin-bottom: 18px;
+  flex-grow: 1;
+}    
 </style>    

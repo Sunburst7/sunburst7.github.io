@@ -1,7 +1,12 @@
 {
   "hash": "69f098dc",
-  "browserHash": "74eaee83",
+  "browserHash": "eed2ce13",
   "optimized": {
+    "scene-ui": {
+      "file": "E:/my_git/my-blog/docs/.vuepress/.cache/scene-ui.js",
+      "src": "E:/my_git/my-blog/node_modules/_scene-ui@0.4.25@scene-ui/dist/scene-ui.es.js",
+      "needsInterop": false
+    },
     "vue": {
       "file": "E:/my_git/my-blog/docs/.vuepress/.cache/vue.js",
       "src": "E:/my_git/my-blog/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js",

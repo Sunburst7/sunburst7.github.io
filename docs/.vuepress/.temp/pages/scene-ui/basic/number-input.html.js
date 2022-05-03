@@ -1,10 +1,10 @@
 export const data = {
   "key": "v-7f4d11de",
   "path": "/scene-ui/basic/number-input.html",
-  "title": "Number Input 数字输入框",
+  "title": "Number-Input 数字输入框",
   "lang": "zh-CN",
   "frontmatter": {
-    "title": "Number Input 数字输入框"
+    "title": "Number-Input 数字输入框"
   },
   "excerpt": "",
   "headers": [
@@ -50,17 +50,4 @@ export const data = {
     ]
   },
   "filePathRelative": "scene-ui/basic/number-input.md"
-}
-
-if (import.meta.webpackHot) {
-  import.meta.webpackHot.accept()
-  if (__VUE_HMR_RUNTIME__.updatePageData) {
-    __VUE_HMR_RUNTIME__.updatePageData(data)
-  }
-}
-
-if (import.meta.hot) {
-  import.meta.hot.accept(({ data }) => {
-    __VUE_HMR_RUNTIME__.updatePageData(data)
-  })
 }

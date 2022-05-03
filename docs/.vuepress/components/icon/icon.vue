@@ -7,7 +7,7 @@
 <script lang='ts'>
 import {defineComponent,computed, CSSProperties} from 'vue'
 import { iconProps } from './icon'
-// import './bootstrap-icons.css'
+import './bootstrap-icons.css'
 
 export default defineComponent({
   name:'scene-icon',

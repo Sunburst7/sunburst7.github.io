@@ -134,9 +134,10 @@ export default defineComponent({
   transition: opacity 0.3s ease;
 }
 .scene-dialog-container {
+  position: relative;
   z-index: var(--scene-index-superlative);
   margin: 0px auto;
-  background-color: var(--scene-color-white);
+  background: var(--scene-color-white);
   border-radius: var(--scene-border-radius);
   box-shadow: var(--scene-box-shadow);
   transition: all 0.3s ease;

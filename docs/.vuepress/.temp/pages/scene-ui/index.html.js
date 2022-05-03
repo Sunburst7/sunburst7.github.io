@@ -5,7 +5,20 @@ export const data = {
   "lang": "zh-CN",
   "frontmatter": {},
   "excerpt": "",
-  "headers": [],
+  "headers": [
+    {
+      "level": 2,
+      "title": "quick start",
+      "slug": "quick-start",
+      "children": []
+    },
+    {
+      "level": 2,
+      "title": "update version",
+      "slug": "update-version",
+      "children": []
+    }
+  ],
   "git": {
     "updatedTime": 1647782215000,
     "contributors": [

@@ -1,12 +1,12 @@
 <template><h1 id="数字输入框-number-input" tabindex="-1"><a class="header-anchor" href="#数字输入框-number-input" aria-hidden="true">#</a> 数字输入框 number-input</h1>
-<p>允许输入标准的数字值，可定义范围。</p>
+<p>只允许设置标准的数字值，可自定义范围，步长</p>
 <h2 id="基础用法" tabindex="-1"><a class="header-anchor" href="#基础用法" aria-hidden="true">#</a> 基础用法</h2>
-<p>要使用它，只需要在 <code>&lt;s-number-input&gt;</code> 元素中使用 <code>v-model</code> 绑定变量即可，其他非数字的字符输入后会被自动转变为0，且超过范围的数字无法输入。</p>
+<p>要使用它，只需要在 <code>&lt;s-number-input&gt;</code> 元素中使用 <code>v-model</code> 绑定变量即可</p>
 <p>其他控制数字输入的属性有：</p>
 <ul>
-<li>:step=&quot;Number&quot;：控制每次按钮调整的步长，默认为1</li>
-<li>:max=&quot;Number&quot;：控制数字输入的最大值，默认无穷</li>
-<li>:min=&quot;Number&quot;：控制数字输入的最小值，默认负无穷</li>
+<li><strong>step</strong>：控制每次按钮调整的步长，默认为1</li>
+<li><strong>max</strong>：控制数字输入的最大值，默认无穷</li>
+<li><strong>min</strong>：控制数字输入的最小值，默认负无穷</li>
 </ul>
 <p>下面是一个从-10到10的数字选择器，步长为1：</p>
 <div class="line">

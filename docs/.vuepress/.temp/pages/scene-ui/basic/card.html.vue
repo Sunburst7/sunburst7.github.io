@@ -181,4 +181,11 @@ const disabled = ref(true)
   justify-content: space-between;
   align-items: center;
 }
+.text {
+  font-size: 14px;
+}
+.item {
+  margin-bottom: 18px;
+  flex-grow: 1;
+}    
 </style>    

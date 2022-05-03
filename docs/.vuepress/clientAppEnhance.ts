@@ -8,13 +8,16 @@ import sDatetime from './components/datetime/datetime.vue'
 import sDialog from './components/dialog/dialog.vue'
 import sIcon from './components/icon/icon.vue'
 import sInput from './components/input/input.vue'
-
+import sLink from './components/link/link.vue'
+import sNumberInput from './components/number-input/number-input.vue'
+import sRadio from './components/radio/radio.vue'
+import sScrollbar from './components/scrollbar/scrollbar.vue'
 import sSelect from './components/select/select.vue'
+import sTextarea from './components/textarea/textarea.vue'
+
+import sInfoPanel from './components/scene/info-panel/info-panel.vue'
 import sLoginReg from './components/scene/login-reg/s-login-reg.vue'
 
-import sRadio from './components/radio/radio.vue'
-import sNumberInput from './components/number-input/number-input.vue'
-import sLink from './components/link/link.vue'
 
 import './styles/global.css'
 export default defineClientAppEnhance(({ app, router, siteData }) => {
@@ -24,10 +27,14 @@ export default defineClientAppEnhance(({ app, router, siteData }) => {
   app.component('s-dialog',sDialog)
   app.component('s-input',sInput)
   app.component('s-icon',sIcon)
-  app.component('s-select',sSelect)
-
-  app.component('s-login-reg',sLoginReg)
-  app.component('s-radio', sRadio)
-  app.component('s-number-input', sNumberInput)
   app.component('s-link',sLink)
+  app.component('s-number-input', sNumberInput)
+  app.component('s-radio', sRadio)
+  app.component('s-scrollbar', sScrollbar)
+  app.component('s-select',sSelect)
+  app.component('s-textarea',sTextarea)
+  
+  app.component('s-info-panel',sInfoPanel)
+  app.component('s-login-reg',sLoginReg)
+  
 })
