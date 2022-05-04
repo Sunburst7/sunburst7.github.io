@@ -17,7 +17,7 @@ const routeItems = [
   ["v-f6c4218a","/scene-code/scrollbar.html",{"title":"scrollbar"},["/scene-code/scrollbar","/scene-code/scrollbar.md"]],
   ["v-21cf1cd6","/scene-code/select.html",{"title":"select"},["/scene-code/select","/scene-code/select.md"]],
   ["v-19a87817","/scene-code/textarea.html",{"title":"textarea"},["/scene-code/textarea","/scene-code/textarea.md"]],
-  ["v-65768081","/scene-ui/",{"title":"Scene-UI组件库"},["/scene-ui/index.html","/scene-ui/README.md"]],
+  ["v-65768081","/scene-ui/",{"title":"Scene-UI:A simple ui-component-lib with simple style"},["/scene-ui/index.html","/scene-ui/README.md"]],
   ["v-76bd8bc4","/note/algorithm/",{"title":""},["/note/algorithm/index.html","/note/algorithm/README.md"]],
   ["v-09639625","/scene-ui/basic/button.html",{"title":"Button 按钮"},["/scene-ui/basic/button","/scene-ui/basic/button.md"]],
   ["v-7d953487","/scene-ui/basic/card.html",{"title":"Card 卡片"},["/scene-ui/basic/card","/scene-ui/basic/card.md"]],

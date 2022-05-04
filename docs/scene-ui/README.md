@@ -1,27 +1,37 @@
-# Scene-UI组件库
+# Scene-UI:A simple ui-component-lib with simple style
 
-scene-ui组件库是山东大学软件学院的学生计划维护的一个开源组件库。计划实现一个开箱即用的组件库以及一个基于该组件库的低代码开发平台。同时实现3个示例网站。
+The scene-ui component library is an **open source component library** maintained by the students of the School of Software of ShanDong University.
 
-* 主要技术栈：Vue3+TypeScript
+**Now a total of 15 basic components, 3 scene components, and 2 ui-method components can be used.**
 
-* 特点：开箱即用、场景组件、低代码开发平台
+Main technology stack:  Vue3+TypeScript
+
+Features: 
+
+* out-of-the-box,
+* scene components
+*  low-code development platform（not available）
+
+Our website: https://sunburst7.github.io/scene-ui/
+
+The three of us are rookies, and hope make progress together with the mature devloper.
 
 ## quick start
 
-首先你需要安装最新版的**Scene-UI**：
+First you need to install the latest version of Scene-UI:
 
-```npm
-npm i scene-ui --save		//生产环境
-npm i scene-ui --save-dev	//开发环境
+```
+npm i scene-ui --save		//produce environment
+npm i scene-ui --save-dev	//develop environment
 ```
 
-接着你需要在main.ts或其他地方导入我们的全局CSS样式：
+Then you need to import our global CSS styles in main.ts or elsewhere:
 
 ```typescript
 import 'scene-ui/style'
 ```
 
-之后按需导入你需要的组件即可：
+Then import the components you need as needed:
 
 ```vue
 <script setup lang="ts">
@@ -34,7 +44,7 @@ import { SButton } from 'scene-ui'
 
 ## update version
 
-推荐从node_mudules中删除scene-ui依赖包，再重新使用npm下载
+It is recommended to delete the scene-ui dependency package from node_mudules, and then use npm to download it again
 
 
 

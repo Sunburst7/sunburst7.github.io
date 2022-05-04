@@ -1,7 +1,7 @@
 export const data = {
   "key": "v-65768081",
   "path": "/scene-ui/",
-  "title": "Scene-UI组件库",
+  "title": "Scene-UI:A simple ui-component-lib with simple style",
   "lang": "zh-CN",
   "frontmatter": {},
   "excerpt": "",
