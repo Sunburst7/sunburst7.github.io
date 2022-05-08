@@ -72,12 +72,16 @@ export const themeData = {
         "children": [
           "/scene-ui/basic/button.md",
           "/scene-ui/basic/card.md",
+          "/scene-ui/basic/checkbox-button.md",
+          "/scene-ui/basic/checkbox-group.md",
+          "/scene-ui/basic/checkbox.md",
           "/scene-ui/basic/datetime.md",
           "/scene-ui/basic/dialog.md",
           "/scene-ui/basic/icon.md",
           "/scene-ui/basic/input.md",
           "/scene-ui/basic/link.md",
           "/scene-ui/basic/loading.md",
+          "/scene-ui/basic/message.md",
           "/scene-ui/basic/number-input.md",
           "/scene-ui/basic/radio.md",
           "/scene-ui/basic/select.md",
@@ -89,8 +93,12 @@ export const themeData = {
         "text": "场景组件",
         "collapsible": true,
         "children": [
+          "/scene-ui/scene/chat.md",
           "/scene-ui/scene/info-panel.md",
-          "/scene-ui/scene/login-reg.md"
+          "/scene-ui/scene/login-reg.md",
+          "/scene-ui/scene/payment-input.md",
+          "/scene-ui/scene/search-panel.md",
+          "/scene-ui/scene/session-list.md"
         ]
       }
     ],

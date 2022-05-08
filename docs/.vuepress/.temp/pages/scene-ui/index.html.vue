@@ -1,6 +1,6 @@
 <template><h1 id="scene-ui-a-simple-ui-component-lib-with-simple-style" tabindex="-1"><a class="header-anchor" href="#scene-ui-a-simple-ui-component-lib-with-simple-style" aria-hidden="true">#</a> Scene-UI:A simple ui-component-lib with simple style</h1>
 <p>The scene-ui component library is an <strong>open source component library</strong> maintained by the students of the School of Software of ShanDong University.</p>
-<p><strong>Now a total of 15 basic components, 3 scene components, and 2 ui-method components can be used.</strong></p>
+<p><strong>Now a total of 15 basic components, 6 scene components, and 2 ui-method components can be used.</strong></p>
 <p>Main technology stack:  Vue3+TypeScript</p>
 <p>Features:</p>
 <ul>

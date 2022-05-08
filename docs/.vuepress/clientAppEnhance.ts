@@ -17,11 +17,17 @@ import sTextarea from './components/textarea/textarea.vue'
 
 import sInfoPanel from './components/scene/info-panel/info-panel.vue'
 import sLoginReg from './components/scene/login-reg/s-login-reg.vue'
-
+import sPaymentInput from './components/payment/s-payment-input.vue'
+import sChat from './components/scene/chat/chat.vue'
+import sSearchPanel from './components/scene/search/s-search-panel.vue'
+import sSessionList from './components/scene/session/s-session-list.vue'
 
 import './styles/global.css'
 export default defineClientAppEnhance(({ app, router, siteData }) => {
   app.component('s-button',sButton)
+  app.component('s-checkbox-button',sCheckboxButton)
+  app.component('s-checkbox-group',sCheckboxGroup)
+  app.component('s-checkbox',sCheckbox)
   app.component('s-card',sCard)
   app.component('s-datetime',sDatetime)
   app.component('s-dialog',sDialog)
@@ -34,7 +40,10 @@ export default defineClientAppEnhance(({ app, router, siteData }) => {
   app.component('s-select',sSelect)
   app.component('s-textarea',sTextarea)
   
+  app.component('s-payment-input',sPaymentInput)
   app.component('s-info-panel',sInfoPanel)
   app.component('s-login-reg',sLoginReg)
-  
+  app.component('s-chat',sChat)
+  app.component('s-search-panel',sSearchPanel)
+  app.component('s-session-list',sSessionList)
 })

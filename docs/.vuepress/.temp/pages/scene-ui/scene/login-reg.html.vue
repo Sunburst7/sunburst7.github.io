@@ -1,4 +1,4 @@
-<template><h1 id="loginreg组件" tabindex="-1"><a class="header-anchor" href="#loginreg组件" aria-hidden="true">#</a> LoginReg组件</h1>
+<template><h1 id="login-reg-登录注册" tabindex="-1"><a class="header-anchor" href="#login-reg-登录注册" aria-hidden="true">#</a> Login Reg 登录注册</h1>
 <p>它的参数如下</p>
 <ul>
 <li>onLogin: 登录时触发的事件，</li>

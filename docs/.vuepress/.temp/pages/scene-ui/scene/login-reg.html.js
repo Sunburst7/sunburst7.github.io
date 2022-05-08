@@ -1,10 +1,10 @@
 export const data = {
   "key": "v-31d0d6e6",
   "path": "/scene-ui/scene/login-reg.html",
-  "title": "Login Reg 组件",
+  "title": "Login Reg 登录注册",
   "lang": "zh-CN",
   "frontmatter": {
-    "title": "Login Reg 组件"
+    "title": "Login Reg 登录注册"
   },
   "excerpt": "",
   "headers": [

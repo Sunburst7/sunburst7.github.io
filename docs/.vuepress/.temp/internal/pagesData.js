@@ -39,6 +39,12 @@ export const pagesData = {
   "v-09639625": () => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/card.html
   "v-7d953487": () => import(/* webpackChunkName: "v-7d953487" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/card.html.js").then(({ data }) => data),
+  // path: /scene-ui/basic/checkbox-button.html
+  "v-45c2a25f": () => import(/* webpackChunkName: "v-45c2a25f" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox-button.html.js").then(({ data }) => data),
+  // path: /scene-ui/basic/checkbox-group.html
+  "v-15a39942": () => import(/* webpackChunkName: "v-15a39942" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox-group.html.js").then(({ data }) => data),
+  // path: /scene-ui/basic/checkbox.html
+  "v-2d537cb4": () => import(/* webpackChunkName: "v-2d537cb4" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/datetime.html
   "v-0b4beffc": () => import(/* webpackChunkName: "v-0b4beffc" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/datetime.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/dialog.html
@@ -51,6 +57,8 @@ export const pagesData = {
   "v-2b5f81dd": () => import(/* webpackChunkName: "v-2b5f81dd" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/link.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/loading.html
   "v-7baf9f9f": () => import(/* webpackChunkName: "v-7baf9f9f" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/loading.html.js").then(({ data }) => data),
+  // path: /scene-ui/basic/message.html
+  "v-4a3ff098": () => import(/* webpackChunkName: "v-4a3ff098" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/message.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/number-input.html
   "v-7f4d11de": () => import(/* webpackChunkName: "v-7f4d11de" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/number-input.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/radio.html
@@ -61,10 +69,18 @@ export const pagesData = {
   "v-7f19969b": () => import(/* webpackChunkName: "v-7f19969b" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/select.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/textarea.html
   "v-a41718c6": () => import(/* webpackChunkName: "v-a41718c6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/textarea.html.js").then(({ data }) => data),
+  // path: /scene-ui/scene/chat.html
+  "v-25b41fc6": () => import(/* webpackChunkName: "v-25b41fc6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/chat.html.js").then(({ data }) => data),
   // path: /scene-ui/scene/info-panel.html
   "v-38618e70": () => import(/* webpackChunkName: "v-38618e70" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/info-panel.html.js").then(({ data }) => data),
   // path: /scene-ui/scene/login-reg.html
   "v-31d0d6e6": () => import(/* webpackChunkName: "v-31d0d6e6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/login-reg.html.js").then(({ data }) => data),
+  // path: /scene-ui/scene/payment-input.html
+  "v-2fc9755a": () => import(/* webpackChunkName: "v-2fc9755a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/payment-input.html.js").then(({ data }) => data),
+  // path: /scene-ui/scene/search-panel.html
+  "v-5e5cd636": () => import(/* webpackChunkName: "v-5e5cd636" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/search-panel.html.js").then(({ data }) => data),
+  // path: /scene-ui/scene/session-list.html
+  "v-f19117c0": () => import(/* webpackChunkName: "v-f19117c0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/session-list.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
 }

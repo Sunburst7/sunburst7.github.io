@@ -1,8 +1,8 @@
 ---
-title: Login Reg 组件
+title: Login Reg 登录注册
 ---
 
-# LoginReg组件
+# Login Reg 登录注册
 
 它的参数如下
 

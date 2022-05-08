@@ -41,6 +41,12 @@ export const pagesComponents = {
   "v-09639625": defineAsyncComponent(() => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.vue")),
   // path: /scene-ui/basic/card.html
   "v-7d953487": defineAsyncComponent(() => import(/* webpackChunkName: "v-7d953487" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/card.html.vue")),
+  // path: /scene-ui/basic/checkbox-button.html
+  "v-45c2a25f": defineAsyncComponent(() => import(/* webpackChunkName: "v-45c2a25f" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox-button.html.vue")),
+  // path: /scene-ui/basic/checkbox-group.html
+  "v-15a39942": defineAsyncComponent(() => import(/* webpackChunkName: "v-15a39942" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox-group.html.vue")),
+  // path: /scene-ui/basic/checkbox.html
+  "v-2d537cb4": defineAsyncComponent(() => import(/* webpackChunkName: "v-2d537cb4" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/checkbox.html.vue")),
   // path: /scene-ui/basic/datetime.html
   "v-0b4beffc": defineAsyncComponent(() => import(/* webpackChunkName: "v-0b4beffc" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/datetime.html.vue")),
   // path: /scene-ui/basic/dialog.html
@@ -53,6 +59,8 @@ export const pagesComponents = {
   "v-2b5f81dd": defineAsyncComponent(() => import(/* webpackChunkName: "v-2b5f81dd" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/link.html.vue")),
   // path: /scene-ui/basic/loading.html
   "v-7baf9f9f": defineAsyncComponent(() => import(/* webpackChunkName: "v-7baf9f9f" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/loading.html.vue")),
+  // path: /scene-ui/basic/message.html
+  "v-4a3ff098": defineAsyncComponent(() => import(/* webpackChunkName: "v-4a3ff098" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/message.html.vue")),
   // path: /scene-ui/basic/number-input.html
   "v-7f4d11de": defineAsyncComponent(() => import(/* webpackChunkName: "v-7f4d11de" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/number-input.html.vue")),
   // path: /scene-ui/basic/radio.html
@@ -63,10 +71,18 @@ export const pagesComponents = {
   "v-7f19969b": defineAsyncComponent(() => import(/* webpackChunkName: "v-7f19969b" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/select.html.vue")),
   // path: /scene-ui/basic/textarea.html
   "v-a41718c6": defineAsyncComponent(() => import(/* webpackChunkName: "v-a41718c6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/textarea.html.vue")),
+  // path: /scene-ui/scene/chat.html
+  "v-25b41fc6": defineAsyncComponent(() => import(/* webpackChunkName: "v-25b41fc6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/chat.html.vue")),
   // path: /scene-ui/scene/info-panel.html
   "v-38618e70": defineAsyncComponent(() => import(/* webpackChunkName: "v-38618e70" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/info-panel.html.vue")),
   // path: /scene-ui/scene/login-reg.html
   "v-31d0d6e6": defineAsyncComponent(() => import(/* webpackChunkName: "v-31d0d6e6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/login-reg.html.vue")),
+  // path: /scene-ui/scene/payment-input.html
+  "v-2fc9755a": defineAsyncComponent(() => import(/* webpackChunkName: "v-2fc9755a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/payment-input.html.vue")),
+  // path: /scene-ui/scene/search-panel.html
+  "v-5e5cd636": defineAsyncComponent(() => import(/* webpackChunkName: "v-5e5cd636" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/search-panel.html.vue")),
+  // path: /scene-ui/scene/session-list.html
+  "v-f19117c0": defineAsyncComponent(() => import(/* webpackChunkName: "v-f19117c0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/scene/session-list.html.vue")),
   // path: /404.html
   "v-3706649a": defineAsyncComponent(() => import(/* webpackChunkName: "v-3706649a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/404.html.vue")),
 }
