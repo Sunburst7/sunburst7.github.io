@@ -633,7 +633,7 @@ $$</p>
 <li>多记录文档型页面</li>
 </ul>
 <h3 id="_6-2-多记录数据型页面" tabindex="-1"><a class="header-anchor" href="#_6-2-多记录数据型页面" aria-hidden="true">#</a> 6.2 多记录数据型页面</h3>
-<p><img src="Web数据管理.assets/2022-06-08-12-52-21-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/Web数据管理.assets/2022-06-08-12-52-21-image.png" alt=""></p>
 <p>相同模板的多个网页，不同之处主要在于数据，数据记录在DOM树上通常在同一层，且具有共同的父节点，记录在DOM树上的结构和内容都具有相似性</p>
 <p>数据记录抽取：</p>
 <ol>
@@ -1382,7 +1382,7 @@ $$</p>
 <p><img src="@source/note/course-notes/Web数据管理.assets/2022-06-07-16-57-11-image.png" alt=""></p>
 <p><img src="@source/note/course-notes/Web数据管理.assets/2022-06-07-19-09-08-image.png" alt=""></p>
 <p>总结：</p>
-<p><img src="Web数据管理.assets/2022-06-07-19-11-06-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/Web数据管理.assets/2022-06-07-19-11-06-image.png" alt=""></p>
 <p>相比于布尔模型要求的准确匹配，向量空间模型采用了“部分匹配”的检索策略（即：出现部分索引词也可以出现在检索结果中）。</p>
 <p>优点:</p>
 <ul>
@@ -1694,7 +1694,7 @@ word_tf_tdf <span class="token operator">=</span> <span class="token builtin">li
 <li>
 <p><strong>颜色直方图</strong>：描述不同色彩在整幅图像中所占的比例，将其绘制为直方图</p>
 <p>适于描述那些难以进行自动分割的图像，无法描述颜色在图片中的空间信息</p>
-<p><img src="Web数据管理.assets/2022-06-08-10-58-13-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/Web数据管理.assets/2022-06-08-10-58-13-image.png" alt=""></p>
 </li>
 <li>
 <p><strong>颜色相关图</strong>：用颜色对相对于距离的分布来描述信息，它反映了像素对的空间相关性，以及局部像素分布和总体像素分布的相关性。</p>

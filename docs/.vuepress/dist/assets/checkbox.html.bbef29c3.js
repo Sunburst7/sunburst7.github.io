@@ -1,1 +1,0 @@
-const e={key:"v-2d537cb4",path:"/scene-ui/basic/checkbox.html",title:"Checkbox \u9009\u62E9\u5668",lang:"zh-CN",frontmatter:{title:"Checkbox \u9009\u62E9\u5668"},excerpt:"",headers:[{level:2,title:"Checkbox\u5C5E\u6027",slug:"checkbox\u5C5E\u6027",children:[]}],git:{updatedTime:null,contributors:[]},filePathRelative:"scene-ui/basic/checkbox.md"};export{e as data};

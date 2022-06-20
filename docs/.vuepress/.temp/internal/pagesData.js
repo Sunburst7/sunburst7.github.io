@@ -3,6 +3,10 @@ export const pagesData = {
   "v-8daa1a0e": () => import(/* webpackChunkName: "v-8daa1a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/index.html.js").then(({ data }) => data),
   // path: /note/
   "v-15054f24": () => import(/* webpackChunkName: "v-15054f24" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/index.html.js").then(({ data }) => data),
+  // path: /note/course-notes/Web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html
+  "v-20a55da0": () => import(/* webpackChunkName: "v-20a55da0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/Web数据管理.html.js").then(({ data }) => data),
+  // path: /note/course-notes/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.html
+  "v-19cf9e3a": () => import(/* webpackChunkName: "v-19cf9e3a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/软件项目管理.html.js").then(({ data }) => data),
   // path: /scene-ui/
   "v-65768081": () => import(/* webpackChunkName: "v-65768081" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/index.html.js").then(({ data }) => data),
   // path: /scene-code/button.html
@@ -41,10 +45,6 @@ export const pagesData = {
   "v-4c5c31b6": () => import(/* webpackChunkName: "v-4c5c31b6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/3-组件与生命周期.html.js").then(({ data }) => data),
   // path: /note/react/4-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A.html
   "v-b3178a0e": () => import(/* webpackChunkName: "v-b3178a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/4-事件绑定.html.js").then(({ data }) => data),
-  // path: /note/course-notes/Web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html
-  "v-20a55da0": () => import(/* webpackChunkName: "v-20a55da0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/Web数据管理.html.js").then(({ data }) => data),
-  // path: /note/course-notes/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.html
-  "v-19cf9e3a": () => import(/* webpackChunkName: "v-19cf9e3a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/软件项目管理.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/button.html
   "v-09639625": () => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/card.html

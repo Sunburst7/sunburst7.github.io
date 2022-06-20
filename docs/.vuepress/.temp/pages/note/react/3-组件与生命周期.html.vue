@@ -1,7 +1,7 @@
 <template><p>组件，从概念上类似于 JavaScript 函数。它接受任意的入参（即 “props”），并返回用于描述页面展示内容的 React 元素。</p>
 <h1 id="_1-组件生命周期" tabindex="-1"><a class="header-anchor" href="#_1-组件生命周期" aria-hidden="true">#</a> 1 组件生命周期</h1>
 <p>React v16.4后的生命周期如图所示</p>
-<p><img src="3-组件与生命周期.assets/2022-06-12-18-22-51-image.png" alt=""></p>
+<p><img src="@source/note/react/3-组件与生命周期.assets/2022-06-12-18-22-51-image.png" alt=""></p>
 <blockquote>
 <p>一张v17之前与之后的对比图：</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b5fa490ee4d948dba86a950bfe08dede~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp" alt=""></p>

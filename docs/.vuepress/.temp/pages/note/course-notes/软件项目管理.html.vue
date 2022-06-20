@@ -290,7 +290,7 @@
 </li>
 <li>
 <p><strong>需求分析</strong>：（也称需求建模）为最终用户所看到的系统建立一个概念模型，是对需求的抽象描述。</p>
-<p><img src="软件项目管理.assets/image-20220604155144688.png" alt="image-20220604155144688"></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604155144688.png" alt="image-20220604155144688"></p>
 <p>需求分析工作完成的一个基本标志是形成了一份完整的、规范的需求规格说明书(SRS）</p>
 </li>
 <li>
@@ -953,7 +953,7 @@ User Case Weight)</strong> ：</p>
 <p><strong>进度</strong>是对执行的活动和里程碑制定的工作计划日期表</p>
 <p><strong>任务</strong>定义是面向活动的，是对WBS做进一步分解的结果</p>
 <p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-12-26-image.png" alt=""></p>
-<p><img src="软件项目管理.assets/2022-06-16-15-43-08-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-43-08-image.png" alt=""></p>
 <p>软件项目进度管理的图示有很多：</p>
 <ul>
 <li>
