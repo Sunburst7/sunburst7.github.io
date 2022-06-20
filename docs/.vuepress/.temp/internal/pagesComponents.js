@@ -5,6 +5,8 @@ export const pagesComponents = {
   "v-8daa1a0e": defineAsyncComponent(() => import(/* webpackChunkName: "v-8daa1a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/index.html.vue")),
   // path: /note/
   "v-15054f24": defineAsyncComponent(() => import(/* webpackChunkName: "v-15054f24" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/index.html.vue")),
+  // path: /scene-ui/
+  "v-65768081": defineAsyncComponent(() => import(/* webpackChunkName: "v-65768081" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/index.html.vue")),
   // path: /scene-code/button.html
   "v-7962711f": defineAsyncComponent(() => import(/* webpackChunkName: "v-7962711f" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-code/button.html.vue")),
   // path: /scene-code/card.html
@@ -33,10 +35,18 @@ export const pagesComponents = {
   "v-21cf1cd6": defineAsyncComponent(() => import(/* webpackChunkName: "v-21cf1cd6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-code/select.html.vue")),
   // path: /scene-code/textarea.html
   "v-19a87817": defineAsyncComponent(() => import(/* webpackChunkName: "v-19a87817" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-code/textarea.html.vue")),
-  // path: /scene-ui/
-  "v-65768081": defineAsyncComponent(() => import(/* webpackChunkName: "v-65768081" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/index.html.vue")),
-  // path: /note/algorithm/
-  "v-76bd8bc4": defineAsyncComponent(() => import(/* webpackChunkName: "v-76bd8bc4" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/algorithm/index.html.vue")),
+  // path: /note/react/1-jsx.html
+  "v-215f11ba": defineAsyncComponent(() => import(/* webpackChunkName: "v-215f11ba" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/1-jsx.html.vue")),
+  // path: /note/react/2-%E6%B8%B2%E6%9F%93%E5%85%83%E7%B4%A0.html
+  "v-1d3cc2d6": defineAsyncComponent(() => import(/* webpackChunkName: "v-1d3cc2d6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/2-渲染元素.html.vue")),
+  // path: /note/react/3-%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.html
+  "v-4c5c31b6": defineAsyncComponent(() => import(/* webpackChunkName: "v-4c5c31b6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/3-组件与生命周期.html.vue")),
+  // path: /note/react/4-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A.html
+  "v-b3178a0e": defineAsyncComponent(() => import(/* webpackChunkName: "v-b3178a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/4-事件绑定.html.vue")),
+  // path: /note/course-notes/Web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html
+  "v-20a55da0": defineAsyncComponent(() => import(/* webpackChunkName: "v-20a55da0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/Web数据管理.html.vue")),
+  // path: /note/course-notes/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.html
+  "v-19cf9e3a": defineAsyncComponent(() => import(/* webpackChunkName: "v-19cf9e3a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/软件项目管理.html.vue")),
   // path: /scene-ui/basic/button.html
   "v-09639625": defineAsyncComponent(() => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.vue")),
   // path: /scene-ui/basic/card.html

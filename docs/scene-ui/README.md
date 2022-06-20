@@ -1,5 +1,7 @@
 # Scene-UI:A simple ui-component-lib with simple style
 
+🎉🎉 Congratulations on the official **v1.0** release
+
 The scene-ui component library is an **open source component library** maintained by the students of the School of Software of ShanDong University.
 
 **Now a total of 15 basic components, 6 scene components, and 2 ui-method components can be used.**

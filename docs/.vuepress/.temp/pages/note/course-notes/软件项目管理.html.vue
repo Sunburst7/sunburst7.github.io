@@ -1,0 +1,1437 @@
+<template><ol>
+<li>什么叫项目？有哪些主要特征？与日常运作的区别</li>
+<li>完成项目的目标有哪些主要约束？如何考虑他们之间的关系</li>
+<li>软件项目有哪些特殊性？</li>
+<li>项目生命周期的阶段有哪些？各阶段的主要任务</li>
+<li>项目生命周期的特征，并简要描述。</li>
+<li>项目生命周期阶段与项目管理工作过程有什么关系？</li>
+<li>按照PMBOK项目管理的主要内容有哪些？（详细）</li>
+<li>软件生命周期有哪几个阶段？每个阶段的主要任务。</li>
+<li>项目管理的三要素和四要素说。如何理解</li>
+<li>组织结构按面向功能到面向项目的程度划分为哪几类，各有何特点？</li>
+<li>什么是软件的综合管理？其实现目标是什么</li>
+<li>什么是项目管理计划？什么作用？</li>
+<li>什么是产品范围？什么是项目范围？有什么联系？</li>
+<li>什么叫范围管理？什么作用？</li>
+<li>如何评价软件的范围？</li>
+<li>SMART（不能只看概念）</li>
+<li>WBS方法（同上）</li>
+<li>网络图画法</li>
+<li>关键路径法</li>
+<li>面向功能点法</li>
+<li>COCOMO方法</li>
+<li>软件成本有哪些？</li>
+<li>成本控制的原则是什么？</li>
+<li>风险管理中的风险有哪几类？</li>
+<li>什么是风险管理？有什么意义？</li>
+</ol>
+<h1 id="软件项目管理" tabindex="-1"><a class="header-anchor" href="#软件项目管理" aria-hidden="true">#</a> 软件项目管理</h1>
+<h2 id="一-项目与项目计划" tabindex="-1"><a class="header-anchor" href="#一-项目与项目计划" aria-hidden="true">#</a> 一 项目与项目计划</h2>
+<h3 id="_1-1-项目与软件项目的定义" tabindex="-1"><a class="header-anchor" href="#_1-1-项目与软件项目的定义" aria-hidden="true">#</a> 1.1 项目与软件项目的定义</h3>
+<h4 id="项目定义" tabindex="-1"><a class="header-anchor" href="#项目定义" aria-hidden="true">#</a> 项目定义</h4>
+<p>是为了创造一个唯一的产品或提供一个唯一的服务而进行的<strong>临时性</strong>的努力</p>
+<h4 id="项目特征" tabindex="-1"><a class="header-anchor" href="#项目特征" aria-hidden="true">#</a> 项目特征</h4>
+<p>目标性、临时性、独特性、资源约束性、不确定性</p>
+<h4 id="项目管理与日常工作的区别" tabindex="-1"><a class="header-anchor" href="#项目管理与日常工作的区别" aria-hidden="true">#</a> 项目管理与日常工作的区别：</h4>
+<table>
+<thead>
+<tr>
+<th><strong>比较项</strong></th>
+<th><strong>项目</strong></th>
+<th style="text-align:center"><strong>运营</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>负责人</strong></td>
+<td><strong>项目经理</strong></td>
+<td style="text-align:center"><strong>职能经理</strong></td>
+</tr>
+<tr>
+<td><strong>实施组织</strong></td>
+<td><strong>项目组</strong></td>
+<td style="text-align:center"><strong>部门</strong></td>
+</tr>
+<tr>
+<td><strong>时限性</strong></td>
+<td><strong>一次性</strong></td>
+<td style="text-align:center"><strong>持续不断</strong></td>
+</tr>
+<tr>
+<td><strong>目标</strong></td>
+<td><strong>独特性</strong></td>
+<td style="text-align:center"><strong>重复性</strong></td>
+</tr>
+<tr>
+<td><strong>目的</strong></td>
+<td><strong>实现目标结束项目</strong></td>
+<td style="text-align:center"><strong>维持运营</strong></td>
+</tr>
+<tr>
+<td><strong>管理追求</strong></td>
+<td><strong>效果</strong></td>
+<td style="text-align:center"><strong>效率</strong></td>
+</tr>
+</tbody>
+</table>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531105850286.png" alt="image-20220531105850286"></p>
+<h4 id="项目目标实现的制约因素" tabindex="-1"><a class="header-anchor" href="#项目目标实现的制约因素" aria-hidden="true">#</a> 项目目标实现的制约因素</h4>
+<p>衡量项目是否成功，应该看该项目是否在工程允许范围内按照成本预算和进度计划，生产出客户满意的产品</p>
+<p>四因素（约束性要素）：</p>
+<ul>
+<li>
+<p>项目范围</p>
+</li>
+<li>
+<p>成本</p>
+</li>
+<li>
+<p>进度计划</p>
+</li>
+<li>
+<p>客户满意度</p>
+</li>
+</ul>
+<h4 id="软件项目的特殊性" tabindex="-1"><a class="header-anchor" href="#软件项目的特殊性" aria-hidden="true">#</a> 软件项目的特殊性</h4>
+<p>除具有项目的基本特征之外：</p>
+<ul>
+<li>
+<p>抽象性  软件是逻辑实体</p>
+</li>
+<li>
+<p>复杂性</p>
+</li>
+<li>
+<p>经验在软件项目中起很大作用</p>
+</li>
+<li>
+<p>变更是软件项目中常见现象，需求，设计，技术，社会</p>
+</li>
+<li>
+<p>项目的独特性和临时性决定项目是渐进明细的</p>
+</li>
+<li>
+<p>目前，软件项目的开发远没有其他领域的项目规范</p>
+</li>
+</ul>
+<h3 id="_1-2-项目管理" tabindex="-1"><a class="header-anchor" href="#_1-2-项目管理" aria-hidden="true">#</a> 1.2 项目管理</h3>
+<p>指在项目活动中运用专门的知识、技能、工具和方法，使项目能够实现或超过项目干系人的需要和期望。</p>
+<p>项目干系人：stakeholder，指参与项目和受项目活动影响的人，包括项目发起人、项目组、协助人员、客户、使用者、供应商，甚至是项目的反对者</p>
+<p>一定主体，为实现其目标，利用各种有效的手段，对执行中的项目周期的各阶段工作进行计划，组织，协调，指挥，控制，以取得良好经济效益的各项活动总和。</p>
+<p>软件项目管理特征：</p>
+<ul>
+<li>
+<p>软件是纯知识产品，其开发进度和质量很难估计和度量，生产效率也难以预测和保障。需求在开始难以明确，与过早签订合同是矛盾的</p>
+</li>
+<li>
+<p>周期长，复杂度高，变数多</p>
+</li>
+<li>
+<p>软件需要满足一群人的期望，其对项目的关注点不同，利益也不同</p>
+</li>
+<li>
+<p>软件项目管理的目的是让软件项目能在控制之下，以预定成本，按质完成</p>
+</li>
+</ul>
+<h3 id="_1-3-项目管理知识体系" tabindex="-1"><a class="header-anchor" href="#_1-3-项目管理知识体系" aria-hidden="true">#</a> 1.3 项目管理知识体系</h3>
+<p><strong>项目管理专业人员-PMP</strong>(project management professional)：是美国项目管理学会(Project Management Institute PMI)开发并负责组织实施的一种专业资格认证</p>
+<p><strong>项目管理知识体系-PMBOK</strong>(Project Management Body Of Knowledge，PMBOK)，包含9个知识领域，5个标准化过程组，39个模块</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531113527779.png" alt="image-20220531113527779"></p>
+<p><strong>知识领域</strong>：指项目经理必须具备的一些重要的知识和能力</p>
+<ul>
+<li>
+<p><strong>四大核心知识领域</strong>：范围、时间、成本、质量</p>
+</li>
+<li>
+<p><strong>四大辅助知识领域</strong>：人力资源、沟通、风险、采购</p>
+</li>
+<li>
+<p><strong>项目整体管理</strong></p>
+</li>
+</ul>
+<p>5个标准化过程组</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531113811042.png" alt="image-20220531113811042"></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531113913303.png" alt="image-20220531113913303"></p>
+<p>PMBOK的5个标准模块、9个知识领域、39个模块之间的关系：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531114131955.png" alt="image-20220531114131955"></p>
+<h3 id="_1-4-过程管理与项目管理" tabindex="-1"><a class="header-anchor" href="#_1-4-过程管理与项目管理" aria-hidden="true">#</a> 1.4 过程管理与项目管理</h3>
+<p>从做过的项目中总结出的一些完善的过程，称为最佳实践。<strong>软件过程管理</strong>就是对最佳实践进行有效积累，形成可重复的过程，使最佳实践可以在机构内共享。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531114602487.png" alt="image-20220531114602487"></p>
+<p>过程管理的内容包括过程定义和过程改进</p>
+<ul>
+<li>
+<p>过程定义：对最佳实践（比如写注释）进行总结，形成一套稳定的可重复的软件过程</p>
+</li>
+<li>
+<p>过程改进：根据实践中对过程的使用情况，进行优化</p>
+</li>
+</ul>
+<p>关系：</p>
+<ul>
+<li>项目管理用于保证项目的成功</li>
+<li>过程管理用于管理最佳实践</li>
+<li>紧密结合：过程管理的成果即软件过程可以在项目管理中辅助于项目管理工作</li>
+</ul>
+<h2 id="二-项目确立" tabindex="-1"><a class="header-anchor" href="#二-项目确立" aria-hidden="true">#</a> 二 项目确立</h2>
+<p>生存期模型</p>
+<h2 id="三-项目范围管理" tabindex="-1"><a class="header-anchor" href="#三-项目范围管理" aria-hidden="true">#</a> 三 项目范围管理</h2>
+<p><strong>项目范围管理</strong>：项目范围管理是指对项目包括什么与不包括什么的定义与控制过程。</p>
+<ul>
+<li>
+<p><strong>产品范围（Product Scope）</strong>：根据产品的需求确定产品范围的完成情况，即一个产品或一项服务应该包含的<strong>特征和功能</strong></p>
+<p>产品范围——某项产品，服务或成果所具备的特性或功能。</p>
+</li>
+<li>
+<p><strong>项目范围（Project Scope）</strong>：根据项目计划来确定项目范围的产成情况，即为了交付具有特定特征和功能的产品所必须要做的<strong>工作</strong></p>
+<p>项目范围——为交付具有特定特性的产品，服务或成果说必须完成的工作</p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220531102901320.png" alt="image-20220531102901320"></p>
+<p>项目范围管理的基本思路就是首先明确要做什么，然后利用分解技术将项目工作细化，核实范围并在全过程对范围的变化进行控制。<strong>核心是工作分解结构（Work Breakdown Structure ，WBS）</strong>。</p>
+<p>项目范围管理内容：</p>
+<ul>
+<li>
+<p><strong>范围规划(Scope Planning)</strong>：制定项目范围管理计划，记载如何确定、核实与控制项目范围，以及如何制定与定义工作分解结构。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220602094046573.png" alt="image-20220602094046573"></p>
+<p><strong>范围管理计划</strong>是项目管理团队确定、记载、核实、管理和控制项目范围的指南。内容有：<strong>编制详细项目范围说明书</strong>；制作工作分解结构；确定如何维持与批准工作分解结构；如何正式验收项目已完成可交付成果；控制详细项目范围说明书变更请求。</p>
+<p><strong>项目范围说明书</strong>的编制，对项目成功至关重要。应该根据项目启动过程中记载的主要可交付成果、假设条件和制约因素，来编制详细项目范围说明书</p>
+</li>
+<li>
+<p><strong>收集需求</strong></p>
+<p>需求定义：软件需求是指用户对软件功能和性能的要求
+需求类型</p>
+<ul>
+<li>功能需求：系统必须执行的功能</li>
+<li>非功能需求：对实际使用环境所做的要求，如性能要求，可靠性，安全性</li>
+<li>非功能需求比功能需求要求更严格，更不易满足</li>
+</ul>
+</li>
+<li>
+<p><strong>范围定义(Scope Definition)</strong>：制定详细的项目范围说明书，作为将来项目决策的依据。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220602094556269.png" alt="image-20220602094556269"></p>
+<p><strong>工作分解结构WBS</strong>是范围定义过程的主要输出，用于将详细范围说明书的内容分解为相互独立、内容单一的工作包。</p>
+<p><strong>项目范围说明书</strong>详细描述项目的可交付成果，以及为提交这些可交付成果而必须开展的工作：</p>
+<ol>
+<li>
+<p>项目名称及描述：项目要要解决的问题、背景等</p>
+</li>
+<li>
+<p>项目论证情况</p>
+</li>
+<li>
+<p>项目目的：为配置资源、衡量利弊关系提供依据</p>
+</li>
+<li>
+<p><strong>项目目标</strong>：项目目标是项目预期的结果或最终产品，应明确具体，并尽量定量化。</p>
+<p>项目目标遵循的原则——SMART</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220602095051875.png" alt="image-20220602095051875"></p>
+<p>**项目目标三要素：时间、成本、质量。**例子：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220602095848753.png" alt="image-20220602095848753"></p>
+</li>
+<li>
+<p>项目产品或服务的描述：产品或服务的描述在项目的早期一般都不很详细，而在后续阶段随着产品或服务特性的逐步详尽而细化</p>
+</li>
+<li>
+<p>可交付结果清单：项目完成后以及在执行过程中的子产品的总和，它们各自得到完整并满意的完成后，才标志着项目的完成</p>
+</li>
+<li>
+<p>制约因素：项目是否受到特别的限制来制约项目经理的各种选择。</p>
+</li>
+<li>
+<p>假设前提：指为了制定项目计划，对那些暂时无法确定或以后极有可能变化的因素做出某些假设。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>制作工作分解结构(Creat WBS)</strong>：将项目大的可交付成果与项目工作划分为较小和更易管理的组成部分。</p>
+</li>
+<li>
+<p><strong>范围核实(Scope Verification)</strong>：正式验收已经完成的项目可交付成果。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220602095937970.png" alt="image-20220602095937970"></p>
+</li>
+<li>
+<p><strong>范围控制(Scope Control)</strong>：控制项目范围的变更。</p>
+<p>范围变更就是对原先已经达成一致的工作分解结构中定义的项目范围所做的任何修改。</p>
+<ul>
+<li>
+<p>范围蔓延 – 客户提出新需求，超出了范围基准</p>
+</li>
+<li>
+<p>范围镀金 – 客户没有提新需求，项目自己做了额外客户不需要工作</p>
+<p>项目范围控制关心的是对造成项目范围变更的因素施加影响，并控制这些变更造成的后果。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="四-软件需求" tabindex="-1"><a class="header-anchor" href="#四-软件需求" aria-hidden="true">#</a> 四 软件需求</h2>
+<h3 id="_4-1-软件需求定义" tabindex="-1"><a class="header-anchor" href="#_4-1-软件需求定义" aria-hidden="true">#</a> 4.1 软件需求定义</h3>
+<p>软件需求：需求是指用户对软件的功能和性能的要求。</p>
+<p>软件需求包含三个层次</p>
+<ul>
+<li>
+<p>业务需求：组织机构或客户对系统，产品高层次的目标要求，由管理人员或市场分析人员确定</p>
+</li>
+<li>
+<p>用户需求：用户通过使用本软件产品必须完成的任务，用户协助提供</p>
+</li>
+<li>
+<p>功能需求：开发人员必须实现的软件功能</p>
+</li>
+</ul>
+<p>最后确定软件需求规格，他们的关系如下：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604154325097.png" alt="image-20220604154325097"></p>
+<h3 id="_4-2-软件需求管理过程" tabindex="-1"><a class="header-anchor" href="#_4-2-软件需求管理过程" aria-hidden="true">#</a> 4.2 软件需求管理过程</h3>
+<p>80年代中期，形成了软件工程的子领域——需求工程</p>
+<p>需求工程：指应用已证实有效的技术、方法进行需求分析，确定客户需求，帮助分析人员理解问题并定义目标系统的所有外部特征的一门学科。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604154626124.png" alt="image-20220604154626124"></p>
+<ul>
+<li>
+<p><strong>需求获取</strong>：指通过与用户的交流，对现有系统的观察及对任务进行分析，从而开发、捕获和修订用户的需求。</p>
+</li>
+<li>
+<p><strong>需求分析</strong>：（也称需求建模）为最终用户所看到的系统建立一个概念模型，是对需求的抽象描述。</p>
+<p><img src="软件项目管理.assets/image-20220604155144688.png" alt="image-20220604155144688"></p>
+<p>需求分析工作完成的一个基本标志是形成了一份完整的、规范的需求规格说明书(SRS）</p>
+</li>
+<li>
+<p><strong>需求规格</strong>：使用户和软件开发者双方对软件的初始规定有一个共同理解，使之成为整个开发工作的基础</p>
+</li>
+<li>
+<p><strong>需求验证</strong>：审查需求文档、依据需求文档编写测试用例、编写用户手册、确定产品验收合格的标准</p>
+<p>需求验证的内容：有效性检查、一致性检查、完备性检查</p>
+</li>
+<li>
+<p><strong>需求变更管理</strong>：</p>
+<ol>
+<li>
+<p>确定需求变更控制过程</p>
+</li>
+<li>
+<p>建立变更控制委员会(SCCB)</p>
+</li>
+<li>
+<p>进行需求变更影响分析</p>
+</li>
+<li>
+<p>跟踪所有受需求变更影响的工作产品</p>
+</li>
+<li>
+<p>建立需求基准版本和需求控制版本文档</p>
+</li>
+<li>
+<p>维护需求变更的历史记录</p>
+</li>
+<li>
+<p>跟踪每项需求的状态</p>
+</li>
+<li>
+<p>衡量需求稳定性</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="_4-3-需求建模基本方法" tabindex="-1"><a class="header-anchor" href="#_4-3-需求建模基本方法" aria-hidden="true">#</a> 4.3 需求建模基本方法</h3>
+<h4 id="_4-3-1-原型方法" tabindex="-1"><a class="header-anchor" href="#_4-3-1-原型方法" aria-hidden="true">#</a> 4.3.1 原型方法</h4>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604160054059.png" alt="image-20220604160054059"></p>
+<p>原型法的理念是指在获取一组基本需求以后，快速地构造出一个能够反映用户需求的初始系统原型。让用户看到概貌，然后不断对需求补充、细化。</p>
+<h4 id="_4-3-2-结构化分析法" tabindex="-1"><a class="header-anchor" href="#_4-3-2-结构化分析法" aria-hidden="true">#</a> 4.3.2 结构化分析法</h4>
+<p>面向数据流的方法、是一种自顶向下逐步求精的分析方法、根据软件内部数据传递、变换的关系进行分析的。</p>
+<ul>
+<li>
+<p>数据流图(DFD)：DFD 是一种描述软件系统逻辑模型的图形符号，利用过程、实体、数据流和数据存储四种基本元素。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604160305798.png" alt="image-20220604160305798"></p>
+</li>
+<li>
+<p>数据字典(DD)：是数据描述的集合，通常配合DFD使用，用来描述数据流图中出现的各种数据和加工，包括数据项（数据元素）、数据流（数据项组成的数据流）、数据文件（数据文件的存储）...</p>
+</li>
+<li>
+<p>系统流程图</p>
+</li>
+</ul>
+<p>其他方法</p>
+<p>面向对象的用例分析法：UML</p>
+<p>功能列表法</p>
+<h2 id="五-软件项目任务分解" tabindex="-1"><a class="header-anchor" href="#五-软件项目任务分解" aria-hidden="true">#</a> 五 软件项目任务分解</h2>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604161953887.png" alt="image-20220604161953887"></p>
+<h3 id="_5-1-任务分解定义" tabindex="-1"><a class="header-anchor" href="#_5-1-任务分解定义" aria-hidden="true">#</a> 5.1 任务分解定义</h3>
+<p>将一个项目分解为更多的工作细目或者子项目，使项目变得更小、更易管理、更易操作。</p>
+<p>任务分解的结果就是：<strong>WBS（ Work Breakdown Structure:任务分解结构）</strong>，其特点：</p>
+<ul>
+<li>
+<p>WBS是对项目由粗到细的分解过程。</p>
+</li>
+<li>
+<p>面向交付成果的</p>
+</li>
+<li>
+<p>WBS它组织并定义了整个项目范围</p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604162310439.png" alt="image-20220604162310439"></p>
+<p><strong>WBS形式</strong>：图表形式与清单形式</p>
+<p><strong>工作包</strong>：WBS的最低层次的可交付成果，是WBS的最小元素。工作包应当由唯一主体负责，可以分配给另外一位项目经理通过子项目的方式完成。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604164503774.png" alt="image-20220604164503774"></p>
+<h3 id="_5-2-任务分解方法" tabindex="-1"><a class="header-anchor" href="#_5-2-任务分解方法" aria-hidden="true">#</a> 5.2 任务分解方法</h3>
+<ul>
+<li>
+<p><strong>模板参照</strong>：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604165352392.png" alt="image-20220604165352392"></p>
+</li>
+<li>
+<p><strong>类比</strong>：类似的项目作为参考进行开发WBS</p>
+</li>
+<li>
+<p><strong>自顶向下</strong>：采用推理演绎方法，因为它沿着从一般到特殊的方向进行，从项目的大局着手，然后逐步分解子细目，将项 目变为更细、更完善的部分。需要有更多的逻辑和结构，它也是创建WBS最好的方法。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604165507021.png" alt="image-20220604165507021"></p>
+</li>
+<li>
+<p><strong>自底向上</strong>：从特殊向一般方向进行，首先定义项目的一些特定任务，然后将这些任务组织起来。形成更高级别的WBS层。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604165614848.png" alt="image-20220604165614848"></p>
+</li>
+</ul>
+<h3 id="_5-3-任务分解的基本步骤" tabindex="-1"><a class="header-anchor" href="#_5-3-任务分解的基本步骤" aria-hidden="true">#</a> 5.3 任务分解的基本步骤</h3>
+<ol>
+<li>
+<p>确认并分解项目的组成要素(WBS编号)</p>
+</li>
+<li>
+<p>确定分解标准：分解标准应当统一</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604170235450.png" alt="image-20220604170235450"></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604170631277.png" alt="image-20220604170631277"></p>
+<p>分解建议：</p>
+<p>最低层是可控的和可管理的，但是不必要的过细</p>
+<p>每个Work package必须有一个提交物</p>
+<p>定义任务完成的标准</p>
+</li>
+<li>
+<p>确定分解是否详细</p>
+</li>
+<li>
+<p>确定项目交付成果（可以编制WBS字典）</p>
+</li>
+<li>
+<p>验证分解的正确性：正确后建立一套编号系统</p>
+</li>
+</ol>
+<p><strong>WBS字典</strong>：WBS具体的工作要素通常收集在WBS字典中，可以包括工作包的阐述、进度表的日期、成本预算、员工分配...</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604170520558.png" alt="image-20220604170520558"></p>
+<h2 id="六-成本计划" tabindex="-1"><a class="header-anchor" href="#六-成本计划" aria-hidden="true">#</a> 六 成本计划</h2>
+<p><img src="@source/note/course-notes/软件项目管理.assets/image-20220604193901218.png" alt="image-20220604193901218"></p>
+<p>从软件生命周期构成的两阶段即开发阶段和维护阶段看，软件的成本由<strong>开发成本和维护成本</strong>构成：</p>
+<ol>
+<li>
+<p>开发成本由软件开发成本、硬件成本和其他成本组成，包括了系统软件的分析/设计费用、实施费用及系统切换等方面的费用；</p>
+</li>
+<li>
+<p>维护成本由运行费用（包含人工费、材料费、固定资产折旧费、专有技术及技术资料购置费）、管理费（包含审计费、系统服务费、行政管理费）及维护费（包含纠错性维护费用及适应性维护费用）。</p>
+</li>
+</ol>
+<h3 id="_6-1-估算过程概念" tabindex="-1"><a class="header-anchor" href="#_6-1-估算过程概念" aria-hidden="true">#</a> 6.1 估算过程概念</h3>
+<p>软件项目规模即工作量，其单位：</p>
+<ul>
+<li>
+<p>LOC(Lines of Code) 代码行：源代码长度的测量</p>
+</li>
+<li>
+<p>FP(Function Point) 功能点：用系统的功能数量来测量</p>
+</li>
+<li>
+<p>人月</p>
+</li>
+<li>
+<p>人天</p>
+</li>
+<li>
+<p>人年</p>
+</li>
+</ul>
+<p>例如，一个软件项目的规模是20人月，而某企业的人力成本是3万元/人月，成本是20*3=60万元</p>
+<p>项目成本估算过程：</p>
+<ul>
+<li>
+<p>依据：工作分解结构、资源要求、活动持续时间估计、历史信息、财务规范等。</p>
+</li>
+<li>
+<p>方法：经验估算法、因素估算法、WBS全面详细估算法、数学模型法等。</p>
+</li>
+<li>
+<p>结果：经过成本估算，最终产生成本估算表、估算的详细依据、成本管理和控制计划等。</p>
+</li>
+</ul>
+<h3 id="_6-2-估算方法" tabindex="-1"><a class="header-anchor" href="#_6-2-估算方法" aria-hidden="true">#</a> 6.2 估算方法</h3>
+<p>1.代码行估算法</p>
+<p>2.功能点估算法</p>
+<p>3.用例点估算法</p>
+<p>4.类比 (自顶向下)估算法</p>
+<p>5.自下而上估算法</p>
+<p>6.参数估算法</p>
+<p>7.专家估算法</p>
+<h4 id="_6-2-1-代码行估算" tabindex="-1"><a class="header-anchor" href="#_6-2-1-代码行估算" aria-hidden="true">#</a> 6.2.1 代码行估算</h4>
+<p><strong>代码行LOC</strong>(Lines of Code)是衡量软件项目规模最常用的概念，指所有的可执行的源代码行数，包括可交付的工作控制语言语句、数据定义、数据类型声明、等价声明、输入/输出格式声明等。</p>
+<blockquote>
+<p>例如，某软件公司统计发现该公司每一万行C语言源代码形成的源文件（.c和.h文件）约为250K。某项目的源文件大小为3.75M，则可估计该项目源代码大约为15万行，该项目累计投入工作量为240人月，每人月费用为10000元（人均工资、福利、办公费用公滩等）。则该项目中1LOC的价值为：（240×10000）/150000＝16元/L。</p>
+</blockquote>
+<p>优点：代码是所有软件开发项目都有的“产品”，而且很容易计算代码行数。</p>
+<p>缺点：</p>
+<ol>
+<li>
+<p>对代码行没有公认的可接受的标准定义</p>
+</li>
+<li>
+<p>代码行数量依赖于所用的编程语言和个人的编程风格.</p>
+</li>
+<li>
+<p>在项目早期,需求不稳定、设计不成熟、实现不确定的情况下很难准确地估算代码量.</p>
+</li>
+<li>
+<p>代码行强调编码的工作量,只是项目实现阶段的一部分</p>
+</li>
+</ol>
+<h4 id="_6-2-2-功能点估算" tabindex="-1"><a class="header-anchor" href="#_6-2-2-功能点估算" aria-hidden="true">#</a> 6.2.2 功能点估算</h4>
+<p>面向功能点（FP）的度量是对程序规模的一个综合量度，经常用于项目早期阶段。功能点估计法要评估产品所需要的内部基本功能和外部功能。然后根据技术复杂度因子（权）对它们进行量化，产生产品规模的最终结果。</p>
+<p>功能点分析中，系统分为5个组件：</p>
+<ul>
+<li>
+<p>外部输入(External Inputs EI)：给软件提供面向应用的数据的项（如屏幕、表单、对话框、控件，文件等）；在这个过程中，数据穿越外部边界进入到系统内部。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-11-46-image.png" alt=""></p>
+</li>
+<li>
+<p>外部输出(External Outputs EO)：向用户提供(经过处理的)面向应用的信息，例如，报表和出错信息等</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-12-01-image.png" alt=""></p>
+</li>
+<li>
+<p>外部查询(External Inquiry EQ)：外部查询是一个输入引出一个即时的简单输出。没有处理过程。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-14-03-image.png" alt=""></p>
+</li>
+<li>
+<p>外部接口文件(External Interface Files EIF)：外部接口文件是用户可以识别的一组逻辑相关数据，这组数据只能被引用。用这些接口把信息传送给另一个系统。</p>
+</li>
+<li>
+<p>内部逻辑文件(Internal Logical Files)：用户可以识别的一组逻辑相关的数据，而且完全存在于应用的边界之内，并且通过外部输入维护，是逻辑主文件的数目</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-13-34-image.png" alt=""></p>
+</li>
+</ul>
+<p><strong>功能点估算步骤</strong>：</p>
+<ol>
+<li>
+<p>确定应用程序必须包含的功能</p>
+</li>
+<li>
+<p>对每一项功能，通过计算4类系统外部行为或事务以及一类内部逻辑文件的数目来估算由一组需求所表达的功能点数目。（上文的5类组件）</p>
+</li>
+<li>
+<p>对5类功能计数项中的每一类功能计数项按其复杂性的不同分为简单（低）、一般（中）和复杂（高）3个级别。n产品中所有功能计数项加权的总和，就形成了该产品的未调整功能点计数（UFC）</p>
+<p><strong>复杂度权重因素：</strong></p>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>简单(低)</th>
+<th>一般（中）</th>
+<th style="text-align:center">复杂（高）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>外部输入</td>
+<td>3</td>
+<td>4</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td>外部输出</td>
+<td>4</td>
+<td>5</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td>外部查询</td>
+<td>3</td>
+<td>4</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td>外部接口文件</td>
+<td>5</td>
+<td>7</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td>内部逻辑文件</td>
+<td>7</td>
+<td>10</td>
+<td style="text-align:center">15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>功能点系数</strong></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-20-48-image.png" alt=""></p>
+<p><strong>UFC结果：UFC=301</strong></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-30-25-image.png" alt=""></p>
+</li>
+<li>
+<p>计算项目中14个技术复杂度因子（TCF）。表10-4是14个技术复杂度因子，每个因子的取值范围是0~5。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-22-52-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-26-26-image.png" alt=""></p>
+</li>
+<li>
+<p>调整所计算的功能点<strong>FP = UFC(未调整功能点计数) * TCF(调整系数)</strong> 其中：调整系数$TCF=0.65+0.01×\sum Fi$</p>
+<p>常数和参数的加权因子是根据经验确定的，调整系数一般在0.65~1.35之间变化。</p>
+<div class="language-unrealscript ext-unrealscript line-numbers-mode"><pre v-pre class="language-unrealscript"><code>UFC<span class="token operator">=</span><span class="token number">45</span>
+TCF<span class="token operator">=</span><span class="token number">0.65</span><span class="token operator">+</span><span class="token number">0.01</span><span class="token punctuation">(</span><span class="token number">14</span><span class="token operator">*</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">1.07</span>
+FP<span class="token operator">=</span>UFC<span class="token operator">*</span>TCF<span class="token operator">=</span><span class="token number">45</span><span class="token operator">*</span><span class="token number">1.07</span><span class="token operator">=</span><span class="token number">48</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div></li>
+</ol>
+<p>功能点计算公式的含义是：如果对应用程序完全没有特殊的功能要求（即综合特征总值=0），那么功能点数应该比未调整的（原有的）点数降低35%（这也就是“0.65”的含义）。否则，除了降低35%之外，功能点数还应该比未调整的点数增加1%的综合特征总值。</p>
+<p>功能点可以按照一定的条件转换为软件代码行（LOC）。下表就是一个AVC转换表，它是针对各种语言的转换率，这个表是根据业界的经验研究得出的。LOC=AVC×功能点的数量</p>
+<table>
+<thead>
+<tr>
+<th>语言</th>
+<th>代码行/FP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assembly</td>
+<td>320</td>
+</tr>
+<tr>
+<td>C</td>
+<td>150</td>
+</tr>
+<tr>
+<td>COBOL</td>
+<td>105</td>
+</tr>
+<tr>
+<td>FORTRAN</td>
+<td>105</td>
+</tr>
+<tr>
+<td>PASCAL</td>
+<td>91</td>
+</tr>
+<tr>
+<td>ADA</td>
+<td>71</td>
+</tr>
+<tr>
+<td>PL/1</td>
+<td>65</td>
+</tr>
+<tr>
+<td>PROLOG/LISP</td>
+<td>64</td>
+</tr>
+<tr>
+<td>SMALLTALK</td>
+<td>21</td>
+</tr>
+<tr>
+<td>SPREADSHEET</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_6-2-3-用例点估算法" tabindex="-1"><a class="header-anchor" href="#_6-2-3-用例点估算法" aria-hidden="true">#</a> 6.2.3 用例点估算法</h4>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-34-51-image.png" alt=""></p>
+<ul>
+<li>
+<p><strong>计算未调整的角色的权值UAW(Unadjusted
+Actor Weight)</strong>：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-44-24-image.png" alt=""></p>
+</li>
+<li>
+<p><strong>计算未调整的用例的权值UUCW(Unadjusted
+User Case Weight)</strong> ：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-44-59-image.png" alt=""></p>
+</li>
+<li>
+<p><strong>计算未调整的用例点UUCP =UAW+UUCW</strong>：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-45-23-image.png" alt=""></p>
+</li>
+<li>
+<p><strong>计算技术和环境因子TEF（TCF与ECF）</strong>：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-47-58-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-48-24-image.png" alt=""></p>
+</li>
+<li>
+<p><strong>计算调整的用例点</strong>：UCP=UUCP×TCF×ECF=110×1.02×0.785 = 88</p>
+</li>
+<li>
+<p><strong>计算工作量</strong>：Effort=UCP×PF，PF是Productivity Factor，是项目生产率，其默认值为20</p>
+</li>
+</ul>
+<h4 id="_6-2-4-类比-自顶向下-估算法" tabindex="-1"><a class="header-anchor" href="#_6-2-4-类比-自顶向下-估算法" aria-hidden="true">#</a> 6.2.4 类比(自顶向下)估算法</h4>
+<blockquote>
+<p>通常在项目的初期或信息不足时进行，此时只确定了初步的工作分解结构，分解层次少，估算精度较差。有两种情况可以使用这种方法：其一是以前完成的项目与新项目非常相似，其二是项目成本估算专家或小组具有必需的专业技能。</p>
+</blockquote>
+<p><strong>自上而下的成本估算</strong>实际上是以项目成本总体为估算对象，在收集上层和中层管理人员的经验判断，以及可以获得的关于以往类似项目的历史数据的基础上，将成本从工作分解结构的上部向下部依次分配、传递，直至WBS的最底层。</p>
+<p>类比估算中，需要评价不同项目间的相似程度。两种常用求距离方式来度量差距：</p>
+<ul>
+<li>
+<p>不加权的欧氏距离</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-53-36-image.png" alt=""></p>
+</li>
+<li>
+<p>加权的欧氏距离</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-53-41-image.png" alt=""></p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-54-11-image.png" alt=""></p>
+<p>对于表中P0工作量的估算：</p>
+<ul>
+<li>
+<p>可以取最相似的项目工作量</p>
+</li>
+<li>
+<p>取比较相似的几个项目的工作量的平均值</p>
+</li>
+<li>
+<p>利用项目规模进行比例调整：Size(P0) / Size(P1) = Effort(P0) / Effort(P1)</p>
+</li>
+</ul>
+<h4 id="_6-2-5-自下而上估算法" tabindex="-1"><a class="header-anchor" href="#_6-2-5-自下而上估算法" aria-hidden="true">#</a> 6.2.5 自下而上估算法</h4>
+<p>利用任务分解图(WBS)，对各个具体工作包进行详细的成本估算，然后将结果累加起来得出项目总成本。</p>
+<p>特点：相对比较准确，它的准确度来源于每个任务的估算情况；花费时间</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-20-57-54-image.png" alt=""></p>
+<h4 id="_6-2-6-参数估算法cocomo-walston-felix" tabindex="-1"><a class="header-anchor" href="#_6-2-6-参数估算法cocomo-walston-felix" aria-hidden="true">#</a> 6.2.6 参数估算法COCOMO/Walston-Felix</h4>
+<p>也称为算法模型或经验导出模型，是一种使用项目特性参数建立数学模型来估算成本的方法，是通过大量的项目数据进行数学分析导出的模型，是一种统计技术。</p>
+<p>基于回归分析的模型分为两类</p>
+<ul>
+<li>
+<p>静态单变量模型：$E=a+b*S^c$</p>
+<p>E：以人月表示的工作量，a,b,c：经验导出的系数，S：主要的输入参数(通常是LOC,FP等)</p>
+</li>
+<li>
+<p>动态多变量模型</p>
+</li>
+</ul>
+<p>下面介绍两个静态单变量模型：</p>
+<h5 id="_6-2-6-1-walston-felix模型" tabindex="-1"><a class="header-anchor" href="#_6-2-6-1-walston-felix模型" aria-hidden="true">#</a> 6.2.6.1 Walston-Felix模型</h5>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-21-37-image.png" alt=""></p>
+<blockquote>
+<p>采用java 完成项目，估计有366功能点，则</p>
+<p>L = 366×46 = 16386行 = 16.386KLOC</p>
+<p>E ＝ 5.2×(KLOC)0.91 ＝ 5.2×16.386 0.91＝ 66人月</p>
+<p>DOC =49× (KLOC)1.01 ＝ 49×16.386 1.01 ＝ 826页</p>
+</blockquote>
+<h5 id="_6-2-6-2-cocomo-constructive-cost-model" tabindex="-1"><a class="header-anchor" href="#_6-2-6-2-cocomo-constructive-cost-model" aria-hidden="true">#</a> 6.2.6.2 COCOMO(Constructive Cost model)</h5>
+<p>模型发展：</p>
+<ul>
+<li>
+<p>COCOMO 81(最初)</p>
+</li>
+<li>
+<p>COCOMO II(20世纪90年代)</p>
+</li>
+<li>
+<p>模型系列</p>
+</li>
+</ul>
+<p>将开发所需要的工作量表示为KLOC软件规模和一系列成本因子的函数，基本估算公式：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-24-59-image.png" alt=""></p>
+<ul>
+<li>
+<p>A可以校准的常量;</p>
+</li>
+<li>
+<p>S为KLOC软件规模;</p>
+</li>
+<li>
+<p>E为规模的指数,说明不同规模软件具有的相对规模经济和不经济性;</p>
+</li>
+<li>
+<p>EM为工作量乘数,反映某个项目特征对完成项目开发所需工作量的影响程度;</p>
+</li>
+<li>
+<p>n为描述软件项目特征的成本驱动因子的个数</p>
+</li>
+</ul>
+<h6 id="cocomo-81" tabindex="-1"><a class="header-anchor" href="#cocomo-81" aria-hidden="true">#</a> COCOMO 81</h6>
+<p>COCOMO 81项目类型</p>
+<ul>
+<li>
+<p>有机: Organic(组织)，</p>
+<ul>
+<li>
+<p>各类应用程序，例如数据处理、科学计算
+等</p>
+</li>
+<li>
+<p>受硬件的约束比较小，程序的规模不是很大</p>
+</li>
+</ul>
+</li>
+<li>
+<p>半有机: Semidetached（半分离）</p>
+<ul>
+<li>
+<p>各类实用程序，介于上述两种软件之间，例如编译器（程序）</p>
+</li>
+<li>
+<p>规模和复杂度都属于中等或者更高</p>
+</li>
+</ul>
+</li>
+<li>
+<p>嵌入式: Embedded</p>
+<ul>
+<li>
+<p>系统程序，例如实时处理、控制程序等</p>
+</li>
+<li>
+<p>紧密联系的硬件、软件和操作的限制条件下运行，软件规模任意</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>COCOMO 81模型级别：</p>
+<ul>
+<li>
+<p><strong>基本COCOMO</strong>：相关信息极少情况下，静态单变量模型，它用一个以已估算出来的源代码行数为自变量的函数来计算软件开发工作量。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-30-14-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-31-27-image.png" alt=""></p>
+<blockquote>
+<p>一个33.3 KLOC的软件开发项目，属于中等规模、半有机型的项目，采用基本COCOMO：</p>
+<p>a=3.0，b=1.12。</p>
+<p>E = 3.0＊L ^1.12 = 3.0＊33.3 ^1.12 = 152 PM</p>
+</blockquote>
+</li>
+<li>
+<p><strong>中等COCOMO</strong>：需求确定之后使用，在LOC为自变量函数计算软件开发工作量的基础上，再用涉及产品、硬件、人员、项目等方面属性的影响因素来调整工作量的估算。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-35-18-image.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>软件类型</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组织模式</td>
+<td>3.2</td>
+<td>1.05</td>
+<td>2.5</td>
+<td>0.38</td>
+</tr>
+<tr>
+<td>半分离模式</td>
+<td>3.0</td>
+<td>1.12</td>
+<td>2.5</td>
+<td>0.35</td>
+</tr>
+<tr>
+<td>嵌入模式</td>
+<td>2.8</td>
+<td>1.2</td>
+<td>2.5</td>
+<td>0.32</td>
+</tr>
+</tbody>
+</table>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-36-30-image.png" alt=""></p>
+<blockquote>
+<p>例：一个 10 KLOC 嵌入式软件产品，要完成在商业微处理器上实现通信处理功能，这里使用中间 COCOMO 模型估计开发工作量和进度。</p>
+<p>工作量调整因子EAF ＝ 1.07</p>
+<p>工作量  ＝ 2.8 ×（ 10 ） 1.20 × 1.07 ＝ 2.8 × 15.85 × 1.07 ＝ 47 （人月）</p>
+<p>开发时间＝ 2.5 ×（ 47 ） 0.32 ＝ 2.5 × 3.43 ＝ 8.58 （月）</p>
+</blockquote>
+</li>
+<li>
+<p><strong>高级COCOMO</strong>：高级COCOMO模型的工作量及进度估算公式与中级COCOMO模型一致，但高级COCOMO
+模型引入了两种主要功能：</p>
+<ul>
+<li>
+<p>阶段敏感工作权数：某些阶段（设计、编码、调试）比其他阶段有关因素的影响可能更大。高级COCOMO 模型为每个因素提供了一个“阶段敏感工作权数”。</p>
+</li>
+<li>
+<p>三层产品分级结构：3个产品层次是模块、子系统和系统。</p>
+</li>
+</ul>
+<p>下表为AEXP（应用经验因子）在不同阶段的作用是不同的实例：AEXP在需求设计阶段影响最大因此取值要大，在后期作用降低</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-39-07-image.png" alt=""></p>
+</li>
+</ul>
+<h6 id="cocomo-ii" tabindex="-1"><a class="header-anchor" href="#cocomo-ii" aria-hidden="true">#</a> COCOMO II</h6>
+<p>COCOMO II 给出3个层次的软件开发工作量估算模型，在估算工作量时对软件细节考虑的详尽程度增加：</p>
+<ul>
+<li>
+<p>应用组装模型---规划阶段</p>
+</li>
+<li>
+<p>早期设计模型---设计阶段</p>
+</li>
+<li>
+<p>后体系结构模型---开发阶段</p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-15-21-44-15-image.png" alt=""></p>
+<h4 id="_6-2-7-专家估算法" tabindex="-1"><a class="header-anchor" href="#_6-2-7-专家估算法" aria-hidden="true">#</a> 6.2.7 专家估算法</h4>
+<p>由多位专家进行成本估算，一个专家可能会有偏见，最好由多位专家进行估算，取得多个估算值,最后得出综合的估算值。</p>
+<p><strong>Deiphi 德尔菲专家估算法</strong>步骤：</p>
+<ol>
+<li>
+<p>专家以无记名对该软件给出3个规模的估算值</p>
+<ul>
+<li>
+<p>最小ai</p>
+</li>
+<li>
+<p>最可能的mi</p>
+</li>
+<li>
+<p>最大bi</p>
+</li>
+</ul>
+</li>
+<li>
+<p>组织者计算每位专家的Ei=(ai+4mi+bi)/6</p>
+</li>
+<li>
+<p>如果各个专家的估算差异超出规定的范围（例如：15%），则需重复上述过程</p>
+</li>
+<li>
+<p>最终可以获得一个多数专家共识的软件规模：E=E1+E2+…En/n（N:表示N
+个专家）</p>
+</li>
+</ol>
+<p>实际软件估算中是一种自下而上和参数法的结合模型,步骤如下:</p>
+<ol>
+<li>
+<p>对任务进行分解:1,2,…,I,…n</p>
+</li>
+<li>
+<p>估算每个工作包的成本Ei，有两种方法：</p>
+<ul>
+<li>
+<p>直接估算成本Ei</p>
+<p>开发（工作量）规模：Scale(Dev) (单位：人月)</p>
+<p>管理、质量（工作量）规模：Scale(Mgn)=a* Scale(Dev)（任务中不包含质量，管理任务时）[a为比例系数：例如：20%--25%]</p>
+<p>直接成本＝ Scale(Dev) ＋ a* Scale(Dev)</p>
+</li>
+<li>
+<p>先估算规模Qi，然后估算成本Ei= Qi *人力成本参数</p>
+</li>
+</ul>
+</li>
+<li>
+<p>直接成本=E1+E2+……+Ei+……+ En</p>
+</li>
+<li>
+<p>间接成本估算</p>
+<ul>
+<li>
+<p>按照企业模型直接估算：</p>
+</li>
+<li>
+<p>简易算法（没有成熟企业模型） 间接成本=直接成本*间接成本系数。例如：间接成本系数=0.3</p>
+</li>
+</ul>
+</li>
+<li>
+<p>项目总估算成本=直接成本+间接成本</p>
+<p>=直接成本+直接成本*间接成本系数</p>
+<p>=直接成本(1+间接成本系数)</p>
+<p>=规模*人力成本参数（1+间接成本系数）</p>
+</li>
+</ol>
+<h3 id="_6-3-成本预算" tabindex="-1"><a class="header-anchor" href="#_6-3-成本预算" aria-hidden="true">#</a> 6.3 成本预算</h3>
+<p>成本预算是将项目的总成本按照项目的进度分摊到各个工作单元中去。</p>
+<p>成本预算的目的是产生<strong>成本基线</strong>，作为度量项目成本性能的基础，成本基线是每个时间阶段内的成本，是项目管理者度量或监控项目的依据。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-09-21-image.png" alt=""></p>
+<h1 id="七-进度计划" tabindex="-1"><a class="header-anchor" href="#七-进度计划" aria-hidden="true">#</a> 七 进度计划</h1>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-10-54-image.png" alt=""></p>
+<h3 id="_7-1-进度管理基本概念" tabindex="-1"><a class="header-anchor" href="#_7-1-进度管理基本概念" aria-hidden="true">#</a> 7.1 进度管理基本概念</h3>
+<p><strong>进度管理</strong>是根据WBS分解出主要的任务（活动）确立任务（活动）之间的关联关系；然后估计每个任务（活动）需要的资源、时间；最后编制出项目的进度计划。</p>
+<p><strong>进度</strong>是对执行的活动和里程碑制定的工作计划日期表</p>
+<p><strong>任务</strong>定义是面向活动的，是对WBS做进一步分解的结果</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-12-26-image.png" alt=""></p>
+<p><img src="软件项目管理.assets/2022-06-16-15-43-08-image.png" alt=""></p>
+<p>软件项目进度管理的图示有很多：</p>
+<ul>
+<li>
+<p>网络图  network diagramming：展示项目中各个活动以及活动之间的逻辑关系</p>
+<ul>
+<li>
+<p>节点法/单代号网络图 PDM (Precedence Diagramming Method)</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-16-16-image.png" alt=""></p>
+</li>
+<li>
+<p>箭线法/双代号网络图 ADM (Arrow Diagramming Method)：双代号表示网络图中两个代号唯一确定一个任务</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-16-42-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-17-46-image.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li>
+<p>甘特图  Gantt图：显示基本的任务信息，可以查看任务的工期、开始时间和结束时间以及资源的信息。只有时标，没有活动的逻辑关系</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-18-33-image.png" alt=""></p>
+<ul>
+<li>
+<p>棒状甘特图</p>
+</li>
+<li>
+<p>三角形甘特图</p>
+</li>
+</ul>
+</li>
+<li>
+<p>里程碑图：是由一系列的里程碑事件组成的，里程碑图显示项目进展中的重大工作完成，里程碑不同于活动，<strong>活动是需要消耗资源的，里程碑仅仅表示事件的标记。</strong></p>
+</li>
+<li>
+<p>资源图</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-19-26-image.png" alt=""></p>
+</li>
+</ul>
+<h3 id="_7-2-任务历时估算" tabindex="-1"><a class="header-anchor" href="#_7-2-任务历时估算" aria-hidden="true">#</a> 7.2 任务历时估算</h3>
+<p>任务历时估计是估计任务的持续时间，而一个项目往往包含多个任务，所以需要分别估算项目各个活动所需要的时间。</p>
+<h4 id="_7-2-1-定额估算法" tabindex="-1"><a class="header-anchor" href="#_7-2-1-定额估算法" aria-hidden="true">#</a> 7.2.1 定额估算法</h4>
+<p>较的简单，容易计算。适合项目的规模比较小，比如，小于10000LOC（代码行）或者说小于6个月的项目</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-23-42-image.png" alt=""></p>
+<h4 id="_7-2-2-经验导出模型" tabindex="-1"><a class="header-anchor" href="#_7-2-2-经验导出模型" aria-hidden="true">#</a> 7.2.2 经验导出模型</h4>
+<p>经验导出模型：$D=a*E^b$</p>
+<ul>
+<li>
+<p>D:进度(以月单位)</p>
+</li>
+<li>
+<p>E:工作量(以人月单位)</p>
+</li>
+<li>
+<p>a:2-4之间</p>
+</li>
+<li>
+<p>b:1/3左右</p>
+</li>
+<li>
+<p>a、b是依赖于项目的自然属性</p>
+</li>
+</ul>
+<p>其中IBM模型/基本COCOMO模型：$D=2.4*E^{b}$，</p>
+<table>
+<thead>
+<tr>
+<th>有机</th>
+<th>0.38</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>半有机</td>
+<td>0.35</td>
+</tr>
+<tr>
+<td>嵌入式</td>
+<td>0.32</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_7-2-3-工程评估评审技术" tabindex="-1"><a class="header-anchor" href="#_7-2-3-工程评估评审技术" aria-hidden="true">#</a> 7.2.3 工程评估评审技术</h4>
+<p>利用网络顺序图的逻辑关系和加权算法估算任务历时。加权算法是基于对某项任务的乐观，悲观以及最可能的概率时间估计</p>
+<p>采用加权平均得到期望值 <strong>PERT历时= (O+4m+P)/ 6</strong></p>
+<ul>
+<li>
+<p>O是最小估算值:乐观(Optimistic Time)</p>
+</li>
+<li>
+<p>P是最大估算值:悲观(Pessimistic Time)</p>
+</li>
+<li>
+<p>M是最可能估算(Most Likely Time)</p>
+</li>
+</ul>
+<p>同时引入标准差与方差的概念，表示历时估计的可行度或者项目完成的概念：</p>
+<p>$$
+\delta = \frac{P-O}{6} \
+\delta^2 = (\frac{P-O}{6})^2
+$$</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-33-17-image.png" alt=""></p>
+<p>项目完成时间分布满足<strong>正态分布</strong>，根据路径的总PERT估计值与标准差画出图形：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-15-35-31-image.png" alt=""></p>
+<p>例如在14.57天内完成的概率？$14.57 = E+\delta$，概率 = 50%+68.3%/2 = 84.2%</p>
+<h4 id="_7-2-4-jones的一阶估算准则" tabindex="-1"><a class="header-anchor" href="#_7-2-4-jones的一阶估算准则" aria-hidden="true">#</a> 7.2.4 Jones的一阶估算准则</h4>
+<p>基于估算项目功能点，从幂次表中选择合适的幂次将功能点升幂：例如，一个商业软件的功能点FP=350，若一个平均水平的软件公司来承担，粗略的进度估算为$ 350^{0.43}=12$月。一阶幂次表如下：</p>
+<table>
+<thead>
+<tr>
+<th>软件类型</th>
+<th>最优级</th>
+<th>平均</th>
+<th>最差级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统软件</td>
+<td>0.43</td>
+<td>0.45</td>
+<td>0.48</td>
+</tr>
+<tr>
+<td>商业软件</td>
+<td>0.41</td>
+<td>0.43</td>
+<td>0.46</td>
+</tr>
+<tr>
+<td>封装商品软件</td>
+<td>0.39</td>
+<td>0.42</td>
+<td>0.45</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_7-3-进度计划编排" tabindex="-1"><a class="header-anchor" href="#_7-3-进度计划编排" aria-hidden="true">#</a> 7.3 进度计划编排</h3>
+<p>进度计划编制是决定项目开始和结束日期的活动。常用方法有：</p>
+<ul>
+<li>
+<p>关键路径法  CPM Critical Path Method  正推法/逆推法</p>
+</li>
+<li>
+<p>时间压缩法  应急法/平行作业法</p>
+</li>
+<li>
+<p>资源平衡</p>
+</li>
+<li>
+<p>管理预留</p>
+</li>
+<li>
+<p>敏捷计划</p>
+</li>
+</ul>
+<h4 id="_7-3-1-关键路径法" tabindex="-1"><a class="header-anchor" href="#_7-3-1-关键路径法" aria-hidden="true">#</a> 7.3.1 关键路径法*</h4>
+<p><strong>关键路径是网络图中最长的路径</strong>，根据指定的网络图逻辑关系进行的单一的历时估算。计算每一个活动的单一的、确定的最早和最迟开始和完成日期；计算网络图中最长的路径。以便确定项目完成时间估计。</p>
+<ul>
+<li>
+<p><strong>最早开始时间(Early Start, ES)</strong>：表示一项任务（活动）的最早可以开始执行的时间</p>
+</li>
+<li>
+<p><strong>最晚开始时间(Late Start, LS)</strong>：表示一项任务（活动）的最晚可以开始执行的时间</p>
+</li>
+<li>
+<p><strong>最早完成时间(Early Finish, EF)</strong>：表示一项任务（活动）的最早可以完成的时间</p>
+</li>
+<li>
+<p><strong>最晚完成时间(Late Finish, LF)</strong>：表示一项任务（活动）的最晚可以完成的时间</p>
+</li>
+</ul>
+<p>进度编制相关术语：</p>
+<ul>
+<li>
+<p><strong>超前(Lead)</strong>：表示两个任务的逻辑关系所允许的提前后置任务的时间</p>
+</li>
+<li>
+<p><strong>滞后(Lag)</strong>：表示两个任务的逻辑关系所允许的推迟后置任务的时间</p>
+</li>
+<li>
+<p><strong>浮动(Float)</strong>：表示一个任务的机动性，是其在不影响项目完成的情况下可以推迟的时间量</p>
+</li>
+<li>
+<p><strong>自由浮动(Free Float, FF)</strong>：在不影响后置任务最早开始时间，本任务可以延迟的时间。</p>
+<p><strong>FF=ES(后置任务)-EF-lag</strong></p>
+</li>
+<li>
+<p><strong>总浮动(Total Float, TF)</strong>：表示在不影响项目最早完成时间，本任务可以延迟的时间。</p>
+<p><strong>TF=LS(当前任务)-ES(当前任务)或TF=LF-EF</strong></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-16-21-43-image.png" alt=""></p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-16-03-14-image.png" alt=""></p>
+<p><strong>关键路径(Critical Path)</strong>：时间浮动为0（Float=0）的路径</p>
+<ul>
+<li>
+<p>网络图中最长的路径</p>
+</li>
+<li>
+<p>关键路径是决定项目完成的最短时间</p>
+</li>
+<li>
+<p>关键路径上的任何活动延迟，都会导致整个项目完成时间的延迟</p>
+</li>
+<li>
+<p>关键路径可能不止一条</p>
+</li>
+</ul>
+<p><strong>关键路径法——正推法</strong>：按照时间顺序计算各个任务（活动）的最早开始时间(ES)和最早完成时间(EF)的方法：</p>
+<ul>
+<li>
+<p>确定项目的开始时间</p>
+</li>
+<li>
+<p>从左到右，从上到下进行任务编排</p>
+</li>
+<li>
+<p>计算每个任务的最早开始时间ES和最早完成时间EF：</p>
+<ul>
+<li>
+<p>网络图中第一个任务的最早开始时间是项目的开始时间</p>
+</li>
+<li>
+<p>ES+Duration=EF</p>
+</li>
+<li>
+<p>EF+Lag=ES(后置)</p>
+</li>
+<li>
+<p><strong>当一个任务有多个前置任务时，选择前置任务中最大的EF加上Lag作为其ES</strong></p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-16-37-16-image.png" alt=""></p>
+</li>
+</ul>
+<p><strong>关键路径法——逆推法</strong>：按照时间顺序计算各个任务（活动）的最晚开始时间(LS)和最晚完成时间(LF)的方法</p>
+<ul>
+<li>
+<p>确定项目的结束时间</p>
+</li>
+<li>
+<p>从右到左，从上到下进行任务编排</p>
+</li>
+<li>
+<p>计算每个任务的最晚开始时间LS和最晚完成时间LF：</p>
+<ul>
+<li>
+<p>网络图中最后一个任务的最晚完成时间是项目的结束时间</p>
+</li>
+<li>
+<p>LF-Duration=LS</p>
+</li>
+<li>
+<p>LS-Lag=LF(p)</p>
+</li>
+<li>
+<p><strong>当一个任务有多个后置任务时，选择其后置任务中最小LS减Lag作为其LF</strong></p>
+</li>
+</ul>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-16-41-36-image.png" alt="">因此计算出关键路径为：A-&gt;C-&gt;G-&gt;H</p>
+</li>
+</ul>
+<h4 id="_7-3-2-时间压缩法" tabindex="-1"><a class="header-anchor" href="#_7-3-2-时间压缩法" aria-hidden="true">#</a> 7.3.2 时间压缩法*</h4>
+<h5 id="_7-3-2-1-应急法" tabindex="-1"><a class="header-anchor" href="#_7-3-2-1-应急法" aria-hidden="true">#</a> 7.3.2.1 应急法</h5>
+<p>时间成本平衡方法是一种线性关系方法，进度压缩与成本的增长是成比例的。压缩进度使得成本增加</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-16-50-39-image.png" alt=""></p>
+<p>$$
+单位进度压缩的成本=\frac{可压缩成本-正常成本}{正常进度-可压缩进度}
+$$</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-18-58-29-image.png" alt=""></p>
+<p>计算单位进度压缩成本：</p>
+<table>
+<thead>
+<tr>
+<th>任务单位压缩成本</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>压缩成本(万/周)</td>
+<td>0.6</td>
+<td>1</td>
+<td>0.5</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>压缩到17周：20+0.5(C压缩一周)</p>
+<p>实际中，进度压缩与费用的上涨不是总能呈现正比关系，如果所示</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-01-57-image.png" alt=""></p>
+<h5 id="_7-3-2-2-平行作业法" tabindex="-1"><a class="header-anchor" href="#_7-3-2-2-平行作业法" aria-hidden="true">#</a> 7.3.2.2 平行作业法</h5>
+<p>又称为快速跟进 (Fast Tracking)法</p>
+<p>应急法不改变活动间的逻辑关系。平行作业法则可改变活动间的逻辑关系，并行开展某些活动。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-03-24-image.png" alt=""></p>
+<h4 id="_7-3-3-资源平衡法" tabindex="-1"><a class="header-anchor" href="#_7-3-3-资源平衡法" aria-hidden="true">#</a> 7.3.3 资源平衡法</h4>
+<p>资源优化配置，形成最有效的利用资源，使资源闲置的时间最小化</p>
+<h4 id="_7-3-4-管理预留" tabindex="-1"><a class="header-anchor" href="#_7-3-4-管理预留" aria-hidden="true">#</a> 7.3.4 管理预留</h4>
+<p>管理预留是一项加在项目末端的人为任务，不是加在每一个任务间隔上，而是给项目增加一个储备时间</p>
+<p>通常是所有任务所需时间的10%-15%</p>
+<p>当某项任务超时，则可以使用关键路径末端的管理预留</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-05-42-image.png" alt=""></p>
+<h3 id="_7-4-项目进度模型" tabindex="-1"><a class="header-anchor" href="#_7-4-项目进度模型" aria-hidden="true">#</a> 7.4 项目进度模型</h3>
+<p>软件项目进度问题（Software Project Scheduling Problem，SPSP）模型是在给定的项目任务工作量及其关系和资源限制下，对项目确定合适的人员安排，以保证项目的时间最短、成本最小</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-06-53-image.png" alt=""></p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-07-00-image.png" alt=""></p>
+<h2 id="八-质量计划" tabindex="-1"><a class="header-anchor" href="#八-质量计划" aria-hidden="true">#</a> 八 质量计划</h2>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-08-01-image.png" alt=""></p>
+<p><strong>质量</strong>是产品或服务满足明确和隐含需要能力的性能特性的总体。</p>
+<p><strong>软件项目的质量管理</strong>：保证项目满足其目标要求所需要的过程</p>
+<h3 id="_8-1-软件质量计划" tabindex="-1"><a class="header-anchor" href="#_8-1-软件质量计划" aria-hidden="true">#</a> 8.1 软件质量计划</h3>
+<p>确定项目应达到的质量标准(目标)，</p>
+<p>确定项目目标，根据wbs分解目的到工作包，并按职责分工将工作包的质量目标落实到每个小组成员，可建立项目的质量模型，以此确定项目的质量目标，或质量标准</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-17-39-image.png" alt=""></p>
+<h3 id="_8-2-软件质量保证" tabindex="-1"><a class="header-anchor" href="#_8-2-软件质量保证" aria-hidden="true">#</a> 8.2 软件质量保证</h3>
+<p><strong>质量保证</strong>：为了提供信用，证明项目将会达到有关质量标准而开展的有计划，有组织的工作活动</p>
+<p>质量保证活动-审计（ Audit ）</p>
+<ul>
+<li>
+<p>审计(Audit) 是对过程或者产品的一次独立评估。将审核的主体与为该主体以前建立的一组规程和标准进行比较</p>
+</li>
+<li>
+<p>目的是确保真正的遵循了这一个过程，产生了合适的文档和精确反映实际项目的报告</p>
+</li>
+<li>
+<p>可以预先规划的，也可以是临时决定的。</p>
+</li>
+</ul>
+<h3 id="_8-3-软件质量控制" tabindex="-1"><a class="header-anchor" href="#_8-3-软件质量控制" aria-hidden="true">#</a> 8.3 软件质量控制</h3>
+<p><strong>质量控制</strong>：确定项目结果与质量标准是否相符，同时确定不符的原因和消除方法，控制产品的质量，及时纠正缺陷的过程</p>
+<p>评审（面向人的过程）和测试（运行软件）可以检测到缺陷</p>
+<p>一般由开发人员实施，是直接对项目工作结果的质量进行把关，属于检查职能</p>
+<h2 id="九-配置管理计划" tabindex="-1"><a class="header-anchor" href="#九-配置管理计划" aria-hidden="true">#</a> 九 配置管理计划</h2>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-20-59-image.png" alt=""></p>
+<h3 id="_9-1-软件项目配置管理基本概念" tabindex="-1"><a class="header-anchor" href="#_9-1-软件项目配置管理基本概念" aria-hidden="true">#</a> 9.1 软件项目配置管理基本概念</h3>
+<p><strong>软件配置管理</strong>：是一套管理软件开发和维护以及其中各种中间软件产品的方法和规则，同时是提高软件质量的重要手段，它帮助开发团队对软件开发过程进行有效的变更控制，高效地开发高质量的软件。</p>
+<blockquote>
+<p>中间产品：代码、技术文档、产品文档、管理文档、数据、脚本、执行文件、安装文件、配置文件甚至一些参数等，且软件的一些不同版本</p>
+</blockquote>
+<p><strong>SCI(software configration item)</strong>：是项目定义其受控于软件配置管理的项</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-23-13-image.png" alt=""></p>
+<p><strong>基线</strong>：是一个或者一些配置项的集合，它们的内容和状态已经通过技术的复审，并在生存期的某个阶段被接受了</p>
+<h3 id="_9-2-软件项目配置管理过程" tabindex="-1"><a class="header-anchor" href="#_9-2-软件项目配置管理过程" aria-hidden="true">#</a> 9.2 软件项目配置管理过程</h3>
+<ol>
+<li>
+<p>配置项标识、跟踪：将软件项目中需要进行控制的部分拆分成SCI，建立唯一的标识，建立相互间的对应关系，进行系统的跟踪和版本控制。</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-26-34-image.png" alt=""></p>
+<p>对应关系：</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-26-54-image.png" alt=""></p>
+</li>
+<li>
+<p>配置管理环境建立：配置管理环境是为了更好地进行软件配置管理的系统环境，最重要的是 建立配置管理库，简称配置库</p>
+</li>
+<li>
+<p>基线变更管理过程</p>
+</li>
+<li>
+<p>配置管理审计</p>
+</li>
+<li>
+<p>配置状态统计</p>
+</li>
+</ol>
+<h2 id="十-人员与沟通计划" tabindex="-1"><a class="header-anchor" href="#十-人员与沟通计划" aria-hidden="true">#</a> 十 人员与沟通计划</h2>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-36-51-image.png" alt=""></p>
+<p>团队组织结构：</p>
+<ol>
+<li>
+<p><strong>职能型</strong>：职能型组织结构是一种传统的、松散的项目组织结构，它最初的出现是社会化大生产，专业化分工的结果。</p>
+<p>在这种类型的组织结构中，高层管理者处于组织结构的最顶层，中、低层管理者逐步向下分布，公司按照各种管理职能划分为生产、财务、营销、人事和研发等若干职能部门</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-38-08-image.png" alt=""></p>
+<p>职能型组织结构主要承担的是<strong>内部项目</strong>，很少承担外部项目。当公司开展项目时，由各职能部门的职员承担相应的项目任务，通常情况下他们都是兼职的，因为这些职员在完成一定项目任务的同时，还要完成其所属职能部门的任务。</p>
+<p>优点：</p>
+<ol>
+<li>
+<p>可以充分发挥职能部门的资源集中优势</p>
+</li>
+<li>
+<p>部门的专家可以同时为部门内不同项目使用</p>
+</li>
+<li>
+<p>便于相互交流 , 相互支援</p>
+</li>
+<li>
+<p>可以随时增派人员</p>
+</li>
+<li>
+<p>可以将项目和本部门的职能工作融为一体</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>
+<p>项目和部门利益发生冲突，职能部门更重视本部门的目标,会忽视项目目标</p>
+</li>
+<li>
+<p>资源平衡会出现问题</p>
+</li>
+<li>
+<p>权利分割不利于各个职能部门的交流和团结协作</p>
+</li>
+<li>
+<p>行政隶属关系使得项目经理没有充分的权利</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>项目型</strong>：项目型组织结构的部门是按照项目来设置的，每个部门相当于一个微型的职能型组织，每个部门都有自己的项目经理及其下属的职能部门</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-39-06-image.png" alt=""></p>
+<p>项目经理对自己的部门全权负责，对项目成员有着直接的管理权力。所有的项目成员都是专职的，当一个项目结束时，团队通常就解散了，团队中的成员可能会被分配到新的项目中去。如果没有新的项目，他们就有可能被解雇了。</p>
+<p>项目式组织结构由于重复设置，成本较高，所以常在那些投资额很大、时间跨度很长的大型项目中使用。</p>
+<p>优点：</p>
+<ol>
+<li>
+<p>通常都是专职人员。有利于项目组织的统一指挥和管理</p>
+</li>
+<li>
+<p>每个部门都是基于项目而组建的，他们的首要目标就是圆满地完成项目的任务，项目成员都能够明确理解并致力于项目目标</p>
+</li>
+<li>
+<p>n项目经理享有最大限度的决策管理自主权，在进度、成本和质量方面的控制较为灵活，可以统一协调整个组织的管理工作，而且对客户的需求和公司高层的意图可以做出快捷的响应，从而保证了项目的成功实施。</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>
+<p>每个独立的项目组织都设有自己的职能部门，不能形成资源共享，同时由于项目各阶段的工作重点不同，而项目组之间的人力资源又不能相互协调，这样会使项目组成员的工作出现忙闲不均的现象，影响了员工的工作积极性，也造成了人力资源的浪费，管理成本较高，资源配置效率低下；</p>
+</li>
+<li>
+<p>不同的项目团队很难共享知识，不利于项目团队成员技术水平的提高</p>
+</li>
+<li>
+<p>项目成员缺乏一种事业上的保障，项目一旦结束，项目团队成员就有可能失去工作，由于他们往往会担心项目结束后的生计，因此项目的收尾工作就可能会被推迟。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>矩阵型</strong>：矩阵型组织结构是一个混合体，它在职能型组织的垂直层次结构中叠加了项目型组织的水平结构，兼有职能型组织结构和项目型组织结构的特征</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-40-10-image.png" alt=""></p>
+<p>根据项目组织中项目经理和职能部门经理责权利的大小，又可以将矩阵型组织结构分为弱矩阵式、平衡矩阵式和强矩阵式三种形式</p>
+<p><img src="@source/note/course-notes/软件项目管理.assets/2022-06-16-19-45-35-image.png" alt=""></p>
+<p>优点：</p>
+<ol>
+<li>
+<p>专职的项目经理负责整个项目 , 以项目为中心,</p>
+</li>
+<li>
+<p>公司的多个项目可以共享各个职能部门的资源</p>
+</li>
+<li>
+<p>即利于项目目标的实现,又利于公司目标方针的贯彻</p>
+</li>
+<li>
+<p>项目成员的顾虑减少了</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>
+<p>容易引起职能经理和项目经理权力的冲突</p>
+</li>
+<li>
+<p>资源共享也能引起项目之间的冲突</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>总结：</p>
+<ul>
+<li>
+<p>一般来说，职能型组织结构适用于不确定性程度较低、所用技术标准规范、持续时间较短的小型项目，而不适用于环境变化较大、技术创新性很强的大型项目。</p>
+</li>
+<li>
+<p>项目型组织结构适用于环境的快速变化的项目</p>
+</li>
+<li>
+<p>矩阵型组织结构融合了上述两种组织结构的优点，在充分利用公司的资源上具有更大的优越性，适用于技术复杂、风险程度较大的大型项目。</p>
+</li>
+</ul>
+</template>

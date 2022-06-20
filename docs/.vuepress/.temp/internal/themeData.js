@@ -17,8 +17,17 @@ export const themeData = {
           "link": "/note/"
         },
         {
-          "text": "算法",
-          "link": "/note/algorithm/"
+          "text": "react基础",
+          "link": "/note/react/1-jsx.md"
+        },
+        {
+          "text": "课程笔记",
+          "children": [
+            {
+              "text": "Web数据管理",
+              "link": "/note/course-notes/Web数据管理.md"
+            }
+          ]
         }
       ]
     },
@@ -64,7 +73,16 @@ export const themeData = {
     }
   ],
   "sidebar": {
-    "/note/": [],
+    "/note/react/": [
+      "/note/react/1-jsx.md",
+      "/note/react/2-渲染元素.md",
+      "/note/react/3-组件与生命周期.md",
+      "/note/react/4-事件绑定.md"
+    ],
+    "/note/course-notes/": [
+      "/note/course-notes/Web数据管理.md",
+      "/note/course-notes/软件项目管理.md"
+    ],
     "/scene-ui/": [
       {
         "text": "基础组件",
@@ -178,4 +196,17 @@ export const themeData = {
   "openInNewWindow": "open in new window",
   "toggleDarkMode": "toggle dark mode",
   "toggleSidebar": "toggle sidebar"
+}
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updateThemeData) {
+    __VUE_HMR_RUNTIME__.updateThemeData(themeData)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ themeData }) => {
+    __VUE_HMR_RUNTIME__.updateThemeData(themeData)
+  })
 }

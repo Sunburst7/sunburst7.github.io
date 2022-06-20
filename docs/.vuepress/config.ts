@@ -16,9 +16,18 @@ module.exports = {
         navbar: [
                 { text: '首页', link: '/' },
                 { text: '学习笔记', link: '/note/',
-                    children: [
-                      { text: '目录', link: '/note/' },
-                      { text: '算法', link: '/note/algorithm/' },
+                  children: [
+                    { text: '目录', link: '/note/' },
+                    { text: 'react基础', link: '/note/react/1-jsx.md' },
+                    { text: '课程笔记', 
+                      // link: '/note/course-notes/',
+                      children:[
+                        {
+                          text: 'Web数据管理',
+                          link: '/note/course-notes/Web数据管理.md'
+                        },
+                      ]
+                    },
                   ],
                 },
                 { text: 'Scene-UI', link: '/scene-ui/', 
@@ -47,7 +56,16 @@ module.exports = {
         ],
         // 可折叠的侧边栏
         sidebar: {
-            '/note/': [],
+            '/note/react/': [
+              '/note/react/1-jsx.md',
+              '/note/react/2-渲染元素.md',
+              '/note/react/3-组件与生命周期.md',
+              '/note/react/4-事件绑定.md',
+            ],
+            '/note/course-notes/': [
+              '/note/course-notes/Web数据管理.md',
+              '/note/course-notes/软件项目管理.md'
+            ],
             '/scene-ui/': [
                 {
                     text: '基础组件',
