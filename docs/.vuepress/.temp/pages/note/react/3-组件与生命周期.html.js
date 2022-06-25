@@ -10,30 +10,56 @@ export const data = {
   "headers": [
     {
       "level": 2,
-      "title": "1.1 Render API",
-      "slug": "_1-1-render-api",
+      "title": "1 组件生命周期",
+      "slug": "_1-组件生命周期",
+      "children": [
+        {
+          "level": 3,
+          "title": "1.1 Render API",
+          "slug": "_1-1-render-api",
+          "children": []
+        },
+        {
+          "level": 3,
+          "title": "1.2 commit API",
+          "slug": "_1-2-commit-api",
+          "children": []
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "title": "2 类组件",
+      "slug": "_2-类组件",
+      "children": [
+        {
+          "level": 3,
+          "title": "纯组件",
+          "slug": "纯组件",
+          "children": []
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "title": "3 函数组件初步",
+      "slug": "_3-函数组件初步",
       "children": []
     },
     {
       "level": 2,
-      "title": "1.2 commit API",
-      "slug": "_1-2-commit-api",
-      "children": []
-    },
-    {
-      "level": 2,
-      "title": "纯组件",
-      "slug": "纯组件",
+      "title": "参考",
+      "slug": "参考",
       "children": []
     }
   ],
   "git": {
-    "updatedTime": 1655712534000,
+    "updatedTime": 1655713968000,
     "contributors": [
       {
         "name": "sunburst7",
         "email": "1064658281@qq.com",
-        "commits": 1
+        "commits": 2
       }
     ]
   },

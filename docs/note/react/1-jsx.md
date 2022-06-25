@@ -1,12 +1,13 @@
 ---
 title: 1.JSX学习与深入
+
 ---
 
-# 1 JSX简介
+## 1 JSX简介
 
 JSX（JavaScript XML） 是一个 JavaScript 的语法扩展，它具有 JavaScript 的全部功能。它看起来像是一种模板语言，实际上 JSX 并不是模板语言，而是对 JavaScript 语言的扩展。**JSX 基于 JavaScript 语言，所以它具备 JS 的全部能力（JS 能做的 JSX 都可以做，比如表达式计算），但又新增了某些能力（JS 不能做的 JSX 也可以做，比如自定义组件）。**
 
-# 2 JSX本质
+## 2 JSX本质
 
 在React官网中有这样的解释：
 
@@ -36,13 +37,13 @@ React.createElement(
 
 > 需要注意的是这里的`children`属性，如果内部标签元素存在多个子元素时候。`children`会是一个数组。因为这里仅仅只有文本节点，所以只有一个`Hello`。
 
-# 3 JSX语法
+## 3 JSX语法
 
 jsx中`()`可以用来换行，即括号内的内容是可以在新的一行书写。
 
 jsx语句中有三个核心的概念：标签名、props、子元素。对JSX语法的介绍也主要分为这三部分进行：
 
-## 3.1 标签名
+### 3.1 标签名
 
 标签名指的是`<div>`中的div，在jsx中指定了 React 元素的类型：
 
@@ -52,7 +53,7 @@ jsx语句中有三个核心的概念：标签名、props、子元素。对JSX语
 
 * 如果你确实需要一个以小写字母开头的组件，则在 JSX 中使用它之前，必须将它赋值给一个大写字母开头的变量。
   
-  ```react
+  ```js
   import React from 'react';
   
   // Hello变量
@@ -68,7 +69,7 @@ jsx语句中有三个核心的概念：标签名、props、子元素。对JSX语
 
 * 你不能将表达式作为 React 元素类型。如果你想通过通用表达式来（动态）决定元素类型，你需要首先将它赋值给大写字母开头的变量。这通常用于根据 prop 来渲染不同组件的情况下
   
-  ```react
+  ```js
   import React from 'react';
   import { PhotoStory, VideoStory } from './stories';
   
@@ -92,7 +93,7 @@ jsx语句中有三个核心的概念：标签名、props、子元素。对JSX语
 
 在 JSX 中，你也可以使用点语法来引用一个 React 组件。当你在一个模块中导出许多 React 组件时，这会非常方便。例如，如果 `MyComponents.DatePicker` 是一个组件，你可以在 JSX 中直接使用：
 
-```react
+```js
 import React from 'react';
 
 const MyComponents = {
@@ -105,13 +106,13 @@ function BlueDatePicker() {
   return <MyComponents.DatePicker color="blue" />;}
 ```
 
-## 3.2 props
+### 3.2 props
 
 JSX中指定props的方式主要有以下几种：
 
 1. **字符串字面量**：你可以将字符串字面量赋值给 prop，它的值是未转义的。
    
-   ```react
+   ```jsx
    <MyComponent message="<3" />
    
    <MyComponent message={'<3'} />
@@ -121,7 +122,7 @@ JSX中指定props的方式主要有以下几种：
    
     `if` 语句以及 `for` 循环不是 JavaScript 表达式，所以不能在 JSX 中直接使用。但是，你可以用在 JSX 以外的代码中。比如：
    
-   ```react
+   ```js
    function NumberDescriber(props) {
      let description;
      if (props.number % 2 == 0) {    
@@ -145,7 +146,7 @@ JSX中指定props的方式主要有以下几种：
    
     以下两个组件是等价的：
    
-   ```react
+   ```js
    function App1() {
      return <Greeting firstName="Ben" lastName="Hector" />;
    }
@@ -158,7 +159,7 @@ JSX中指定props的方式主要有以下几种：
    
     你还可以选择只保留当前组件需要接收的 props，并使用展开运算符将其他 props 传递下去。
    
-   ```react
+   ```js
    const Button = props => {
      const { kind, ...other } = props;  const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton";
      return <button className={className} {...other} />;
@@ -177,11 +178,11 @@ JSX中指定props的方式主要有以下几种：
 
 4. **默认值**：prop默认值是 `true`。
 
-## 3.3 子元素
+### 3.3 子元素
 
 包含在开始和结束标签之间的 JSX 表达式内容将作为特定属性 `props.children` 传递给外层组件。有几种不同的方法来传递子元素：
 
-### 字符串字面量
+#### 字符串字面量
 
 你可以将字符串放在开始和结束标签之间，此时 `props.children` 就只是该字符串。这对于很多内置的 HTML 元素很有用。例如：
 
@@ -202,11 +203,11 @@ JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被�
 </div>
 ```
 
-### JSX 子元素
+#### JSX 子元素
 
 子元素允许由多个 JSX 元素组成。你可以将不同类型的子元素混合在一起，因此你可以将字符串字面量与 JSX 子元素一起使用。这对于嵌套组件非常有用：
 
-```react
+```jsx
 <MyContainer>
    Here is a list:
   <MyFirstComponent />
@@ -216,7 +217,7 @@ JSX 会移除行首尾的空格以及空行。与标签相邻的空行均会被�
 
 React 组件也能够返回存储在数组中的一组元素：
 
-```react
+```js
 render() {
   // 不需要用额外的元素包裹列表元素！
   return [
@@ -228,11 +229,11 @@ render() {
 }
 ```
 
-### JavaScript 表达式作为子元素
+#### JavaScript 表达式作为子元素
 
 JavaScript 表达式可以被包裹在 `{}` 中作为子元素。这对于展示任意长度的列表非常有用。例如，渲染 HTML 列表：
 
-```react
+```js
 function Item(props) {
   return <li>{props.message}</li>;
 }
@@ -249,17 +250,17 @@ function TodoList() {
 
 JavaScript 表达式也可以和其他类型的子元素组合。这种做法可以方便地替代模板字符串：
 
-```react
+```js
 function Hello(props) {
   return <div>Hello {props.addressee}!</div>;
 }
 ```
 
-### 函数作为子元素
+#### 函数作为子元素
 
 通常，JSX 中的 JavaScript 表达式将会被计算为字符串、React 元素或者是列表。不过，`props.children` 和其他 prop 一样，它可以传递任意类型的数据，而不仅仅是 React 已知的可渲染类型。例如，如果你有一个自定义组件，你可以把回调函数作为 `props.children` 进行传递：
 
-```react
+```js
 // 调用子元素回调 numTimes 次，来重复生成组件
 function Repeat(props) {
   let items = [];
@@ -280,7 +281,7 @@ function ListOfTenThings() {
 
 你可以将任何东西作为子元素传递给自定义组件，只要确保在该组件渲染之前能够被转换成 React 理解的对象。
 
-### 布尔类型、Null 以及 Undefined 将会忽略
+#### 布尔类型、Null 以及 Undefined 将会忽略
 
 `false`, `null`, `undefined`, and `true` 是合法的子元素。但它们并不会被渲染。以下的 JSX 表达式渲染结果相同：
 
@@ -295,7 +296,7 @@ function ListOfTenThings() {
 
 这有助于依据特定条件来渲染其他的 React 元素。例如，在以下 JSX 中，仅当 `showHeader` 为 `true` 时，才会渲染 `<Header />` 组件：
 
-```react
+```jsx
 <div>
   {showHeader && <Header />}  <Content />
 </div>
@@ -303,7 +304,7 @@ function ListOfTenThings() {
 
 值得注意的是有一些 [“falsy” 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)，如数字 `0`，仍然会被 React 渲染。因此需要确保 `&&` 之前的表达式总是布尔值：
 
-```react
+```jsx
 <div>
   {props.messages.length > 0 &&  <MessageList messages={props.messages} />}
 </div>
@@ -311,7 +312,7 @@ function ListOfTenThings() {
 
 反之，如果你想渲染 `false`、`true`、`null`、`undefined` 等值，你需要先将它们[转换为字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion)：
 
-```react
+```jsx
 <div>
   My JavaScript variable is {String(myVariable)}.
 </div>

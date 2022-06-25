@@ -7,7 +7,20 @@ export const data = {
     "title": "2.渲染元素(createRoot与render)"
   },
   "excerpt": "",
-  "headers": [],
+  "headers": [
+    {
+      "level": 2,
+      "title": "1 v16到v18渲染元素的方法",
+      "slug": "_1-v16到v18渲染元素的方法",
+      "children": []
+    },
+    {
+      "level": 2,
+      "title": "2 回调函数问题",
+      "slug": "_2-回调函数问题",
+      "children": []
+    }
+  ],
   "git": {
     "updatedTime": 1655712534000,
     "contributors": [

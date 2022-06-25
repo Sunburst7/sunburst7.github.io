@@ -17,7 +17,7 @@ export const themeData = {
           "link": "/note/"
         },
         {
-          "text": "react基础",
+          "text": "React文档学习",
           "link": "/note/react/1-jsx.md"
         },
         {
@@ -26,6 +26,10 @@ export const themeData = {
             {
               "text": "Web数据管理",
               "link": "/note/course-notes/Web数据管理.md"
+            },
+            {
+              "text": "软件项目管理",
+              "link": "/note/course-notes/软件项目管理.md"
             }
           ]
         }
@@ -77,7 +81,9 @@ export const themeData = {
       "/note/react/1-jsx.md",
       "/note/react/2-渲染元素.md",
       "/note/react/3-组件与生命周期.md",
-      "/note/react/4-事件绑定.md"
+      "/note/react/4-事件绑定.md",
+      "/note/react/5-组件编写方法.md",
+      "/note/react/6-受控组件与非受控组件.md"
     ],
     "/note/course-notes/": [
       "/note/course-notes/Web数据管理.md",

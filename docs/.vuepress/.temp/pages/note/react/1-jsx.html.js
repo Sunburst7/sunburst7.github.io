@@ -10,49 +10,37 @@ export const data = {
   "headers": [
     {
       "level": 2,
-      "title": "3.1 标签名",
-      "slug": "_3-1-标签名",
+      "title": "1 JSX简介",
+      "slug": "_1-jsx简介",
       "children": []
     },
     {
       "level": 2,
-      "title": "3.2 props",
-      "slug": "_3-2-props",
+      "title": "2 JSX本质",
+      "slug": "_2-jsx本质",
       "children": []
     },
     {
       "level": 2,
-      "title": "3.3 子元素",
-      "slug": "_3-3-子元素",
+      "title": "3 JSX语法",
+      "slug": "_3-jsx语法",
       "children": [
         {
           "level": 3,
-          "title": "字符串字面量",
-          "slug": "字符串字面量",
+          "title": "3.1 标签名",
+          "slug": "_3-1-标签名",
           "children": []
         },
         {
           "level": 3,
-          "title": "JSX 子元素",
-          "slug": "jsx-子元素",
+          "title": "3.2 props",
+          "slug": "_3-2-props",
           "children": []
         },
         {
           "level": 3,
-          "title": "JavaScript 表达式作为子元素",
-          "slug": "javascript-表达式作为子元素",
-          "children": []
-        },
-        {
-          "level": 3,
-          "title": "函数作为子元素",
-          "slug": "函数作为子元素",
-          "children": []
-        },
-        {
-          "level": 3,
-          "title": "布尔类型、Null 以及 Undefined 将会忽略",
-          "slug": "布尔类型、null-以及-undefined-将会忽略",
+          "title": "3.3 子元素",
+          "slug": "_3-3-子元素",
           "children": []
         }
       ]

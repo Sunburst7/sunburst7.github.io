@@ -3,10 +3,6 @@ export const pagesData = {
   "v-8daa1a0e": () => import(/* webpackChunkName: "v-8daa1a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/index.html.js").then(({ data }) => data),
   // path: /note/
   "v-15054f24": () => import(/* webpackChunkName: "v-15054f24" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/index.html.js").then(({ data }) => data),
-  // path: /note/course-notes/Web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html
-  "v-20a55da0": () => import(/* webpackChunkName: "v-20a55da0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/Web数据管理.html.js").then(({ data }) => data),
-  // path: /note/course-notes/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.html
-  "v-19cf9e3a": () => import(/* webpackChunkName: "v-19cf9e3a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/软件项目管理.html.js").then(({ data }) => data),
   // path: /scene-ui/
   "v-65768081": () => import(/* webpackChunkName: "v-65768081" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/index.html.js").then(({ data }) => data),
   // path: /scene-code/button.html
@@ -37,6 +33,10 @@ export const pagesData = {
   "v-21cf1cd6": () => import(/* webpackChunkName: "v-21cf1cd6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-code/select.html.js").then(({ data }) => data),
   // path: /scene-code/textarea.html
   "v-19a87817": () => import(/* webpackChunkName: "v-19a87817" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-code/textarea.html.js").then(({ data }) => data),
+  // path: /note/course-notes/Web%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86.html
+  "v-20a55da0": () => import(/* webpackChunkName: "v-20a55da0" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/Web数据管理.html.js").then(({ data }) => data),
+  // path: /note/course-notes/%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86.html
+  "v-19cf9e3a": () => import(/* webpackChunkName: "v-19cf9e3a" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/course-notes/软件项目管理.html.js").then(({ data }) => data),
   // path: /note/react/1-jsx.html
   "v-215f11ba": () => import(/* webpackChunkName: "v-215f11ba" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/1-jsx.html.js").then(({ data }) => data),
   // path: /note/react/2-%E6%B8%B2%E6%9F%93%E5%85%83%E7%B4%A0.html
@@ -45,6 +45,10 @@ export const pagesData = {
   "v-4c5c31b6": () => import(/* webpackChunkName: "v-4c5c31b6" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/3-组件与生命周期.html.js").then(({ data }) => data),
   // path: /note/react/4-%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A.html
   "v-b3178a0e": () => import(/* webpackChunkName: "v-b3178a0e" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/4-事件绑定.html.js").then(({ data }) => data),
+  // path: /note/react/5-%E7%BB%84%E4%BB%B6%E7%BC%96%E5%86%99%E6%96%B9%E6%B3%95.html
+  "v-85f670ba": () => import(/* webpackChunkName: "v-85f670ba" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/5-组件编写方法.html.js").then(({ data }) => data),
+  // path: /note/react/6-%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%E4%B8%8E%E9%9D%9E%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6.html
+  "v-19d08aa1": () => import(/* webpackChunkName: "v-19d08aa1" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/note/react/6-受控组件与非受控组件.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/button.html
   "v-09639625": () => import(/* webpackChunkName: "v-09639625" */"E:/my_git/my-blog/docs/.vuepress/.temp/pages/scene-ui/basic/button.html.js").then(({ data }) => data),
   // path: /scene-ui/basic/card.html

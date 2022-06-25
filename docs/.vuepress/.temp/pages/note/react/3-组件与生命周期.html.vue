@@ -1,5 +1,5 @@
 <template><p>组件，从概念上类似于 JavaScript 函数。它接受任意的入参（即 “props”），并返回用于描述页面展示内容的 React 元素。</p>
-<h1 id="_1-组件生命周期" tabindex="-1"><a class="header-anchor" href="#_1-组件生命周期" aria-hidden="true">#</a> 1 组件生命周期</h1>
+<h2 id="_1-组件生命周期" tabindex="-1"><a class="header-anchor" href="#_1-组件生命周期" aria-hidden="true">#</a> 1 组件生命周期</h2>
 <p>React v16.4后的生命周期如图所示</p>
 <p><img src="@source/note/react/3-组件与生命周期.assets/2022-06-12-18-22-51-image.png" alt=""></p>
 <blockquote>
@@ -19,7 +19,7 @@
 <p>commit：可以使用 DOM，运行副作用，安排更新。</p>
 </li>
 </ul>
-<h2 id="_1-1-render-api" tabindex="-1"><a class="header-anchor" href="#_1-1-render-api" aria-hidden="true">#</a> 1.1 Render API</h2>
+<h3 id="_1-1-render-api" tabindex="-1"><a class="header-anchor" href="#_1-1-render-api" aria-hidden="true">#</a> 1.1 Render API</h3>
 <ul>
 <li>
 <p><code>constructor</code>：该方法只会执行一次，调用该方法会返回一个组件实例。</p>
@@ -70,7 +70,7 @@
 <p><code>render()</code> 函数应该为纯函数，这意味着在不修改组件 state 的情况下，每次调用时都返回相同的结果，并且它不会直接与浏览器交互。如需与浏览器进行交互，请在 <code>componentDidMount()</code> 或其他生命周期方法中执行你的操作。保持 <code>render()</code> 为纯函数，可以使组件更容易思考。</p>
 </li>
 </ul>
-<h2 id="_1-2-commit-api" tabindex="-1"><a class="header-anchor" href="#_1-2-commit-api" aria-hidden="true">#</a> 1.2 commit API</h2>
+<h3 id="_1-2-commit-api" tabindex="-1"><a class="header-anchor" href="#_1-2-commit-api" aria-hidden="true">#</a> 1.2 commit API</h3>
 <p>commit 阶段在首次渲染时会执行 componentDidMount，在组件更新时会执行 getSnapshotBeforeUpdate 和 componentDidUpdate。</p>
 <ul>
 <li>
@@ -92,7 +92,7 @@
 <p>使用场景：通常用来执行组件的清理操作，例如，清除 timer，取消网络请求或清除在 <code>componentDidMount()</code> 中创建的订阅等。</p>
 </li>
 </ul>
-<h1 id="_2-类组件" tabindex="-1"><a class="header-anchor" href="#_2-类组件" aria-hidden="true">#</a> 2 类组件</h1>
+<h2 id="_2-类组件" tabindex="-1"><a class="header-anchor" href="#_2-类组件" aria-hidden="true">#</a> 2 类组件</h2>
 <p>类组件是基于ES6的class来定义的通过继承<code>React.Component</code> 得来的 React 组件。类组件提供了所有的生命周期的实例方法以及一些额外的 API：</p>
 <ul>
 <li>
@@ -140,7 +140,7 @@ CustomButton<span class="token punctuation">.</span>defaultProps <span class="to
 <li>props：组件标签上的属性对象，需特别注意，<code>this.props.children</code> 是一个特殊的 prop，通常由 JSX 表达式中的子组件组成，而非组件本身定义。</li>
 <li>state：组件中的 state 包含了随时可能发生变化的数据。state 由用户自定义，它是一个普通 JavaScript 对象。如果某些值未用于渲染或数据流（例如，计时器 ID），则不必将其设置为 state。此类值可以在组件实例上定义。永远不要直接改变 <code>this.state</code></li>
 </ul>
-<h2 id="纯组件" tabindex="-1"><a class="header-anchor" href="#纯组件" aria-hidden="true">#</a> 纯组件</h2>
+<h3 id="纯组件" tabindex="-1"><a class="header-anchor" href="#纯组件" aria-hidden="true">#</a> 纯组件</h3>
 <p>类组件分为普通类组件(React.Component)以及纯类组件(React.PureComponent)。</p>
 <div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token comment">// Component</span>
 <span class="token keyword">class</span> <span class="token class-name">Welcome</span> <span class="token keyword">extends</span> <span class="token class-name">React<span class="token punctuation">.</span>Component</span> <span class="token punctuation">{</span>
@@ -201,7 +201,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   <span class="token operator">&lt;</span>WordAdder <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">,</span>
   document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'root'</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><h1 id="_3-函数组件初步" tabindex="-1"><a class="header-anchor" href="#_3-函数组件初步" aria-hidden="true">#</a> 3 函数组件初步</h1>
+</code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br></div></div><h2 id="_3-函数组件初步" tabindex="-1"><a class="header-anchor" href="#_3-函数组件初步" aria-hidden="true">#</a> 3 函数组件初步</h2>
 <p>早期并没有 React-Hooks 的加持，函数组件内部无法定义和维护 state，因此它还有一个别名叫“无状态组件”。以下是一个典型的函数组件：</p>
 <div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">DemoFunction</span><span class="token punctuation">(</span><span class="token parameter">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">const</span> <span class="token punctuation">{</span> text <span class="token punctuation">}</span> <span class="token operator">=</span> props
@@ -219,7 +219,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
 <li>不能访问生命周期方法</li>
 <li>不需要显示声明 this 关键字：在 ES6 的类声明中往往需要将函数的 this 关键字绑定到当前作用域，而因为函数式声明的特性，我们不需要再强制绑定。</li>
 </ul>
-<h1 id="参考" tabindex="-1"><a class="header-anchor" href="#参考" aria-hidden="true">#</a> 参考</h1>
+<h2 id="参考" tabindex="-1"><a class="header-anchor" href="#参考" aria-hidden="true">#</a> 参考</h2>
 <p><a href="https://juejin.cn/post/6844903735043293191" target="_blank" rel="noopener noreferrer">React（二）：类组件、函数式组件 - 掘金<ExternalLinkIcon/></a></p>
 <p><a href="https://juejin.cn/post/7096137407409422344" target="_blank" rel="noopener noreferrer">React 生命周期详解 - 掘金 (juejin.cn)<ExternalLinkIcon/></a></p>
 </template>

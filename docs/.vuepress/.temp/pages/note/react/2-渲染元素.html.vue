@@ -1,4 +1,4 @@
-<template><h1 id="_1-v16到v18渲染元素的方法" tabindex="-1"><a class="header-anchor" href="#_1-v16到v18渲染元素的方法" aria-hidden="true">#</a> 1 v16到v18渲染元素的方法</h1>
+<template><h2 id="_1-v16到v18渲染元素的方法" tabindex="-1"><a class="header-anchor" href="#_1-v16到v18渲染元素的方法" aria-hidden="true">#</a> 1 v16到v18渲染元素的方法</h2>
 <p>React 18 提供了两个 root API，被称之为 Legacy Root API 和 New Root API：</p>
 <ul>
 <li>
@@ -44,7 +44,7 @@ root<span class="token punctuation">.</span><span class="token function">render<
 <li>当调用render()时，root的任何现有的DOM元素都会被全部替换，使用diff算法实现高效的更新。</li>
 <li>createRoot() 不修改容器节点（只修改容器的子节点）。 可以在不覆盖现有子节点的情况下将组件插入现有 DOM 节点。</li>
 </ul>
-<h1 id="_2-回调函数问题" tabindex="-1"><a class="header-anchor" href="#_2-回调函数问题" aria-hidden="true">#</a> 2 回调函数问题</h1>
+<h2 id="_2-回调函数问题" tabindex="-1"><a class="header-anchor" href="#_2-回调函数问题" aria-hidden="true">#</a> 2 回调函数问题</h2>
 <p>在v16的<code>render()</code>方法中，你可以传递一个回调函数，在组件被渲染或更新后调用：</p>
 <div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> ReactDOM <span class="token keyword">from</span> <span class="token string">'react-dom'</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'App'</span><span class="token punctuation">;</span>
@@ -56,7 +56,7 @@ ReactDOM<span class="token punctuation">.</span><span class="token function">ren
   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'rendered'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre><div class="line-numbers" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>而在v18 New Root API 中，我们删除了此回调。推荐的方法是添加一个callback ref到根元素上。推荐的写法：</p>
-<div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> ReactDOM <span class="token keyword">from</span> <span class="token string">'react-dom'</span><span class="token punctuation">;</span>
+<div class="language-javascript ext-js line-numbers-mode"><pre v-pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> ReactDOM <span class="token keyword">from</span> <span class="token string">'react-dom/client'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> callback <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token comment">// Callback will be called when the div is first created.</span>
